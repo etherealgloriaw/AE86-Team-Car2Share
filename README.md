@@ -1,16 +1,42 @@
 # CPSC455-project
 
-Project Description: \n
-○ Who is it for? \n
-○ What will it do? (What "human activity" will it support?) \n
-○ What type of data will it store? \n
-○ What will users be able to do with this data? \n
-○ What is some additional functionality you can add/remove based on time constraints? \n
+## Project Description: 
+○ Who is it for? 
+
+○ What will it do? (What "human activity" will it support?) 
+
+○ What type of data will it store? 
+
+○ What will users be able to do with this data? 
+
+○ What is some additional functionality you can add/remove based on time constraints? 
 
 
-Project task requirements:\n
-○ 3-5 minimal requirements \n
-○ 3-7 "standard" requirements \n
-○ 2-3 stretch requirements \n
+## Project task requirements:
+○ minimal requirements 
 
-Small Tasks:
+  a. Add, edit, delete, view carpool request, such as destination, home, price, date and number of available seats
+  
+  b. Visualize the carpool routes via a map interface
+  
+  c. Basic user authentication
+  
+  d. Find the nearest carpool requests and orders in the map to make the users interact each other
+
+○ standard requirements 
+
+  a. Users can publish their carpool photos and feelings in their account
+  
+  b. Recommend the monthly popular destination
+  
+  c. User statistics, such as the carpool history, ratings
+
+○ stretch requirements 
+
+  a. Recommend the price for carpool based on history average
+  
+  b. Users could select to pick up the passengers within the distance they choose, and the circle is presented in the map.
+
+## Small Tasks:
+
+## Blueprints:
