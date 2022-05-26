@@ -1,15 +1,16 @@
 # CPSC455-project
 
 ## Project Description: 
-○ Who is it for? 
 
-○ What will it do? (What "human activity" will it support?) 
+Our app is designed for people who live near the UBC campus. 
 
-○ What type of data will it store? 
+It allows people from the same starting point to browse and choose rides on the same route. 
 
-○ What will users be able to do with this data? 
+It stores destination addresses and estimated departure time of users and drivers. 
 
-○ What is some additional functionality you can add/remove based on time constraints? 
+Users can choose the appropriate driver based on the route and departure time to save time and money. 
+
+We can add functionality that allows users to use this app in different places.
 
 
 ## Project task requirements:
