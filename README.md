@@ -1,4 +1,4 @@
-# CPSC455-project
+# Carpool Application
 
 ## Project Description: 
 
