@@ -1,4 +1,4 @@
-# Carpool Application
+# Car2Share -- Carpool Application
 
 ## Project Summary: 
 
