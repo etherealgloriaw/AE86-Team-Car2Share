@@ -43,3 +43,6 @@ The additional functionality could include automatic matching system according t
 ## Small Tasks:
 
 ## Blueprints:
+
+![Car2Share_prototypes_carowner](https://user-images.githubusercontent.com/52093783/170796118-4396c743-32b0-4f33-a149-b7b643ebfe06.jpg)
+![Car2Share_prototypes_passenger](https://user-images.githubusercontent.com/52093783/170796138-25978b99-5727-4d4a-acf7-fdf4ac88cdfd.jpg)
