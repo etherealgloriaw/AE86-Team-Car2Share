@@ -1,17 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
-import Posts from "./components/Posts";
-import {SearchBar} from "./components/SearchBar";
-import {Filter} from "./components/Filter";
-import {Logo} from "./components/Logo";
+import Home from "./pages/Home"
+import User from './pages/User';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-        <Logo />
-        <SearchBar />
-        <Filter></Filter>
-      <Posts />
+      <h1>Application</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}>         </Route>
+          <Route path="/User" element={<User />}>         </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

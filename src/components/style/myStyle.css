@@ -1,15 +1,29 @@
 .post {
-    background: #8E916D;
+    background: #84ac7c;
     flex-direction: row;
     border-radius: 9px;
     width: 265px;
     height: 280px;
-    margin-right: 2.4rem;
+    margin-right: 1rem;
     margin-bottom: 3rem;
     font-size: 15px;
     font-weight: bold;
 }
 
+.login {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    background: #93bcc8;
+    flex-direction: row;
+    border-radius: 9px;
+    width: 180px;
+    height: 170px;
+    margin-right: 2.4rem;
+    margin-bottom: 3rem;
+    font-size: 10px;
+    font-weight: bold;
+}
 .post-title {
     text-align: center;
     padding: 1rem;
@@ -52,5 +66,17 @@
     margin: 3rem;
 }
 
-
+.search {
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    flex-direction: row;
+    border-radius: 9px;
+    width: 150px;
+    height: 220px;
+    margin-right: 2.4rem;
+    margin-bottom: 3rem;
+    font-size: 15px;
+    font-weight: bold;
+}
 
