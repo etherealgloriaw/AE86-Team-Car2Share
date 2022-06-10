@@ -1,5 +1,5 @@
 export const Logo = () => {
     return (
-        <h3>This is our logo.</h3>
+        <h3> logo.</h3>
     )
 }
