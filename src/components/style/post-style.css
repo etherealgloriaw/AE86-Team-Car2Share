@@ -1,15 +1,22 @@
 .post {
     background: #84ac7c;
-    flex-direction: row;
-    border-radius: 9px;
-    width: 265px;
-    height: 280px;
-    margin-right: 1rem;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-    font-size: 15px;
+    border-radius: 10px;
+    width: 25%;
+    height: 10%;
+    margin-right: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
     font-weight: bold;
+    box-shadow: 0 8px 16px 0 rgb(65, 65, 65);
+    transition: all 0.3s ease-in-out;
 }
+
+.post:hover {
+    box-shadow: 0 16px 32px 0 rgb(211, 213, 206);
+    transform: scale3d(1.04,1.04,1.04);
+}
+
 
 .post-title {
     text-align: center;
@@ -31,4 +38,10 @@
     text-align: left;
     padding-left: 1rem;
     padding-right: 1rem;
+}
+
+.posts {
+    margin-top: 5%;
+    margin-left: 15%;
+    row-gap: 1%;
 }

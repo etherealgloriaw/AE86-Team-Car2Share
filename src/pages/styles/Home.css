@@ -1,7 +1,10 @@
 .button .login{
+    position: relative;
+    left: 45%;
+    top: 20%;
     width: 80px;
     height: 40px;
-    margin: 10 10px;
+    margin: 10px 10px;
     background-color: #93bcc8;
     color: white;
 }
@@ -10,6 +13,3 @@
     background-color: #194B49;
 }
 
-.h1 {
-    margin: 0px;
-}
