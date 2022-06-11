@@ -19,7 +19,7 @@ export const PostsList = () => {
         <div className="post" key={slice.id}>
              <p className="post-title"> To: {slice.to}</p>
              <p className="post-detail"> From: {slice.from}</p>
-            <p className="post-detail" >Deiver: {slice.name}</p>
+            <p className="post-detail" >Deliver: {slice.name}</p>
             <p className="post-detail">Rating: {slice.rating}</p>
             <p className="post-detail" >Starting Time: {slice.startingTime}</p>
             <p className="post-detail" >Total Time: {slice.totalTime}</p>

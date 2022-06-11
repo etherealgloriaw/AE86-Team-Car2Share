@@ -2,12 +2,16 @@ import Posts from "../components/Posts";
 import {SearchBar} from "../components/SearchBar";
 import {Filter} from "../components/Filter";
 import {Logo} from "../components/Logo";
+import "./styles/Login.css"
 import React from 'react';
 import { Link } from "react-router-dom";
 
 function Login () {
     return (
-      <><p>hello</p><div className="login"><h1>Login</h1>
+        <div className="loginPage">
+      <h1>Car2share</h1>
+          <div className="login">
+              <h1>Login</h1>
         <form>
           <label>
             <p>Username</p>
@@ -21,7 +25,9 @@ function Login () {
             </Link>
             </div>
           </label>
-        </form></div></>
+        </form>
+          </div>
+        </div>
     )
 }
 

@@ -10,10 +10,10 @@ import "./styles/Home.css"
 function Home () {
     return (
     <div className="Home">
-        <h1>Application</h1>
+        <h1>Car2share</h1>
         <Logo />
         <SearchBar />
-        <Filter></Filter>
+        <Filter/>
         <Link to={"/Login"} className="button">
             <button className = "login" type="submit">Login</button>
         </Link>
