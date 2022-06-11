@@ -1,0 +1,34 @@
+.post {
+    background: #84ac7c;
+    flex-direction: row;
+    border-radius: 9px;
+    width: 265px;
+    height: 280px;
+    margin-right: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.post-title {
+    text-align: center;
+    padding: 1rem;
+    color: black;
+    background-color: #EAE5CF;
+    font-size: 25px;
+}
+
+
+.post-rating {
+    text-align: left;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-style: italic;
+}
+
+.post-detail {
+    text-align: left;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

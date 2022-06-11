@@ -2,16 +2,21 @@ import Posts from "../components/Posts";
 import {SearchBar} from "../components/SearchBar";
 import {Filter} from "../components/Filter";
 import {Logo} from "../components/Logo";
-import { Login } from "../components/Login";
+import { Link } from "react-router-dom";
+import Login from "./Login";
 import React from 'react';
+import "./styles/Home.css"
 
 function Home () {
     return (
-    <div className="App">
+    <div className="Home">
+        <h1>Application</h1>
         <Logo />
         <SearchBar />
         <Filter></Filter>
-        <Login />
+        <Link to={"/Login"} className="button">
+            <button className = "login" type="submit">Login</button>
+        </Link>
         <Posts />
     </div>
     )

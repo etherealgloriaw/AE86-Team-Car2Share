@@ -1,5 +1,5 @@
 import {useState,React} from 'react';
-
+import "./style/Filter.css"
 export const Filter = () => {
 
     const[option1, setValue1] = useState('true');
@@ -18,8 +18,6 @@ export const Filter = () => {
         setValue1('');
 
 };
-
-
 
     return(
         <div>

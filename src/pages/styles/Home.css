@@ -1,0 +1,15 @@
+.button .login{
+    width: 80px;
+    height: 40px;
+    margin: 10 10px;
+    background-color: #93bcc8;
+    color: white;
+}
+
+.button .login:hover{
+    background-color: #194B49;
+}
+
+.h1 {
+    margin: 0px;
+}
