@@ -1,0 +1,16 @@
+.search_bar {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    border-radius: 9px;
+    width: 150px;
+    height: 220px;
+    margin-right: 2.4rem;
+    margin-bottom: 3rem;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.search_bar textarea{
+    resize: none;
+}

@@ -1,0 +1,19 @@
+.filter {
+    position: absolute;
+    top: 75px;
+    left: 250px;
+    border-radius: 9px;
+    width: 150px;
+    height: 220px;
+    margin-right: 2.4rem;
+    margin-bottom: 3rem;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.sorting{
+    position: absolute;
+    top: 95px;
+    left: 450px;
+    font-size: 15px;
+}
