@@ -18,6 +18,7 @@ export const Filter = () => {
         setValue1('');
 
 };
+
     return(
         <div>
             <div className="filter">
