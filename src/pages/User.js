@@ -1,5 +1,5 @@
 import Posts from "../components/Posts";
-import {SearchBar} from "../components/SearchBar";
+import { ResponsiveSearchBar } from "../components/ResponsiveSearchBar ";
 import {Filter} from "../components/Filter";
 import {Logo} from "../components/Logo";
 import React from 'react';

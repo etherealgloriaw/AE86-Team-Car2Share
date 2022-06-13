@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export let initialState = [
 
+export let initialState = [
     {
         "id": 1, "name": "Peter",
         "from": "UBC Book Store",

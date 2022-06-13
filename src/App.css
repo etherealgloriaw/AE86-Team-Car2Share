@@ -1,11 +1,10 @@
 .App {
   width: 100vw;
   height: 100vh;
-  text-align: center;
+  /* text-align: center; */
   position: relative;
   font-size: 100%;
   vertical-align: baseline;
-  background: Linear-gradient(#dcd4b8 20%, #91a157 80%);
 }
 
 .App-logo {

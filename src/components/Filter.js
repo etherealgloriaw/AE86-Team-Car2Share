@@ -1,8 +1,6 @@
 import React from 'react';
 import "./style/Filter.css"
 export const Filter = () => {
-
-
     return(
         <div>
             <div className="filter">
