@@ -1,6 +1,6 @@
 import './App.css';
 import Home from "./pages/Home"
-import User from './pages/User';
+import Profile from "./pages/Profile"
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}>         </Route>
           <Route path="/Login" element={<Login />}>       </Route>
-          <Route path="/User" element={<User />}>         </Route>
+          <Route path="/Profile" element={<Profile />}>         </Route>
           <Route path="/SignUp" element={<SignUp />}>    </Route>
         </Routes>
       </BrowserRouter>
