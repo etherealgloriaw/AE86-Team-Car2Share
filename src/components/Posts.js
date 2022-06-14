@@ -21,7 +21,7 @@ import { Grid } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
     card: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
       },
     root: {
       maxWidth: 300,

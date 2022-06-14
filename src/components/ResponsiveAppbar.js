@@ -95,7 +95,7 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Current Travel</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem component={Link} to='/Profile' onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">
           <Badge badgeContent={0} color="secondary">
             <DashboardIcon />
