@@ -54,7 +54,7 @@ export default function Profile() {
     
     const renderedPosts = posts.map((slice) => (
         <Grid item xs={12} md={6}>
-                    <Card className={classes.root}>
+        <Card className={classes.root}>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>

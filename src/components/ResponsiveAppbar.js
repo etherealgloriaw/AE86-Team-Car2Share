@@ -87,8 +87,8 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton color="inherit" onClick={handleProfileMenuOpen}>
+      <MenuItem component={Link} to='/Current' onClick={handleProfileMenuOpen}>
+        <IconButton color="inherit" >
           <Badge badgeContent={0} color="secondary">
             <EmojiPeopleIcon />
           </Badge>
