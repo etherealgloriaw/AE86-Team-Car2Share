@@ -51,7 +51,7 @@ export default function Profile() {
         setAuth(event.target.checked);
     };
     const posts = useSelector((state) => state.posts)
-    
+
     const renderedPosts = posts.map((slice) => (
         <Grid item xs={12} md={6}>
         <Card className={classes.root}>
@@ -67,7 +67,7 @@ export default function Profile() {
             </IconButton>
           }
           title={slice.name}
-          Starting_time= {slice.startingTime}
+          starting_time= {slice.startingTime}
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">

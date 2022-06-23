@@ -15,6 +15,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import { Link } from "react-router-dom";
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import HomeIcon from '@material-ui/icons/Home';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -87,6 +89,14 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <MenuItem component={Link} to='/' onClick={handleProfileMenuOpen}>
+        <IconButton color="inherit" >
+          <Badge badgeContent={0} color="secondary">
+            <HomeIcon />
+          </Badge>
+        </IconButton>
+        <p>Home</p>
+      </MenuItem>
       <MenuItem component={Link} to='/Current' onClick={handleProfileMenuOpen}>
         <IconButton color="inherit" >
           <Badge badgeContent={0} color="secondary">
@@ -113,6 +123,14 @@ export default function PrimarySearchAppBar() {
           <AccountCircle />
         </IconButton>
         <p>Login</p>
+      </MenuItem>
+      <MenuItem component={Link} to='/Add' onClick={handleProfileMenuOpen}>
+        <IconButton color="inherit">
+          <Badge badgeContent={0} color="secondary">
+            <DriveEtaIcon />
+          </Badge>
+        </IconButton>
+        <p>Add a new post</p>
       </MenuItem>
     </Menu>
   );
