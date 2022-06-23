@@ -50,7 +50,7 @@ export const Post = (slice) => {
       };
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={Math.random()}>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
@@ -63,7 +63,7 @@ export const Post = (slice) => {
             </IconButton>
           }
           title={slice.name}
-          Starting_time= {slice.startingTime}
+          starting_time= {slice.startingTime}
         />
         {/* <CardMedia
           className={classes.media}

@@ -9,10 +9,10 @@ export const Posts = () => {
     const posts = useSelector((state) => state.posts)
 
     const renderedPosts = posts.map((slice) => (
-        <Grid item xs={12} md={12}>
+        <Grid item xs={12} md={12} key={Math.random()}>
           {
             <Post name = {slice.name} startingTime = {slice.startingTime} from = {slice.from}
-            to = {slice.to} />
+            to = {slice.to} key={Math.random()}/>
           }
         </Grid>
     ))
