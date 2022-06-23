@@ -33,7 +33,7 @@
 // }
 // function MapComponent(){
 //     var { isLoaded } = useLoadScript({
-//         googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',
+//         googleMapsApiKey: '',
 //     });
 //
 //     if (!isLoaded) return <div>Loading</div>;
