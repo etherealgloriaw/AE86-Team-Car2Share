@@ -7,6 +7,7 @@ import Current from './pages/Current';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PrimarySearchAppBar from './components/ResponsiveAppbar';
 import { createTheme, ThemeProvider} from '@material-ui/core/styles';
+import AddNewPost from "./pages/AddNewPost";
 
 const theme = createTheme(
 {
@@ -33,11 +34,12 @@ function App() {
           <Route path="/Profile" element={<Profile />}>         </Route>
           <Route path="/SignUp" element={<SignUp />}>    </Route>
           <Route path="/Current" element={<Current />}>    </Route>
+          <Route path="/Add" element={<AddNewPost />}>    </Route>
         </Routes>
       </BrowserRouter>
     </div>
     </ThemeProvider>
-    
+
   );
 }
 
