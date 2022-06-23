@@ -6,8 +6,8 @@ import Map from "../components/Map";
 function Current () {
     return (
     <div className="Home">
-        <Map />
         <Post />
+        <Map />
     </div>
     )
 }
