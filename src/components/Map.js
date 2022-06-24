@@ -69,6 +69,6 @@ export default function Map(){
                 {postList.map((post => {
                     return <Marker position={post.dest}/>
                 }))}
-            </GoogleMap>;
+            </GoogleMap>
         </div>)
 }
