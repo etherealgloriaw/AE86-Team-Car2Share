@@ -15,7 +15,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
 import { Grid } from "@material-ui/core";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -84,6 +86,9 @@ export const Post = (slice) => {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
+            <IconButton aria-label="share" component={Link} to={`/Edit/${slice.id}`} >
+                <EditIcon />
+            </IconButton>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
