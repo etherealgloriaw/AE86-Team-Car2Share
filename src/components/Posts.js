@@ -12,7 +12,7 @@ export const Posts = () => {
         <Grid item xs={12} md={12} key={Math.random()}>
           {
             <Post name = {slice.name} startingTime = {slice.startingTime} from = {slice.from}
-            to = {slice.to} key={Math.random()}/>
+            to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()}/>
           }
         </Grid>
     ))

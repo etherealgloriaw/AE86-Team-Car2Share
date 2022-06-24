@@ -10,7 +10,8 @@ export let initialState = [
         "rating": 4,
         "availableSeats": 4,
         "startingTime": "12:30",
-        "totalTime": 25
+        "totalTime": 25,
+        "contactInfo": "123-456-789"
     },
     {
         "id": 2, "name": "Meg",
@@ -20,7 +21,8 @@ export let initialState = [
         "rating": 3,
         "availableSeats": 4,
         "startingTime": "12:30",
-        "totalTime": 25
+        "totalTime": 25,
+        "contactInfo": "123-456-789"
     },
     {
         "id": 3, "name": "Lois",
@@ -30,7 +32,8 @@ export let initialState = [
         "rating": 4,
         "availableSeats": 4,
         "startingTime": "12:30",
-        "totalTime": 25
+        "totalTime": 25,
+        "contactInfo": "123-456-789"
     },
     {
         "id": 4, "name": "Chris",
@@ -40,7 +43,8 @@ export let initialState = [
         "rating": 4,
         "availableSeats": 4,
         "startingTime": "12:30",
-        "totalTime": 25
+        "totalTime": 25,
+        "contactInfo": "123-456-789",
     },
     {
         "id": 5, "name": "Brain",
@@ -50,7 +54,8 @@ export let initialState = [
         "rating": 4,
         "availableSeats": 4,
         "startingTime": "12:30",
-        "totalTime": 25
+        "totalTime": 25,
+        "contactInfo": "123-456-789",
     },
 
 ];
