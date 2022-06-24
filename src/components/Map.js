@@ -1,74 +1,42 @@
-// import React from 'react';
-// import PropTypes from 'prop-types';
-// import { makeStyles } from '@material-ui/core/styles';
-// import Typography from '@material-ui/core/Typography';
-// import Grid from '@material-ui/core/Grid';
-// import Card from '@material-ui/core/Card';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import Hidden from '@material-ui/core/Hidden';
-// import {GoogleMap, useLoadScript} from "@react-google-maps/api";
-//
-// const useStyles = makeStyles({
-//     card: {
-//       display: 'flex',
-//       height: 300,
-//     },
-//   });
-//
-// export default function Map(props) {
-//     const classes = useStyles();
-//     const { post } = props;
-//
-//     return (
-//       <Grid item xs={12} md={6}>
-//         <CardActionArea component="a" href="#">
-//           <Card className={classes.card}>
-//               <MapComponent/>
-//           </Card>
-//         </CardActionArea>
-//       </Grid>
-//     );
-// }
-// function MapComponent(){
-//     var { isLoaded } = useLoadScript({
-//         googleMapsApiKey: '',
-//     });
-//
-//     if (!isLoaded) return <div>Loading</div>;
-//     return (
-//         <div>
-//             <GoogleMap zoom={10} center={{lat: 49.261443, lng:-123.256696}} mapContainerClassName="map-container"></GoogleMap>;
-//         </div>)
-// }
-//
-// Map.propTypes = {
-//     post: PropTypes.object,
-// };
-
-
-
-import {GoogleMap, Marker, useLoadScript} from "@react-google-maps/api";
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import React from "react";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import { makeStyles } from '@material-ui/core/styles';
 
-export default function Map(){
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+}));
+
+export default function Map() {
+    const classes = useStyles();
     var { isLoaded } = useLoadScript({
         googleMapsApiKey: '',
     });
 
+    const containerStyle = {
+        width: '800px',
+        height: '1000px'
+    };
+
     const postList = useSelector(state => state.posts);
-
-
 
     if (!isLoaded) return <div>Loading</div>;
     return (
-        <div className='mapComponent'>
-            <GoogleMap zoom={10} center={{lat: 49.261443, lng:-123.256696}} mapContainerClassName="map-container">
+        <Grid item xs={12}>
+             <Paper className={classes.paper}><GoogleMap zoom={10} center={{lat: 49.261443, lng:-123.256696}}  mapContainerStyle={containerStyle} mapContainerClassName="map-container">
                 {postList.map((post => {
                     return <Marker position={post.dest}/>
                 }))}
-            </GoogleMap>
-        </div>)
+            </GoogleMap></Paper>
+        </Grid>
+       )
 }
