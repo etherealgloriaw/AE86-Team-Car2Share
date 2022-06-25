@@ -9,11 +9,12 @@
     margin-bottom: 3rem;
     font-size: 15px;
     font-weight: bold;
+    
 }
 
 .sorting{
     position: absolute;
-    top: 95px;
+    top: 75px;
     left: 450px;
     font-size: 15px;
 }
