@@ -74,14 +74,14 @@ export const ResponsiveSearchBar = () => {
 
     return (
         <div className={classes.search}>
-            <InputBase
+            {/* <InputBase
                 placeholder="From…"
                 classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
                 }}
                 // inputProps={{ 'aria-label': 'search' }}
-            />
+            /> */}
             <div></div>
             <InputBase onChange={handleChange}
                 name = "destination"

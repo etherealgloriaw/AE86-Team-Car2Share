@@ -1,11 +1,13 @@
 import React from 'react';
 import "./style/Filter.css"
+
 export const Filter = () => {
     return(
         <div>
-            <div className="filter">
-            <label htmlFor="filter">Filter</label> 
-            <select >              
+            <div className="filter" >
+
+            <select>    
+                <option hidden = "hidden">Filter...</option>          
                 <option >Distance (starting point)</option>
                 <option >Distance (destination)</option>
                 <option >Ratings</option>
