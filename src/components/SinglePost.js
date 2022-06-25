@@ -78,11 +78,20 @@ const slice = createSlice({
                 existingPost.availableSeats = availableSeats
                 existingPost.contactInfo = contactInfo
             }
+        },
+        postSearch(state = initialState, action){
+            const destination = action.payload
+            const targetPosts = state.filter(post => post.to == destination) 
+            state = []
+            state.push(targetPosts)
+            console.log("state: " + state);
+            return state
+            
         }
     },
 })
 
-export const { postAdded, postEdit } = slice.actions
+export const { postAdded, postEdit ,postSearch} = slice.actions
 
 export default slice.reducer
 

@@ -1,10 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
+import { useDispatch } from 'react-redux';
 import { alpha, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import { initialState, postSearch } from './SinglePost';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,10 +50,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 export const ResponsiveSearchBar = () => {
     const classes = useStyles();
-    const handleSearch = (event) => {
-        console.log("search");
+
+    const[destination, setDestination] = useState('')
+
+    const handleChange = e =>{
+        if(e.target.name == 'destination'){
+            setDestination(e.target.value);
+        }
+    }
+
+    const dispatch = useDispatch()
+
+    const handleSearch = () => {
+        dispatch(
+            postSearch(destination)
+        )
+        setDestination('');
       };
 
     return (
@@ -66,7 +83,8 @@ export const ResponsiveSearchBar = () => {
                 // inputProps={{ 'aria-label': 'search' }}
             />
             <div></div>
-            <InputBase
+            <InputBase onChange={handleChange}
+                name = "destination"
                 placeholder="To…"
                 classes={{
                     root: classes.inputRoot,
@@ -75,7 +93,7 @@ export const ResponsiveSearchBar = () => {
                 // inputProps={{ 'aria-label': 'search' }}
             />
             <IconButton aria-label="search">
-                <SearchIcon />
+                <SearchIcon onClick = {handleSearch}/>
             </IconButton>
         </div>
     )
