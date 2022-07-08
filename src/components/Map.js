@@ -23,8 +23,8 @@ export default function Map() {
     });
 
     const containerStyle = {
-        width: '800px',
-        height: '1000px'
+        width: '900px',
+        height: '1050px'
     };
 
     const postList = useSelector(state => state.posts);
