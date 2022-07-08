@@ -16,6 +16,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
+import {Tooltip} from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -40,7 +41,13 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: "#0d47a1",
   },
-}));
+  fav: {
+    '&:hover': {
+      color: 'red',
+    }
+  },
+}
+));
 
 export const Post = (slice) => {
   const posts = useSelector((state) => state.posts)
@@ -80,9 +87,11 @@ export const Post = (slice) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <Tooltip title="Join the post">
+        <IconButton aria-label="add to favorites" >
+          <FavoriteIcon className = {classes.fav}/>
         </IconButton>
+        </Tooltip>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
