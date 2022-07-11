@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import {useLoadScript} from "@react-google-maps/api";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,7 +24,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Home() {
     const classes = useStyles();
-
+    const postList = useSelector(state => state.posts);
+    useLoadScript({
+        googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',
+        libraries: ["places"],
+    });
     return (
         <div className="Home">
             <ResponsiveSearchBar />
@@ -34,7 +39,7 @@ function Home() {
                         <Posts />
                     </Grid>
                     <Grid item xs={8}>
-                        <Map />
+                        <Map markerList={postList.map((post) => {return post.dest})}/>
                     </Grid>
                 </Grid>
             </div>

@@ -4,6 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {useDispatch, useSelector} from 'react-redux'
 import {initialState, postAdded} from '../components/SinglePost.js'
+import PlacesAutocomplete from "../components/PlacesAutocomplete";
+import Map from "../components/Map";
+import {useLoadScript} from "@react-google-maps/api";
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,12 +34,37 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddNewPost() {
     const classes = useStyles();
-
+    const [dept, setDept] = useState(null);
+    const [dest, setDest] = useState(null)
     const [startingPoint, setStartingPoint] = useState('')
     const [destination, setDestination] = useState('')
     const [availableSeats, setAvailableSeats] = useState('')
     const [departureTime, setDepartureTime] = useState('')
     const [contactInfo, setContactInfo] = useState('')
+    const [directionResponse, setDirectionResponse] = useState(null)
+    const [distances, setDistances] = useState(null)
+    const [duration, setDuration] = useState(null)
+
+
+    const calculateRoute = async() => {
+        if (dept == null || dest == null) {
+            return
+        }
+        console.log("Starting point:" + dept)
+        // eslint-disable-next-line no-undef
+        const directionService = new google.maps.DirectionsService()
+        const results = await directionService.route({
+            origin: dept,
+            destination: dest,
+            // eslint-disable-next-line no-undef
+            travelMode: google.maps.TravelMode.DRIVING
+        })
+        console.log(results)
+        setDirectionResponse(results)
+        setDistances(results.routes[0].legs[0].distance.text)
+        setDuration(results.routes[0].legs[0].duration.text)
+    }
+
 
     const handleChange = e => {
         if (e.target.name == 'startingPoint') {
@@ -73,17 +103,19 @@ export default function AddNewPost() {
         setDepartureTime('');
         setContactInfo('');
     }
+    const markerList = [dept, dest]
+
     return (
+        <div>
         <form className={classes.root} noValidate autoComplete="off" >
             <div>
-                <TextField required id="standard-required" label="Starting at"
-                           onChange={handleChange}
-                           name="startingPoint"
-                           value={startingPoint}/>
-                <TextField required id="standard-required" label="Destination"
-                           name="destination"
-                           onChange={handleChange}
-                           value={destination}/>
+                <PlacesAutocomplete setSelected={setDept} selected={dept} title="Departure From"/>
+                <PlacesAutocomplete setSelected={setDest} selected={dest} title="Arrive At"/>
+                <Button variant="contained" color="primary" onClick={calculateRoute}>
+                    Calculate Route
+                </Button>
+                <h3>Estimated time of arrival: {duration}</h3>
+                <h3>Distance: {distances}</h3>
                 <TextField
                     id="standard-number"
                     label="Available seats"
@@ -116,6 +148,8 @@ export default function AddNewPost() {
                 Submit
             </Button>
         </form>
+        <Map markerList={markerList} directionResponse={directionResponse} />
+        </div>
     );
 }
 
