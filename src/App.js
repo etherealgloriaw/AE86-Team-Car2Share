@@ -9,6 +9,7 @@ import PrimarySearchAppBar from './components/ResponsiveAppbar';
 import { createTheme, ThemeProvider} from '@material-ui/core/styles';
 import AddNewPost from "./pages/AddNewPost";
 import EditPost from "./pages/EditPost";
+import {useLoadScript} from "@react-google-maps/api";
 
 const theme = createTheme(
 {
@@ -24,25 +25,32 @@ const theme = createTheme(
 );
 
 function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-      <BrowserRouter>
-        <PrimarySearchAppBar />
-        <Routes>
-          <Route path="/" element={<Home />}>         </Route>
-          <Route path="/Login" element={<Login />}>       </Route>
-          <Route path="/Profile" element={<Profile />}>         </Route>
-          <Route path="/SignUp" element={<SignUp />}>    </Route>
-          <Route path="/Current" element={<Current />}>    </Route>
-          <Route path="/Add" element={<AddNewPost />}>    </Route>
-          <Route path="/Edit/:postID" element={<EditPost />}>    </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
-    </ThemeProvider>
+    const {isLoaded} = useLoadScript({
+        googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',
+        libraries: ["places"],
+    });
 
-  );
+    if (isLoaded) {
+        return (
+            <ThemeProvider theme={theme}>
+                <div className="App">
+                    <BrowserRouter>
+                        <PrimarySearchAppBar/>
+                        <Routes>
+                            <Route path="/" element={<Home/>}> </Route>
+                            <Route path="/Login" element={<Login/>}> </Route>
+                            <Route path="/Profile" element={<Profile/>}> </Route>
+                            <Route path="/SignUp" element={<SignUp/>}> </Route>
+                            <Route path="/Current" element={<Current/>}> </Route>
+                            <Route path="/Add" element={<AddNewPost/>}> </Route>
+                            <Route path="/Edit/:postID" element={<EditPost/>}> </Route>
+                        </Routes>
+                    </BrowserRouter>
+                </div>
+            </ThemeProvider>
+
+        );
+    }
 }
 
 export default App;
