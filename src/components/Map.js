@@ -16,14 +16,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
-
 export default function Map(props) {
     const classes = useStyles();
     const containerStyle = {
-        width: '900px',
-        height: '1050px'
+        position: 'relative'
     };
 
     return (

@@ -3,11 +3,10 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {useDispatch, useSelector} from 'react-redux'
-import {initialState, postAdded} from '../components/SinglePost.js'
+import {initialState, postAdded} from '../reducer/SinglePost.js'
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Map from "../components/Map";
 import {useLoadScript} from "@react-google-maps/api";
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +58,6 @@ export default function AddNewPost() {
             // eslint-disable-next-line no-undef
             travelMode: google.maps.TravelMode.DRIVING
         })
-        console.log(results)
         setDirectionResponse(results)
         setDistances(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
@@ -82,7 +80,6 @@ export default function AddNewPost() {
     const dispatch = useDispatch()
 
     const submit = () => {
-        console.log("1");
         dispatch(
             postAdded({
                 id: initialState.length+1,

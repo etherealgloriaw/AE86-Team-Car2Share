@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {useDispatch, useSelector} from 'react-redux'
-import {initialState, postAdded, postEdit} from '../components/SinglePost.js'
+import {initialState, postAdded, postEdit} from '../reducer/SinglePost.js'
 import { Link, useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
