@@ -35,10 +35,10 @@ function Home() {
             <Filter />
             <div className={classes.root}>
                 <Grid container spacing={2}>
-                    <Grid item xs={4}>
+                    <Grid item xs={5}>
                         <Posts />
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={7}>
                         <Map markerList={postList.map((post) => {return post.dest})}/>
                     </Grid>
                 </Grid>

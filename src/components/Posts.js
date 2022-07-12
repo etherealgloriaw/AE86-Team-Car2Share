@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {useDispatch, useSelector} from 'react-redux'
-import { Grid } from "@material-ui/core";
+import { Grid, List } from "@material-ui/core";
 import { Post } from "./Post";
 import './style/posts.css'
 
@@ -15,13 +15,16 @@ export const Posts = () => {
             to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice.id}/>
           }
         </Grid>
+        
     ))
 
     return (
         <section className="posts">
-            <Grid container spacing={2}>
+            <List style={{maxHeight: '250%', overflow: 'auto'}}>
+            {/* <Grid sx={{ overflowY: "scroll", maxHeight: "250px" }}, container spacing={2}> */}
                 {renderedPosts}
-            </Grid>
+            {/* </Grid> */}
+            </List>
         </section>
     )
 

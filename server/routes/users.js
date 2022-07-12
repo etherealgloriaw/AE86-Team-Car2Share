@@ -2,10 +2,12 @@ var express = require('express');
 var router = express.Router();
 var mySchemas = require('../models/Schemas')
 
+// no use now
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+// get profile history posts
 router.get('/:username', async (req, res, next) => {
   const userPosts = await mySchemas.historyItem.find({}).populate("user").exec((err, tweetData) => {
     if (err) throw err;
@@ -18,6 +20,7 @@ router.get('/:username', async (req, res, next) => {
   });
 });
 
+// signup a new user
 router.post('/signUp', async (req, res, next) => {
   const user = {username: req.params.username, password: req.params.password}
   try {
@@ -28,7 +31,9 @@ router.post('/signUp', async (req, res, next) => {
   }
 });
 
+// user join a post
 router.post('/add', async (req, res, next) => {
+  id = '62cc948a3dc6303d5d1cd263';
   const post = { startPoint: req.params.startPoint, destination: req.params.destination, lat: req.params.lat,
     long: req.params.long, distance: req.params.distance, price: req.params.price, date: req.params.date, 
     contact_info: req.params.contact_info, seats: req.params.seats, isActive: true, driver: '62cc948a3dc6303d5d1cd263',
@@ -41,7 +46,7 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
-/* Edit a recipe. */
+// edit profile
 router.patch('/', async (req, res, next) => {
   const id = req.body.id.trim();
   const post = { username: req.body.username, introduction: req.body.introduction };

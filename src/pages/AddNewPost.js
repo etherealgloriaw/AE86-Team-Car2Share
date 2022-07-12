@@ -7,7 +7,7 @@ import {initialState, postAdded} from '../reducer/SinglePost.js'
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Map from "../components/Map";
 import {useLoadScript} from "@react-google-maps/api";
-
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -141,7 +141,7 @@ export default function AddNewPost() {
                         onChange={handleChange}
                     />
             </div>
-            <Button variant="contained" color="primary" onClick={submit}>
+            <Button variant="contained" color="primary" onClick={submit} component={Link} to='/'>
                 Submit
             </Button>
         </form>

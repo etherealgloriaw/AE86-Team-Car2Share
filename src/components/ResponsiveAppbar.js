@@ -98,14 +98,14 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Home</p>
       </MenuItem>
-      <MenuItem component={Link} to='/Current' onClick={handleProfileMenuOpen}>
+      {/* <MenuItem component={Link} to='/Current' onClick={handleProfileMenuOpen}>
         <IconButton color="inherit" >
           <Badge badgeContent={0} color="secondary">
             <EmojiPeopleIcon />
           </Badge>
         </IconButton>
         <p>Current Travel</p>
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem component={Link} to='/Profile' onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">
           <Badge badgeContent={0} color="secondary">

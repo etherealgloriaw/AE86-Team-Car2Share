@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   root: {
-    maxWidth: 400,
+    maxWidth: 520,
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -62,7 +62,7 @@ export const Post = (slice) => {
     <Card className={classes.root} key={Math.random()}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar aria-label="recipe" className={classes.avatar} component={Link} to='/Profile'>
             {slice.name}
           </Avatar>
         }
@@ -80,10 +80,14 @@ export const Post = (slice) => {
           title="Paella dish"
         /> */}
       <CardContent>
+      
         <Typography variant="body2" color="textSecondary" component="p">
-          From: {slice.from}
-          <div></div>
-          To: {slice.to}
+          From: {slice.from} 
+          <div> </div>
+          To: {slice.to}  
+          <Typography variant="body2" color="textSecondary" align = "right" component="p">
+          Departure time: {slice.startingTime} 
+        </Typography>    
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -112,9 +116,6 @@ export const Post = (slice) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Contact: {slice.contactInfo}</Typography>
-          <Typography paragraph>
-            Departure time: {slice.startingTime}
-          </Typography>
         </CardContent>
       </Collapse>
     </Card>
