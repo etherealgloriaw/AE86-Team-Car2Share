@@ -3,10 +3,10 @@ import { actionTypes } from './actionTypes';
 import PostService from './services';
 
 export const getPostAsync = createAsyncThunk(
-    actionTypes.GET_POST,
-    async () =>{
-        return await PostService.getPost();
-    }
+  actionTypes.GET_POST,
+  async () =>{
+      return await PostService.getPost();
+  }
 )
 
 export const addPostAsync = createAsyncThunk(

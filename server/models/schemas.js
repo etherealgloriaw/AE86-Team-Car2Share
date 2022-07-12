@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-const CONNECTION_URL = 'mongodb+srv://car2share:<password>@cluster0.fjt9o67.mongodb.net/?retryWrites=true&w=majority';
+const CONNECTION_URL = 'mongodb+srv://car2share:groupae86@cluster0.fjt9o67.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log('Server Running on Port'))

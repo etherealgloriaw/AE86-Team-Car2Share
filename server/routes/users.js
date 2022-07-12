@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 // get profile history posts
 router.get('/:username', async (req, res, next) => {
-  const userPosts = await mySchemas.historyItem.find({}).populate("user").exec((err, tweetData) => {
+ await mySchemas.historyItem.find({}).populate("user").exec((err, tweetData) => {
     if (err) throw err;
     if (postData) {
       console.log(postData);
@@ -18,17 +18,6 @@ router.get('/:username', async (req, res, next) => {
       res.end();
     }
   });
-});
-
-// signup a new user
-router.post('/signUp', async (req, res, next) => {
-  const user = {username: req.params.username, password: req.params.password}
-  try {
-    await mySchemas.userItem(user).save().then(card => res.send(card))
-      .catch(err => console.error(err));
-  } catch (error) {
-    console.log(error);
-  }
 });
 
 // user join a post
