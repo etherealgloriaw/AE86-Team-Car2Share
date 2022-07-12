@@ -4,7 +4,7 @@ var router = express.Router();
 
 // get main page active posts
 router.get('/', async (req, res, next) => {
-  const userPosts = await mySchemas.postItem.find({}).populate("driver").exec((err, tweetData) => {
+  await mySchemas.postItem.find({}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       console.log(postData);
@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
 // get a single post (search)
 router.get('/:name', async (req, res, next) => {
   try {
-    await mySchemas.postItem.find({ title: req.params.name.trim() }).then(card => res.send(card))
+    await mySchemas.postItem.find({ title: req.params.destination.trim() }).then(card => res.send(card))
       .catch(err => console.error(err));
   } catch (error) {
     console.log(error);

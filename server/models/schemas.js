@@ -10,9 +10,9 @@ const postSchema = new Schema({
     // _id: objectId
     startPoint:  {type: String, required:true}, // String is shorthand for {type: String}
     destination: {type: String},
-    lat:   {type: Decimal128},
-    long: {type: Decimal128},
-    distance: {type: Decimal128},
+    lat:   {type:mongoose.Decimal128},
+    long: {type: mongoose.Decimal128},
+    distance: {type: mongoose.Decimal128},
     price: {type: Number},
     date: { type: Date},
     contact_info: {type: String},
@@ -25,16 +25,16 @@ const postSchema = new Schema({
     // _id: objectId
     username: {type: String, required:true}, 
     introduction: {type: String},
-    rating: {type: Decimal128},
+    rating: {type: mongoose.Decimal128},
   }, { collection: 'users', versionKey: false});
 
   const historySchema = new Schema({
     // _id: objectId
     startPoint:  {type: String, required:true}, // String is shorthand for {type: String}
     destination: {type: String},
-    lat:   {type: Decimal128},
-    long: {type: Decimal128},
-    distance: {type: Decimal128},
+    lat:   {type: mongoose.Decimal128},
+    long: {type: mongoose.Decimal128},
+    distance: {type: mongoose.Decimal128},
     price: {type: Number},
     date: { type: Date},
     contact_info: {type: String},
@@ -47,6 +47,6 @@ const postSchema = new Schema({
   const postItem = mongoose.model('postItem', postSchema, 'posts');
   const userItem = mongoose.model('userItem', userSchema, 'users');
   const historyItem = mongoose.model('historyItem', userSchema, 'users_history');
-  const mySchemas = {'postItem': postItem, 'userItem': userItem, 'historyitem', historyItem};
+  const mySchemas = {'postItem': postItem, 'userItem': userItem, 'historyitem': historyItem};
   
   module.exports = mySchemas;

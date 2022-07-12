@@ -87,7 +87,6 @@ const slice = createSlice({
         },
         postSearch(state = initialState, action){
             const destination = action.payload
-
             const targetPosts = state.filter(post => post.to == destination)
             state = targetPosts
             console.log("state: " + state);
