@@ -2,6 +2,7 @@ var mySchemas = require('../models/Schemas')
 var express = require('express');
 var router = express.Router();
 
+// get main page active posts
 router.get('/', async (req, res, next) => {
   const userPosts = await mySchemas.postItem.find({}).populate("driver").exec((err, tweetData) => {
     if (err) throw err;
@@ -14,7 +15,7 @@ router.get('/', async (req, res, next) => {
   });
 });
 
-/* GET single recipe. */
+// get a single post (search)
 router.get('/:name', async (req, res, next) => {
   try {
     await mySchemas.postItem.find({ title: req.params.name.trim() }).then(card => res.send(card))
@@ -24,7 +25,7 @@ router.get('/:name', async (req, res, next) => {
   }
 });
 
-/* POST new recipe. */
+/* add a new post. */
 router.post('/add', async (req, res, next) => {
   const post = { startPoint: req.params.startPoint, destination: req.params.destination, lat: req.params.lat,
     long: req.params.long, distance: req.params.distance, price: req.params.price, date: req.params.date, 
@@ -37,7 +38,7 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
-/* Delete a recipe. */
+/* delete a post. */
 router.delete('/:id', function (req, res, next) {
   const id = req.params.id.trim();
   mySchemas.recipeItem.findByIdAndDelete(id).then(card => res.send(id))
@@ -45,7 +46,7 @@ router.delete('/:id', function (req, res, next) {
   // res.json({ message: "Post deleted successfully." });
 });
 
-/* Edit a recipe. */
+/* Edit a post. */
 router.patch('/edit/:id', async (req, res, next) => {
   const id = req.params.id.trim();
   const post = { startPoint: req.params.startPoint, destination: req.params.destination, lat: req.params.lat,
