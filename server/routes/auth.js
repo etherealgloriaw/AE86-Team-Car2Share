@@ -35,4 +35,15 @@ router.get("/logout", (req, res) => {
 	res.redirect(process.env.CLIENT_URL);
 });
 
+// signup a new user
+router.post('/signUp', async (req, res, next) => {
+	const user = {username: req.params.username, password: req.params.password}
+	try {
+	  await mySchemas.userItem(user).save().then(card => res.send(card))
+		.catch(err => console.error(err));
+	} catch (error) {
+	  console.log(error);
+	}
+  });
+
 module.exports = router;
