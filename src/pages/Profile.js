@@ -53,8 +53,8 @@ export default function Profile() {
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
-  const posts = useSelector((state) => state.posts)
-
+  const posts = useSelector((state) => state.posts).filter(post=> post.active);
+  console.log(posts);
   const renderedPosts = posts.map((slice) => (
     <Grid item xs={12} md={12} key={Math.random()}>
       <CardHeader

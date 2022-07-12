@@ -91,7 +91,8 @@ export default function AddNewPost() {
                 startingTime: departureTime,
                 totalTime: 25,
                 dest: {lat: 49.2872071045258, lng:-123.11517882905274},
-                contactInfo: contactInfo
+                contactInfo: contactInfo,
+                active: false
             })
         )
         setStartingPoint('');

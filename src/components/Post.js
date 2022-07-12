@@ -19,6 +19,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import {Tooltip} from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import {postEdit, postActive} from "../reducer/SinglePost";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -38,6 +39,12 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
+      active: {
+        color: "red"
+      },
+      inactive: {
+        color: "gray"
+      },
   avatar: {
     backgroundColor: "#0d47a1",
   },
@@ -53,10 +60,24 @@ export const Post = (slice) => {
   const posts = useSelector((state) => state.posts)
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
+  const [active, setActive] = React.useState(slice.active);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const dispatch = useDispatch()
+
+  const handleJoin = () => {
+    console.log(slice)
+    dispatch(
+        postActive({
+            id: slice.id,
+          active: !active
+        })
+    )
+      setActive(!(slice.active))
+      console.log(slice)
+  }
 
   return (
     <Card className={classes.root} key={Math.random()}>
@@ -88,7 +109,10 @@ export const Post = (slice) => {
       </CardContent>
       <CardActions disableSpacing>
         <Tooltip title="Join the post">
-        <IconButton aria-label="add to favorites" >
+        <IconButton aria-label="add to favorites" onClick={handleJoin}
+                    className={clsx({
+                      [classes.active]: active,
+                    })}>
           <FavoriteIcon className = {classes.fav}/>
         </IconButton>
         </Tooltip>

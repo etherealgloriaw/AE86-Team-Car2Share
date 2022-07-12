@@ -11,7 +11,8 @@ export let initialState = [
         "availableSeats": 4,
         "startingTime": "2022-06-09T01:11",
         "totalTime": 25,
-        "contactInfo": "123-456-789"
+        "contactInfo": "123-456-789",
+        "active": true
     },
     {
         "id": 2, "name": "Meg",
@@ -22,7 +23,8 @@ export let initialState = [
         "availableSeats": 4,
         "startingTime": "2022-06-09T01:11",
         "totalTime": 25,
-        "contactInfo": "123-456-789"
+        "contactInfo": "123-456-789",
+        "active": true
     },
     {
         "id": 3, "name": "Lois",
@@ -33,7 +35,8 @@ export let initialState = [
         "availableSeats": 4,
         "startingTime": "2022-06-09T01:11",
         "totalTime": 25,
-        "contactInfo": "123-456-789"
+        "contactInfo": "123-456-789",
+        "active": false
     },
     {
         "id": 4, "name": "Chris",
@@ -45,6 +48,7 @@ export let initialState = [
         "startingTime": "2022-06-09T01:11",
         "totalTime": 25,
         "contactInfo": "123-456-789",
+        "active": false
     },
     {
         "id": 5, "name": "Brain",
@@ -56,6 +60,7 @@ export let initialState = [
         "startingTime": "2022-06-09T01:11",
         "totalTime": 25,
         "contactInfo": "123-456-789",
+        "active": false
     },
 
 ];
@@ -69,7 +74,7 @@ const slice = createSlice({
         },
         postEdit(state = initialState, action) {
             const { id, name, from, to, dest, rating, availableSeats,startingTime, totalTime ,
-                contactInfo } = action.payload
+                contactInfo,active } = action.payload
             const existingPost = state.find(post => post.id == id)
             if (existingPost) {
                 existingPost.from = from
@@ -77,21 +82,29 @@ const slice = createSlice({
                 existingPost.startingTime = startingTime
                 existingPost.availableSeats = availableSeats
                 existingPost.contactInfo = contactInfo
+                existingPost.active = active
             }
         },
         postSearch(state = initialState, action){
             const destination = action.payload
 
-            const targetPosts = state.filter(post => post.to == destination) 
+            const targetPosts = state.filter(post => post.to == destination)
             state = targetPosts
             console.log("state: " + state);
             return state
 
+        },
+        postActive(state = initialState, action) {
+            const { id, active } = action.payload
+            const existingPost = state.find(post => post.id == id)
+            if (existingPost) {
+                existingPost.active = active
+            }
         }
     },
 })
 
-export const { postAdded, postEdit ,postSearch} = slice.actions
+export const { postAdded, postEdit ,postSearch, postActive} = slice.actions
 
 export default slice.reducer
 
