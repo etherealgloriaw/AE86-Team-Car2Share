@@ -1,7 +1,7 @@
 import Posts from "../components/Posts";
 import { ResponsiveSearchBar } from "../components/ResponsiveSearchBar";
 import { Filter } from "../components/Filter";
-import React from 'react';
+import React, {useState} from 'react';
 import { useMemo } from 'react';
 import Map from '../components/Map'
 import './Home.css'
@@ -22,12 +22,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// const libraries = ['places']
+
 function Home() {
     const classes = useStyles();
-    const postList = useSelector(state => state.posts);
+    const [ libraries ] = useState(['places']);
+    const postList = useSelector(state => state.posts.list);
     useLoadScript({
         googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',
-        libraries: ["places"],
+        libraries
     });
     return (
         <div className="Home">
@@ -39,7 +42,7 @@ function Home() {
                         <Posts />
                     </Grid>
                     <Grid item xs={7}>
-                        <Map markerList={postList.map((post) => {return post.dest})}/>
+                       <Map markerList={postList.map((post) => {return post.dest})}/>
                     </Grid>
                 </Grid>
             </div>

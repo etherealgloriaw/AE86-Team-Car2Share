@@ -27,33 +27,33 @@ const INITIAL_STATE = {
           state.getCards = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
-        .addCase(loginFailedAsync.pending, (state) => {
-          state.addCard = REQUEST_STATE.PENDING;
-          state.error = null;
-        })
-        .addCase(loginFailedAsync.fulfilled, (state, action) => {
-          state.addCard = REQUEST_STATE.FULFILLED;
-          state.list.push(action.payload);
-        })
-        .addCase(loginFailedAsync.rejected, (state, action) => {
-          state.addCard = REQUEST_STATE.REJECTED;
-          state.error = action.error;
-        })
-        .addCase(signUpAsync.pending, (state) => {
-          state.addCard = REQUEST_STATE.PENDING;
-          state.error = null;
-        })
-        .addCase(signUpAsync.fulfilled, (state, action) => {
-          state.addCard = REQUEST_STATE.FULFILLED;
-          state.list.push(action.payload);
-        })
-        .addCase(signUpAsync.rejected, (state, action) => {
-          state.addCard = REQUEST_STATE.REJECTED;
-          state.error = action.error;
-        })
-        
+        // .addCase(loginFailedAsync.pending, (state) => {
+        //   state.addCard = REQUEST_STATE.PENDING;
+        //   state.error = null;
+        // })
+        // .addCase(loginFailedAsync.fulfilled, (state, action) => {
+        //   state.addCard = REQUEST_STATE.FULFILLED;
+        //   state.list.push(action.payload);
+        // })
+        // .addCase(loginFailedAsync.rejected, (state, action) => {
+        //   state.addCard = REQUEST_STATE.REJECTED;
+        //   state.error = action.error;
+        // })
+        // .addCase(signUpAsync.pending, (state) => {
+        //   state.addCard = REQUEST_STATE.PENDING;
+        //   state.error = null;
+        // })
+        // .addCase(signUpAsync.fulfilled, (state, action) => {
+        //   state.addCard = REQUEST_STATE.FULFILLED;
+        //   state.list.push(action.payload);
+        // })
+        // .addCase(signUpAsync.rejected, (state, action) => {
+        //   state.addCard = REQUEST_STATE.REJECTED;
+        //   state.error = action.error;
+        // })
+
     }
   });
-  
+
   export default authSlice.reducer;
-  
+

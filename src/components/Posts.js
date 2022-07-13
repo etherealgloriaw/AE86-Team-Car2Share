@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import { Grid, List } from "@material-ui/core";
 import { Post } from "./Post";
 import './style/posts.css'
+import {getPostAsync} from "../redux/posts/thunks";
 
 
 export const Posts = () => {
-    const posts = useSelector((state) => state.posts)
-
+    const posts = useSelector(state => state.posts.list)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getPostAsync());
+    }, []);
     const renderedPosts = posts.map((slice) => (
         <Grid item xs={12} md={12} key={Math.random()}>
           {
@@ -16,7 +20,7 @@ export const Posts = () => {
                   active={slice.active}/>
           }
         </Grid>
-        
+
     ))
 
     return (

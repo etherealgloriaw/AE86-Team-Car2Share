@@ -5,14 +5,14 @@ import PostService from './services';
 export const getPostAsync = createAsyncThunk(
   actionTypes.GET_POST,
   async () =>{
-      return await PostService.getPost();
+      return await PostService.getPosts();
   }
 )
 
 export const addPostAsync = createAsyncThunk(
     actionTypes.ADD_POST,
     async (newPost) => {
-      return await PostService.addCard(newPost);
+      return await PostService.addPost(newPost);
     }
   );
 
@@ -39,10 +39,17 @@ export const editPostAsync = createAsyncThunk(
 )
 
 
+export const joinPostAsync = createAsyncThunk(
+    actionTypes.JOIN_POST,
+    async (id, edited) => {
+        return await PostService.joinPost(id, edited)
+    }
+)
 
 
 
 
 
 
-  
+
+
