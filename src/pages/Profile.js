@@ -1,5 +1,5 @@
 import "./styles/Login.css"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link as Jump } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar';
@@ -22,6 +22,8 @@ import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FormDialog from "../components/Edit";
+import { getHistoryAsync } from "../redux/users/thunks";
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -53,8 +55,13 @@ export default function Profile() {
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
-  const posts = useSelector((state) => state.posts).filter(post=> post.active);
-  console.log(posts);
+
+  const posts = useSelector((state) => state.list);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getHistoryAsync());
+  }, []);
+
   const renderedPosts = posts.map((slice) => (
     <Grid item xs={12} md={12} key={Math.random()}>
       <CardHeader

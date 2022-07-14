@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 // get profile history posts
 router.get('/:username', async (req, res, next) => {
- await mySchemas.historyItem.find({}).populate("user").exec((err, postData) => {
+ await mySchemas.historyItem.find({username: req.params.name.trim()}).populate("user").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       console.log(postData);
