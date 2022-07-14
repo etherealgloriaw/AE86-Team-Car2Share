@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import {useDispatch, useSelector} from 'react-redux'
 import {initialState, postAdded, postEdit} from '../reducer/SinglePost.js'
 import { Link, useParams } from 'react-router-dom';
+import {editPostAsync} from "../redux/posts/thunks";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,10 +33,11 @@ function EditPost({ match }) {
 
     const classes = useStyles();
     const { postID } = useParams()
+    console.log(postID)
     const post = useSelector(state =>
-        state.posts.find(p => p.id == postID)
+        state.posts.list.find(p => p._id == postID)
     )
-
+    console.log(post)
     const [startingPoint, setStartingPoint] = useState(post.from)
     const [destination, setDestination] = useState(post.to)
     const [availableSeats, setAvailableSeats] = useState(post.availableSeats)
@@ -57,20 +59,34 @@ function EditPost({ match }) {
     }
     const dispatch = useDispatch()
 
+    const edited = {
+        availableSeats: availableSeats,
+        rating: 4,
+        startingTime: departureTime,
+        totalTime: 10,
+        lat: 49.2872071045258,
+        lng: -123.11517882905274,
+        contactInfo: contactInfo,
+        active: false,
+        price: 10,
+        to: "SSSS",
+        from: "ABCDEF",
+    }
     const submit = () => {
         dispatch(
-            postEdit({
-                id: postID,
-                name: "New User",
-                from: startingPoint,
-                to: destination,
-                availableSeats: availableSeats,
-                rating: 4,
-                startingTime: departureTime,
-                totalTime: 25,
-                dest: {lat: 49.2872071045258, lng:-123.11517882905274},
-                contactInfo: contactInfo
-            })
+            // postEdit({
+            //     id: postID,
+            //     name: "New User",
+            //     from: startingPoint,
+            //     to: destination,
+            //     availableSeats: availableSeats,
+            //     rating: 4,
+            //     startingTime: departureTime,
+            //     totalTime: 25,
+            //     dest: {lat: 49.2872071045258, lng:-123.11517882905274},
+            //     contactInfo: contactInfo
+            // })
+            editPostAsync(postID, )
         )
         setStartingPoint('');
         setDestination('');

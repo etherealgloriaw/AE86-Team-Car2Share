@@ -67,16 +67,17 @@ export const Post = (slice) => {
 
   const dispatch = useDispatch()
 
+
   const handleJoin = () => {
     console.log(slice)
     dispatch(
         postActive({
-            id: slice.id,
+            id: slice._id.toString(),
           active: !active
         })
     )
       setActive(!(slice.active))
-      console.log(slice)
+      console.log(slice._id.toString())
   }
 
   return (
@@ -101,14 +102,14 @@ export const Post = (slice) => {
           title="Paella dish"
         /> */}
       <CardContent>
-      
+
         <Typography variant="body2" color="textSecondary" component="p">
-          From: {slice.from} 
+          From: {slice.from}
           <div> </div>
-          To: {slice.to}  
+          To: {slice.to}
           <Typography variant="body2" color="textSecondary" align = "right" component="p">
-          Departure time: {slice.startingTime} 
-        </Typography>    
+          Departure time: {slice.startingTime}
+        </Typography>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -123,7 +124,7 @@ export const Post = (slice) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton aria-label="share" component={Link} to={`/Edit/${slice.id}`} >
+        <IconButton aria-label="share" component={Link} to={`/Edit/${slice._id}`} >
           <EditIcon />
         </IconButton>
         <IconButton

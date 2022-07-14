@@ -29,7 +29,7 @@ const historySchema = new Schema({
     from:  {type: String, required:true}, // String is shorthand for {type: String}
     to: {type: String},
     lat:   {type: mongoose.Decimal128},
-    long: {type: mongoose.Decimal128},
+    lng: {type: mongoose.Decimal128},
     distance: {type: mongoose.Decimal128},
     price: {type: Number},
     contactInfo: {type: String},

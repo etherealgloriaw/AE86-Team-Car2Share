@@ -8,6 +8,7 @@ import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Map from "../components/Map";
 import {useLoadScript} from "@react-google-maps/api";
 import { Link } from "react-router-dom";
+import {addPostAsync} from "../redux/posts/thunks";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,11 +33,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AddNewPost() {
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [dept, setDept] = useState(null);
     const [dest, setDest] = useState(null)
-    const [startingPoint, setStartingPoint] = useState('')
-    const [destination, setDestination] = useState('')
+    // const [startingPoint, setStartingPoint] = useState('')
+    // const [destination, setDestination] = useState('')
     const [availableSeats, setAvailableSeats] = useState('')
     const [departureTime, setDepartureTime] = useState('')
     const [contactInfo, setContactInfo] = useState('')
@@ -62,14 +64,16 @@ export default function AddNewPost() {
         setDistances(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
     }
+    let deptLat = 50.11802598023384;
+    let deptLng = -122.96137023530274;
+    if (dept != null) {
+        deptLat = dept.lat;
+        deptLng = dept.lng;
+    }
 
 
     const handleChange = e => {
-        if (e.target.name == 'startingPoint') {
-            setStartingPoint(e.target.value);
-        } else if (e.target.name == 'destination') {
-            setDestination(e.target.value);
-        } else if (e.target.name == 'availableSeats') {
+        if (e.target.name == 'availableSeats') {
             setAvailableSeats(e.target.value);
         } else if (e.target.name == "departureTime") {
             setDepartureTime(e.target.value);
@@ -77,32 +81,43 @@ export default function AddNewPost() {
             setContactInfo(e.target.value);
         }
     }
-    const dispatch = useDispatch()
-
+    const newPost = {
+        availableSeats: availableSeats,
+        rating: 4,
+        startingTime: departureTime,
+        totalTime: duration,
+        lat: deptLat,
+        lng: deptLng,
+        contactInfo: contactInfo,
+        active: false,
+        price: 10,
+        to: "SSSS",
+        from: "ABCDEF",
+    }
     const submit = () => {
         dispatch(
-            postAdded({
-                id: initialState.length+1,
-                name: "New User",
-                from: startingPoint,
-                to: destination,
-                availableSeats: availableSeats,
-                rating: 4,
-                startingTime: departureTime,
-                totalTime: 25,
-                dest: {lat: 49.2872071045258, lng:-123.11517882905274},
-                contactInfo: contactInfo,
-                active: false
-            })
+            // postAdded({
+            //     id: initialState.length+1,
+            //     name: "New User",
+            //     from: startingPoint,
+            //     to: destination,
+            //     availableSeats: availableSeats,
+            //     rating: 4,
+            //     startingTime: departureTime,
+            //     totalTime: 25,
+            //     dest: {lat: 49.2872071045258, lng:-123.11517882905274},
+            //     contactInfo: contactInfo,
+            //     active: false
+            // })
+            addPostAsync(newPost)
         )
-        setStartingPoint('');
-        setDestination('');
+        // setStartingPoint('');
+        // setDestination('');
         setAvailableSeats('');
         setDepartureTime('');
         setContactInfo('');
     }
     const markerList = [dept, dest]
-
     return (
         <div>
         <form className={classes.root} noValidate autoComplete="off" >

@@ -23,7 +23,6 @@ const addPost = async(newPost)=>{
         body: JSON.stringify(newPost)
     });
     const data = await response.json();
-
     if (!response.ok) {
         const errorMsg = data?.message;
         throw new Error(errorMsg)
