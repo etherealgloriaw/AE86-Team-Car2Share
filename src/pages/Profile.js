@@ -56,7 +56,8 @@ export default function Profile() {
     setAuth(event.target.checked);
   };
 
-  const posts = useSelector((state) => state.list);
+  const posts = useSelector(state => state.posts.list);
+  console.log("post is: " + posts);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getHistoryAsync());
