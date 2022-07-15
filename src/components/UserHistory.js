@@ -41,6 +41,8 @@ export const UserHistory = (props) => {
     useEffect(() => {
         dispatch(getHistoryAsync(props.props._id));
     }, []);
+
+    console.log(posts)
     
     const renderedPosts = posts.map((slice) => (
         <Grid item xs={12} md={12} key={Math.random()}>
@@ -60,9 +62,9 @@ export const UserHistory = (props) => {
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            From: {slice.startPoint}
+            From: {slice.from}
             <div></div>
-            To: {slice.destination}
+            To: {slice.to}
           </Typography>
           <Typography variant="body2" color="textSecondary" align = "right" component="p">
           Departure time: {slice.startingTime}

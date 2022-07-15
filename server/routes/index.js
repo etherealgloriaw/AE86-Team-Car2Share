@@ -8,45 +8,16 @@ const posts = mySchemas.postItem
 router.get("/", async (req, res, next) => {
   // const data = await mySchemas.postItem.find({});
   // console.log(data);
-  await posts.find({}).populate("driver").exec((err, postData) => {
+  await posts.find({active : true}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
+      console.log(postData)
       res.send(JSON.stringify(postData));
     } else {
       res.end();
     }
   });
 });
-
-router.post('/posts', async function (req, res, next) {
-  const post = {
-    availableSeats: req.body.availableSeats,
-    rating: req.body.rating,
-    startingTime: req.body.startingTime,
-    totalTime: req.body.totalTime,
-    lat: req.body.lat,
-    lng: req.body.lng,
-    contactInfo: req.body.contactInfo,
-    active: req.body.active,
-    price: req.body.price,
-    to: req.body.to,
-    from: req.body.from,
-  }
-  const newPost = new mySchemas.postItem(post);
-  try {
-    await newPost.save(async (err, newPostResult) => {
-      console.log(newPostResult)
-      newPostResult.instruction = "check detail"
-      res.send(newPostResult)
-    })
-  } catch (err) {
-    console.log(err)
-    res.end("post not added!")
-  }
-})
-
-
-
 
 // get a single post (search)
 router.get('/:name', async (req, res, next) => {

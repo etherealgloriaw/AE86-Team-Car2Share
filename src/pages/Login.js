@@ -72,7 +72,7 @@ export default function Login() {
     dispatch(loginSuccessAsync(form));
     setInputEmail('');
     setInputPassword('');
-    navigate("/Profile", { replace: true });
+    navigate("/Profile", { replace: false });
   };
 
   // useEffect(() => {

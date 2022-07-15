@@ -1,5 +1,5 @@
 const getPosts = async() => {
-    const response = await fetch ('http://localhost:3001/posts',{
+    const response = await fetch ('http://localhost:3001',{
         method: 'GET'
     });
     return response.json();

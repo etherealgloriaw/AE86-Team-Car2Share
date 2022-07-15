@@ -23,8 +23,7 @@ import { Link } from "react-router-dom";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { joinPostAsync } from "../redux/users/thunks";
 import {deletePostAsync} from "../redux/posts/thunks";
-import 'reactjs-popup/dist/index.css';
-
+// import 'reactjs-popup/dist/index.css';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -105,13 +104,14 @@ export const Post = (slice) => {
 
     // navigate("/Profile", { replace: true });
   }
+  console.log(slice)
 
   return (
     <Card className={classes.root} key={Math.random()}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar} component={Link} to='/Profile'>
-            {slice.name}
+            {slice.name.username}
           </Avatar>
         }
         action={
@@ -119,7 +119,7 @@ export const Post = (slice) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={slice.name}
+        title={slice.name.username}
         starting_time={slice.startingTime}
       />
       {/* <CardMedia

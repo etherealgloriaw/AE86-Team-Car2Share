@@ -13,6 +13,8 @@ export const Posts = () => {
         dispatch(getPostAsync());
     }, []);
 
+    console.log(posts)
+    
 
     const renderedPosts = posts.map((slice) => {
         const date = new Date(slice.startingTime)
@@ -22,7 +24,7 @@ export const Posts = () => {
         return(
         <Grid item xs={12} md={12} key={Math.random()}>
           {
-            <Post name = {slice.name} startingTime = {dateString} from = {slice.from}
+            <Post name = {slice.driver} startingTime = {dateString} from = {slice.from}
             to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
                   active={slice.active}/>
           }

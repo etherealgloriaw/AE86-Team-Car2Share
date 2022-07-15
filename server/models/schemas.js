@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
     // _id: objectId
-    from:  {type: String, required:true}, // String is shorthand for {type: String}
+    from:  {type: String}, // String is shorthand for {type: String}
     to: {type: String},
     lat:   {type: mongoose.Decimal128},
     lng: {type: mongoose.Decimal128},
@@ -15,8 +15,7 @@ const postSchema = new Schema({
     startingTime:{type: Date},
     rating: {type: Number},
     active: {type: Boolean, default: true},
-    driver: {type: Schema.Types.ObjectId},
-    user: {type: Schema.Types.ObjectId},
+    driver: {type: Schema.Types.ObjectId, ref: 'userItem'}
 }, { collection: 'posts' , versionKey: false});
 
 const userSchema = new Schema({
@@ -30,7 +29,7 @@ const userSchema = new Schema({
 
 const historySchema = new Schema({
     // _id: objectId
-    from:  {type: String, required:true}, // String is shorthand for {type: String}
+    from:  {type: String}, // String is shorthand for {type: String}
     to: {type: String},
     lat:   {type: mongoose.Decimal128},
     lng: {type: mongoose.Decimal128},
@@ -41,7 +40,8 @@ const historySchema = new Schema({
     startingTime:{type: Date},
     rating: {type: Number},
     active: {type: Boolean, default: true},
-    driver: {type: Schema.Types.ObjectId},
+    original_id: {type: Schema.Types.ObjectId, ref: 'postItem'},
+    driver: {type: Schema.Types.ObjectId, ref: 'userItem'},
     user: {type: Schema.Types.ObjectId},
 
 }, { collection: 'user_history' , versionKey: false});

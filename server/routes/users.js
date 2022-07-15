@@ -11,18 +11,15 @@ router.get('/', function (req, res, next) {
 router.get('/:userid', async (req, res, next) => {
   const id = mongoose.Types.ObjectId(req.params.userid)
   const userID = await mySchemas.userItem.findById(id)
-  console.log(userID);
-  const result = await mySchemas.historyItem.find({user: {$eq: id}});
-  console.log(result);
-  res.end(JSON.stringify(result));
-  // await mySchemas.historyItem.find({ user: id }).exec((err, postData) => {
-  //   if (err) throw err;
-  //   if (postData) {
-  //     res.end(JSON.stringify(postData));
-  //   } else {
-  //     res.end();
-  //   }
-  // });
+  const result = await mySchemas.historyItem.find({user: {$eq: userID._id}}).populate("driver").exec((err, postData) => {
+    if (err) throw err;
+    if (postData) {
+      console.log(postData)
+      res.send(JSON.stringify(postData));
+    } else {
+      res.end();
+    }
+  });
 });
 
 // user join a post
