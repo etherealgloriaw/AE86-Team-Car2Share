@@ -84,10 +84,17 @@ router.post('/add', async (req, res, next) => {
 });
 
 /* delete a post. */
-router.delete('/:id', function (req, res, next) {
-  const id = req.params.id.trim();
-  mySchemas.postItem.findByIdAndDelete(id).then(card => res.send(id))
-      .catch(err => console.error(err))
+router.delete('/delete/:id', async (req, res, next) => {
+  const id = req.params.id;
+  // mySchemas.postItem.findByIdAndDelete(id).then(card => res.send(id))
+  //     .catch(err => console.error(err))
+  try {
+    await mySchemas.postItem.deleteOne( {_id: req.params.id}).exec();
+    const allPosts = await mySchemas.postItem.find({}).exec();
+    res.send(allPosts)
+  } catch {
+    console.log("err")
+  }
   // res.json({ message: "Post deleted successfully." });
 });
 

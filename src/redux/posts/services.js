@@ -10,7 +10,20 @@ const searchPost = async(dest) =>{
 }
 
 const deletePost = async(id) =>{
-    console.log("del")
+    console.log(id)
+    const response = await fetch(`http://localhost:3001/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-type": "application/json"
+        }
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
 };
 
 const addPost = async(newPost)=>{

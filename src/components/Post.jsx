@@ -20,7 +20,18 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Tooltip } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import DeleteIcon from '@material-ui/icons/Delete';
 import { joinPostAsync } from "../redux/users/thunks";
+import {deletePostAsync} from "../redux/posts/thunks";
+import 'reactjs-popup/dist/index.css';
+
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -68,7 +79,7 @@ export const Post = (slice) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth.list)
-  
+
   const handleJoin = () => {
     console.log(user[0])
     dispatch(
@@ -78,6 +89,21 @@ export const Post = (slice) => {
       })
     )
     navigate("/Profile", { replace: true });
+  }
+
+  const handleDelete = () => {
+    if (user.length == 0) {
+      console.log("Please login")
+    } else if (user[0]._id == slice.name) {
+      dispatch(
+          deletePostAsync(slice.id)
+      )
+    } else {
+      console.log("No permission to delete this post.")
+    }
+
+
+    // navigate("/Profile", { replace: true });
   }
 
   return (
@@ -121,8 +147,9 @@ export const Post = (slice) => {
             <FavoriteIcon className={classes.fav} />
           </IconButton>
         </Tooltip>
-        <IconButton aria-label="share">
-          <ShareIcon />
+        <IconButton aria-label="share" onClick={handleDelete}>
+          <DeleteIcon />
+
         </IconButton>
         <IconButton aria-label="share" component={Link} to={`/Edit/${slice.id}`} >
           <EditIcon />
