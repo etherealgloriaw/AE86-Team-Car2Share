@@ -40,11 +40,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
   const classes = useStyles();
-  const [status, setStatus] = React.useState(true);
-  const handleChange = (event) => {
-    setStatus(event.target.checked);
-  };
+  
   const user = useSelector(state => state.auth.list);
+  console.log(user)
 
   if (user.length > 0) return <Container component="main" maxWidth="xs">
     <CssBaseline />
@@ -59,14 +57,9 @@ export default function Profile() {
         {user[0].introduction}
       </Typography>
       <FormDialog />
-      <FormGroup>
-        <FormControlLabel
-          control={<Switch checked={status} onChange={handleChange} aria-label="login switch" />}
-          label={status ? 'Passenger' : 'Driver'}
-        />
-      </FormGroup>
+      
     </div>
-    {<UserHistory props={user[0]} />}
+    <UserHistory />
   </Container>
   else return < Navigate to='/Login' />
 }

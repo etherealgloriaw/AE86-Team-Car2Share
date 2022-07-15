@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,15 +6,38 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import {useDispatch, useSelector} from 'react-redux'
+import {editProfileAsync} from "../redux/auth/thunks";
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
+  const [name, setName] = useState('')
+  const [introduction, setIntroduction] = useState('')
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.list)
+  console.log(user)
+  
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChange = e => {
+    if (e.target.id == 'name') {
+        setName(e.target.value);
+    } else if (e.target.id == "intro") {
+        setIntroduction(e.target.value);
+    } 
+}
+
+  const handleSubmit = () => {
+    const form = {id: user[0]._id, username: name, introduction: introduction}
+    dispatch(
+      editProfileAsync(form)
+    )
     setOpen(false);
   };
 
@@ -32,6 +55,8 @@ export default function FormDialog() {
             id="name"
             label="User Name"
             type="string"
+            value={name}
+            onChange={handleChange}
             fullWidth
           />
           <TextField
@@ -40,6 +65,8 @@ export default function FormDialog() {
             id="intro"
             label="User Introduction"
             type="string"
+            value={introduction}
+            onChange={handleChange}
             fullWidth
           />
         </DialogContent>
@@ -47,7 +74,7 @@ export default function FormDialog() {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmit} color="primary">
             Submit
           </Button>
         </DialogActions>

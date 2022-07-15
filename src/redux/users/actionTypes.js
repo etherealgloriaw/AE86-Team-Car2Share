@@ -1,5 +1,6 @@
 export const actionTypes = {
     GET_HISTORY:'users/getHistory',
-    JOIN_POST:'users/joinPost',
-    EDIT_PROFILE:'users/editProfile',
+    GET_DRIVER_HISTORY:'users/getDriverHistory',
+    JOIN_POST:'users/joinPost'
+    
 }

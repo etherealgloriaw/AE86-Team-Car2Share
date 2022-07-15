@@ -22,3 +22,10 @@ export const signUpAsync = createAsyncThunk(
         return await AuthService.signUp();
     }
 )
+
+export const editProfileAsync = createAsyncThunk(
+    actionTypes.EDIT_PROFILE,
+    async (edited) =>{
+        return await AuthService.editProfile(edited);
+    }
+)

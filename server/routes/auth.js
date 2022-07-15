@@ -1,6 +1,7 @@
 const router = require("express").Router();
 // const passport = require("passport");
 var mySchemas = require('../models/Schemas')
+const mongoose = require('mongoose');
 
 router.get("/:email", async (req, res, next) => {
 	console.log(req.params.email);
@@ -11,6 +12,15 @@ router.get("/:email", async (req, res, next) => {
 		console.log(error);
 	  }
 });
+
+// edit profile
+router.patch('/Edit', async (req, res, next) => {
+	const id = mongoose.Types.ObjectId(req.body.id);
+	const post = { username: req.body.username, introduction: req.body.introduction };
+	console.log(post)
+	await mySchemas.userItem.findByIdAndUpdate(id, post, { new: true }).then(card => res.send(card))
+	  .catch(err => console.error(err))
+  })
 
 router.get("/login/failed", (req, res) => {
 	res.status(401).json({

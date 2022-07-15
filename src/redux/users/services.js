@@ -1,8 +1,15 @@
 const url = 'http://localhost:3001/Profile';
 
 const getHistory = async(name) => {
-    console.log(url +  "/" + name);
     const response = await fetch (url +  "/" + name,{
+        method: 'GET'
+    });
+    return response.json();
+};
+
+const getDriverHistory = async(name) => {
+    console.log(url +  "/driver/" + name)
+    const response = await fetch (url +  "/driver/" + name,{
         method: 'GET'
     });
     return response.json();
@@ -25,14 +32,12 @@ const joinHistory = async(post) =>{
     return data;
 }
 
-const editProfile = async(id) =>{
 
-}
 
 const UserService = {
     getHistory,
     joinHistory,
-    editProfile 
+    getDriverHistory
 };
 
 export default UserService;

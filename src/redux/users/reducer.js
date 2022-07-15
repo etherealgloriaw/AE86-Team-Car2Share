@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
-import { getHistoryAsync, joinPostAsync,editProfileAsync} from './thunks';
+import { getHistoryAsync, joinPostAsync, getDriverHistoryAsync} from './thunks';
 
 
 const INITIAL_STATE = {
     list: [],
     getUsers: REQUEST_STATE.IDLE,
     addUser: REQUEST_STATE.IDLE,
+    getDrivers: REQUEST_STATE.IDLE,
     error: null
   };
 
@@ -40,18 +41,19 @@ const INITIAL_STATE = {
           state.addUser = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
-        .addCase(editProfileAsync.pending, (state) => {
-          state.deleteCard = REQUEST_STATE.PENDING;
+        .addCase(getDriverHistoryAsync.pending, (state) => {
+          state.getDrivers = REQUEST_STATE.PENDING;
           state.error = null;
         })
-        .addCase(editProfileAsync.fulfilled, (state, action) => {
-          state.deleteCard = REQUEST_STATE.FULFILLED;
-          state.list= action.payload;
+        .addCase(getDriverHistoryAsync.fulfilled, (state, action) => {
+          state.getDrivers = REQUEST_STATE.FULFILLED;
+          state.list = action.payload;
         })
-        .addCase(editProfileAsync.rejected, (state, action) => {
-          state.deleteCard = REQUEST_STATE.REJECTED;
+        .addCase(getDriverHistoryAsync.rejected, (state, action) => {
+          state.getDrivers = REQUEST_STATE.REJECTED;
           state.error = action.error;
-        });
+        })
+        
        
     }
   });

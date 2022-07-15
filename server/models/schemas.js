@@ -42,7 +42,7 @@ const historySchema = new Schema({
     active: {type: Boolean, default: true},
     original_id: {type: Schema.Types.ObjectId, ref: 'postItem'},
     driver: {type: Schema.Types.ObjectId, ref: 'userItem'},
-    user: {type: Schema.Types.ObjectId},
+    user: {type: Schema.Types.ObjectId, ref: 'userItem'},
 
 }, { collection: 'user_history' , versionKey: false});
 

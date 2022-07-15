@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
-import { loginSuccessAsync, loginFailedAsync, signUpAsync} from './thunks';
+import { loginSuccessAsync, loginFailedAsync, signUpAsync, editProfileAsync} from './thunks';
 
 const INITIAL_STATE = {
     list: [],
     getUsers: REQUEST_STATE.IDLE,
     addUser: REQUEST_STATE.IDLE,
+    editUser: REQUEST_STATE.IDLE,
     error: null
   };
 
@@ -27,6 +28,18 @@ const INITIAL_STATE = {
           state.getUsers = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
+        .addCase(editProfileAsync.pending, (state) => {
+          state.editUser = REQUEST_STATE.PENDING;
+          state.error = null;
+        })
+        .addCase(editProfileAsync.fulfilled, (state, action) => {
+          state.editUser = REQUEST_STATE.FULFILLED;
+          state.list= action.payload;
+        })
+        .addCase(editProfileAsync.rejected, (state, action) => {
+          state.editUser= REQUEST_STATE.REJECTED;
+          state.error = action.error;
+        });
         // .addCase(loginFailedAsync.pending, (state) => {
         //   state.addCard = REQUEST_STATE.PENDING;
         //   state.error = null;

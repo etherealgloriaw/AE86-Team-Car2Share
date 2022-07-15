@@ -22,6 +22,21 @@ router.get('/:userid', async (req, res, next) => {
   });
 });
 
+router.get('/driver/:userid', async (req, res, next) => {
+  const id = mongoose.Types.ObjectId(req.params.userid.trim())
+  const userID = await mySchemas.userItem.findById(id)
+  console.log(userID)
+  const result = await mySchemas.historyItem.find({driver: {$eq: userID._id}}).populate("user").exec((err, postData) => {
+    if (err) throw err;
+    if (postData) {
+      console.log(postData)
+      res.send(JSON.stringify(postData));
+    } else {
+      res.end();
+    }
+  });
+});
+
 // user join a post
 router.post('/join', async (req, res, next) => {
   const userId = mongoose.Types.ObjectId(req.body.user)
@@ -44,12 +59,6 @@ router.post('/join', async (req, res, next) => {
   }
 });
 
-// edit profile
-router.patch('/', async (req, res, next) => {
-  const id = req.body.id.trim();
-  const post = { username: req.body.username, introduction: req.body.introduction };
-  await mySchemas.userItem.findByIdAndUpdate(id, post, { new: true }).then(card => res.send(card))
-    .catch(err => console.error(err))
-})
+
 
 module.exports = router;

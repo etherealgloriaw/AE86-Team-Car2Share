@@ -9,6 +9,13 @@ export const getHistoryAsync = createAsyncThunk(
 }
 )
 
+export const getDriverHistoryAsync = createAsyncThunk(
+  actionTypes.GET_DRIVER_HISTORY,
+  async (name) =>{
+    return await UserService.getDriverHistory(name);
+}
+)
+
 export const joinPostAsync = createAsyncThunk(
     actionTypes.JOIN_POST,
     async (post) =>{
@@ -16,12 +23,7 @@ export const joinPostAsync = createAsyncThunk(
     }
   )
 
-export const editProfileAsync = createAsyncThunk(
-    actionTypes.EDIT_PROFILE,
-    async () =>{
-        return await UserService.editProfile();
-    }
-)
+
 
 
 
