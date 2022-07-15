@@ -4,7 +4,7 @@ import usePlacesAutocomplete, {
     getLatLng,
 } from "use-places-autocomplete";
 
-import TextField from "@material-ui/core/TextField";
+import TextField from "@material-ui/core/TextField" ;
 
 
 export default function PlacesAutocomplete(props) {
@@ -23,6 +23,7 @@ export default function PlacesAutocomplete(props) {
 
         const results = await getGeocode({address});
         const coordinates = await getLatLng(results[0]);
+        props.setString(address)
         props.setSelected(coordinates);
     };
 

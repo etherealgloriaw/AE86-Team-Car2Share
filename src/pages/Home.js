@@ -42,7 +42,8 @@ function Home() {
                         <Posts />
                     </Grid>
                     <Grid item xs={7}>
-                       <Map markerList={postList.map((post) => {return post.dest})}/>
+                       <Map markerList={postList.map((post) => {
+                           return {lat: Number(post.lat.$numberDecimal), lng: Number(post.lng.$numberDecimal)}})}/>
                     </Grid>
                 </Grid>
             </div>
