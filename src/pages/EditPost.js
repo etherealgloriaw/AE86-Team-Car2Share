@@ -30,18 +30,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function EditPost({ match }) {
-
+    const dispatch = useDispatch();
     const classes = useStyles();
     const { postID } = useParams()
     // console.log(postID)
-    const postList = useSelector(state => state.posts.list);
-
     const post = useSelector(state => state.posts.list.find(p => p._id == postID))
     console.log(post)
     const [startingPoint, setStartingPoint] = useState(post.from)
     const [destination, setDestination] = useState(post.to)
     const [availableSeats, setAvailableSeats] = useState(post.availableSeats)
-    const [departureTime, setDepartureTime] = useState(post.startingTime)
+    const dateStr = post.startingTime.toString()
+    const dateFormat = dateStr.substring(0,dateStr.length-2)
+    const [departureTime, setDepartureTime] = useState(dateFormat)
     const [contactInfo, setContactInfo] = useState(post.contactInfo)
 
     const handleChange = e => {
@@ -57,42 +57,33 @@ function EditPost({ match }) {
             setContactInfo(e.target.value);
         }
     }
-    const dispatch = useDispatch()
 
     const edited = {
-        availableSeats: availableSeats,
-        rating: 4,
+        _id: post._id,
+        availableSeats: 2,
+        rating: post.rating,
         startingTime: departureTime,
         totalTime: 10,
-        lat: 49.2872071045258,
-        lng: -123.11517882905274,
+        lat: post.lat,
+        lng: post.lng,
         contactInfo: contactInfo,
         active: false,
         price: 10,
-        to: "SSSS",
-        from: "ABCDEF",
+        to: destination,
+        from: startingPoint,
+        driver: post.driver
     }
+
     const submit = () => {
         dispatch(
-            // postEdit({
-            //     id: postID,
-            //     name: "New User",
-            //     from: startingPoint,
-            //     to: destination,
-            //     availableSeats: availableSeats,
-            //     rating: 4,
-            //     startingTime: departureTime,
-            //     totalTime: 25,
-            //     dest: {lat: 49.2872071045258, lng:-123.11517882905274},
-            //     contactInfo: contactInfo
-            // })
-            editPostAsync(postID, edited)
+            editPostAsync(edited)
         )
         setStartingPoint('');
         setDestination('');
         setAvailableSeats('');
         setDepartureTime('');
         setContactInfo('');
+
     }
     return (
         <form className={classes.root} noValidate autoComplete="off" >
@@ -133,7 +124,7 @@ function EditPost({ match }) {
                     onChange={handleChange}
                 />
             </div>
-            <Button variant="contained" color="primary" onClick={submit}>
+            <Button variant="contained" color="primary" onClick={submit} to='/'>
                 Submit
             </Button>
         </form>

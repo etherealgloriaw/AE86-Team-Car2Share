@@ -86,14 +86,15 @@ router.post('/add', async (req, res, next) => {
 /* delete a post. */
 router.delete('/:id', function (req, res, next) {
   const id = req.params.id.trim();
-  mySchemas.recipeItem.findByIdAndDelete(id).then(card => res.send(id))
+  mySchemas.postItem.findByIdAndDelete(id).then(card => res.send(id))
       .catch(err => console.error(err))
   // res.json({ message: "Post deleted successfully." });
 });
 
 /* Edit a post. */
-router.patch('/edit/:id', async (req, res, next) => {
-  const id = req.params.id.trim();
+router.put('/Edit/:id', async (req, res, next) => {
+  const id = req.params.id;
+  console.log(id)
   const post = {
     availableSeats: req.body.availableSeats,
     rating: req.body.rating,
@@ -106,8 +107,11 @@ router.patch('/edit/:id', async (req, res, next) => {
     price: req.body.price,
     to: req.body.to,
     from: req.body.from,
+    driver: '62cc948a3dc6303d5d1cd263'
   }
-  await mySchemas.postItem.findByIdAndUpdate(id, post, { new: true }).then(card => res.send(card))
+  await mySchemas.postItem.findByIdAndUpdate(id, post).then(
+      card => res.send(card)
+  )
       .catch(err => console.error(err))
 })
 

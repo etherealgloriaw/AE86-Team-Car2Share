@@ -93,6 +93,7 @@ export default function AddNewPost() {
         price: 10,
         to: "SSSS",
         from: "ABCDEF",
+        driver: "62cc934c3dc6303d5d1cd261"
     }
     const submit = () => {
         dispatch(

@@ -75,7 +75,7 @@ const postsSlice = createSlice({
         })
         .addCase(editPostAsync.fulfilled, (state, action) => {
           state.editPost = REQUEST_STATE.FULFILLED;
-          state.list= action.payload;
+            state.list.push(action.payload);
         })
         .addCase(editPostAsync.rejected, (state, action) => {
           state.editPost = REQUEST_STATE.REJECTED;

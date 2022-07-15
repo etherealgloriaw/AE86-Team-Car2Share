@@ -22,6 +22,7 @@ const addPost = async(newPost)=>{
         },
         body: JSON.stringify(newPost)
     });
+    console.log(JSON.stringify(newPost))
     const data = await response.json();
     if (!response.ok) {
         const errorMsg = data?.message;
@@ -31,21 +32,20 @@ const addPost = async(newPost)=>{
     return data;
 };
 
-const editPost = async(id, edited) =>{
-    const response = await fetch(`http://localhost:3001/posts/edit/${id.user}`, {
+const editPost = async(edited) =>{
+    const id = edited._id;
+    const response = await fetch(`http://localhost:3001/Edit/${id}`, {
         method: 'PUT',
         headers: {
             "Content-type": "application/json",
         },
         body: JSON.stringify(edited)
     });
-
     const data = await response.json();
     if (!response.ok) {
         const errorMsg = data?.message;
         throw new Error(errorMsg)
     }
-
     return data;
 
 }

@@ -33,8 +33,8 @@ export const searchPostAsync = createAsyncThunk(
 
 export const editPostAsync = createAsyncThunk(
   actionTypes.EDIT_POST,
-  async (id, edited) => {
-      return await PostService.editPost(id, edited)
+  async (edited) => {
+      return await PostService.editPost(edited)
   }
 )
 
