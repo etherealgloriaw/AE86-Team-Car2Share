@@ -104,7 +104,6 @@ export const Post = (slice) => {
 
     // navigate("/Profile", { replace: true });
   }
-  console.log(slice)
 
   return (
     <Card className={classes.root} key={Math.random()}>

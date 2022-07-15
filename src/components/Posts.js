@@ -12,8 +12,6 @@ export const Posts = () => {
     useEffect(() => {
         dispatch(getPostAsync());
     }, []);
-
-    console.log(posts)
     
 
     const renderedPosts = posts.map((slice) => {

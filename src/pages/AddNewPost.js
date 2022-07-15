@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -7,7 +7,7 @@ import {initialState, postAdded} from '../reducer/SinglePost.js'
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Map from "../components/Map";
 import {useLoadScript} from "@react-google-maps/api";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import {addPostAsync} from "../redux/posts/thunks";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +45,7 @@ export default function AddNewPost() {
     const [directionResponse, setDirectionResponse] = useState(null)
     const [distances, setDistances] = useState(null)
     const [duration, setDuration] = useState(null)
-
+    const user = useSelector(state => state.auth.list)
 
     const calculateRoute = async() => {
         if (dept == null || dest == null) {
@@ -67,6 +67,7 @@ export default function AddNewPost() {
 
     let destLat
     let destLng
+
     if (dest != null) {
         destLat = dest.lat;
         destLng = dest.lng;
@@ -82,89 +83,82 @@ export default function AddNewPost() {
             setContactInfo(e.target.value);
         }
     }
-    const newPost = {
-        availableSeats: availableSeats,
-        rating: 4,
-        startingTime: departureTime,
-        totalTime: duration,
-        lat: destLat,
-        lng: destLng,
-        contactInfo: contactInfo,
-        active: false,
-        price: 10,
-        to: destString,
-        from: deptString,
-        driver: "62cc934c3dc6303d5d1cd261"
-    }
-    const submit = () => {
-        dispatch(
-            // postAdded({
-            //     id: initialState.length+1,
-            //     name: "New User",
-            //     from: startingPoint,
-            //     to: destination,
-            //     availableSeats: availableSeats,
-            //     rating: 4,
-            //     startingTime: departureTime,
-            //     totalTime: 25,
-            //     dest: {lat: 49.2872071045258, lng:-123.11517882905274},
-            //     contactInfo: contactInfo,
-            //     active: false
-            // })
-            addPostAsync(newPost)
-        )
-        // setStartingPoint('');
-        // setDestination('');
-        setAvailableSeats('');
-        setDepartureTime('');
-        setContactInfo('');
-    }
+
+    
     const markerList = [dept, dest]
-    return (
-        <div>
-        <form className={classes.root} noValidate autoComplete="off" >
+
+    if (user.length > 0) {
+        const submit = () => {
+            dispatch(
+                addPostAsync(newPost)
+            )
+            // setStartingPoint('');
+            // setDestination('');
+            setAvailableSeats('');
+            setDepartureTime('');
+            setContactInfo('');
+        }
+        
+        const newPost = {
+            availableSeats: availableSeats,
+            rating: 4,
+            startingTime: departureTime,
+            totalTime: duration,
+            lat: destLat,
+            lng: destLng,
+            contactInfo: contactInfo,
+            active: true,
+            price: 10,
+            to: destString,
+            from: deptString,
+            driver: user[0]._id
+        }
+        return (
             <div>
-                <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString} title="Departure From"/>
-                <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString} title="Arrive At"/>
-                <Button variant="contained" color="primary" onClick={calculateRoute}>
-                    Calculate Route
-                </Button>
-                <h3>Estimated time of arrival: {duration}</h3>
-                <h3>Distance: {distances}</h3>
-                <TextField
-                    id="standard-number"
-                    label="Available seats"
-                    type="number"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    name = "availableSeats"
-                    onChange={handleChange}
-                    value={availableSeats}
-                />
-                <TextField required id="standard-required" label="Contact information"
-                           name = "contactInfo"
-                           value={contactInfo}
-                           onChange={handleChange}/>
+            <form className={classes.root} noValidate autoComplete="off" >
+                <div>
+                    <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString} title="Departure From"/>
+                    <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString} title="Arrive At"/>
+                    <Button variant="contained" color="primary" onClick={calculateRoute}>
+                        Calculate Route
+                    </Button>
+                    <h3>Estimated time of arrival: {duration}</h3>
+                    <h3>Distance: {distances}</h3>
                     <TextField
-                        id="datetime-local standard-required"
-                        label="Departure time"
-                        type="datetime-local"
-                        className={classes.textField}
+                        id="standard-number"
+                        label="Available seats"
+                        type="number"
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        name = "departureTime"
-                        value={departureTime}
+                        name = "availableSeats"
                         onChange={handleChange}
+                        value={availableSeats}
                     />
+                    <TextField required id="standard-required" label="Contact information"
+                               name = "contactInfo"
+                               value={contactInfo}
+                               onChange={handleChange}/>
+                        <TextField
+                            id="datetime-local standard-required"
+                            label="Departure time"
+                            type="datetime-local"
+                            className={classes.textField}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            name = "departureTime"
+                            value={departureTime}
+                            onChange={handleChange}
+                        />
+                </div>
+                <Button variant="contained" color="primary" onClick={submit} component={Link} to='/'>
+                    Submit
+                </Button>
+            </form>
+            <Map markerList={markerList} directionResponse={directionResponse} />
             </div>
-            <Button variant="contained" color="primary" onClick={submit} component={Link} to='/'>
-                Submit
-            </Button>
-        </form>
-        <Map markerList={markerList} directionResponse={directionResponse} />
-        </div>
-    );
+        )
+    } else return < Navigate to='/Login' />
 }
 

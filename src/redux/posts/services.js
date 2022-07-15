@@ -27,15 +27,13 @@ const deletePost = async(id) =>{
 };
 
 const addPost = async(newPost)=>{
-
-    const response = await fetch('http://localhost:3001/posts', {
+    const response = await fetch('http://localhost:3001/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(newPost)
     });
-    console.log(JSON.stringify(newPost))
     const data = await response.json();
     if (!response.ok) {
         const errorMsg = data?.message;

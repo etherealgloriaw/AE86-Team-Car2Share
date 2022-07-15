@@ -1,7 +1,7 @@
 var mySchemas = require('../models/Schemas')
 var express = require('express');
 var router = express.Router();
-
+var mongoose = require('mongoose')
 
 const posts = mySchemas.postItem
 // get main page active posts
@@ -11,7 +11,6 @@ router.get("/", async (req, res, next) => {
   await posts.find({active : true}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
-      console.log(postData)
       res.send(JSON.stringify(postData));
     } else {
       res.end();
@@ -43,8 +42,9 @@ router.post('/add', async (req, res, next) => {
     price: req.body.price,
     to: req.body.to,
     from: req.body.from,
-    driver: '62cc948a3dc6303d5d1cd263'
+    driver: mongoose.Types.ObjectId(req.body.driver)
   };
+  console.log(post)
 
   try {
     await mySchemas.postItem(post).save().then(card => res.send(card))
