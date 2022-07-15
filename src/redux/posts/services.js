@@ -32,7 +32,22 @@ const addPost = async(newPost)=>{
 };
 
 const editPost = async(id, edited) =>{
-    console.log("edit")
+    const response = await fetch(`http://localhost:3001/posts/edit/${id.user}`, {
+        method: 'PUT',
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify(edited)
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+
+    return data;
+
 }
 
 

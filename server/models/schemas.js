@@ -4,17 +4,19 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
     // _id: objectId
-    startPoint:  {type: String, required:true}, // String is shorthand for {type: String}
-    destination: {type: String},
-    lat:   {type:mongoose.Decimal128},
-    long: {type: mongoose.Decimal128},
+    from:  {type: String, required:true}, // String is shorthand for {type: String}
+    to: {type: String},
+    lat:   {type: mongoose.Decimal128},
+    lng: {type: mongoose.Decimal128},
     distance: {type: mongoose.Decimal128},
     price: {type: Number},
-    date: { type: Date},
-    contact_info: {type: String},
-    seats: {type: Number},
-    isActive: {type: Boolean, default: true},
-    driver: {type: Schema.Types.ObjectId, ref:'userItem'},
+    contactInfo: {type: String},
+    availableSeats: {type: Number},
+    startingTime:{type: Date},
+    rating: {type: Number},
+    active: {type: Boolean, default: true},
+    driver: {type: Schema.Types.ObjectId},
+    user: {type: Schema.Types.ObjectId},
 }, { collection: 'posts' , versionKey: false});
 
 const userSchema = new Schema({
@@ -35,7 +37,7 @@ const historySchema = new Schema({
     distance: {type: mongoose.Decimal128},
     price: {type: Number},
     contactInfo: {type: String},
-    seats: {type: Number},
+    availableSeats: {type: Number},
     startingTime:{type: Date},
     rating: {type: Number},
     active: {type: Boolean, default: true},

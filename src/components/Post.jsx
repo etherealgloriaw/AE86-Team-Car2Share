@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 ));
 
 export const Post = (slice) => {
-  const posts = useSelector((state) => state.posts)
+  // const crrPost = useSelector((state) => state.posts.list.filter(slice._id = ))
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [active, setActive] = React.useState(slice.active);
@@ -70,14 +70,15 @@ export const Post = (slice) => {
 
   const handleJoin = () => {
     console.log(slice)
-    dispatch(
-        postActive({
-            id: slice._id.toString(),
-          active: !active
-        })
-    )
-      setActive(!(slice.active))
-      console.log(slice._id.toString())
+    // dispatch(
+    //     postActive({
+    //         id: slice.id,
+    //       // active: !active
+    //     })
+    // )
+      // setActive(!(slice.active))
+    console.log(slice.startingTime)
+      // console.log(slice.id)
   }
 
   return (
@@ -124,7 +125,7 @@ export const Post = (slice) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton aria-label="share" component={Link} to={`/Edit/${slice._id}`} >
+        <IconButton aria-label="share" component={Link} to={`/Edit/${slice.id}`} >
           <EditIcon />
         </IconButton>
         <IconButton

@@ -33,10 +33,10 @@ function EditPost({ match }) {
 
     const classes = useStyles();
     const { postID } = useParams()
-    console.log(postID)
-    const post = useSelector(state =>
-        state.posts.list.find(p => p._id == postID)
-    )
+    // console.log(postID)
+    const postList = useSelector(state => state.posts.list);
+
+    const post = useSelector(state => state.posts.list.find(p => p._id == postID))
     console.log(post)
     const [startingPoint, setStartingPoint] = useState(post.from)
     const [destination, setDestination] = useState(post.to)
@@ -86,7 +86,7 @@ function EditPost({ match }) {
             //     dest: {lat: 49.2872071045258, lng:-123.11517882905274},
             //     contactInfo: contactInfo
             // })
-            editPostAsync(postID, )
+            editPostAsync(postID, edited)
         )
         setStartingPoint('');
         setDestination('');
