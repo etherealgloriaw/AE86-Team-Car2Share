@@ -37,8 +37,8 @@ export default function AddNewPost() {
     const classes = useStyles();
     const [dept, setDept] = useState(null);
     const [dest, setDest] = useState(null)
-    // const [startingPoint, setStartingPoint] = useState('')
-    // const [destination, setDestination] = useState('')
+    const [deptString, setDeptString] = useState(null);
+    const [destString, setDestString] = useState(null)
     const [availableSeats, setAvailableSeats] = useState('')
     const [departureTime, setDepartureTime] = useState('')
     const [contactInfo, setContactInfo] = useState('')
@@ -64,11 +64,12 @@ export default function AddNewPost() {
         setDistances(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
     }
-    let deptLat = 50.11802598023384;
-    let deptLng = -122.96137023530274;
-    if (dept != null) {
-        deptLat = dept.lat;
-        deptLng = dept.lng;
+
+    let destLat
+    let destLng
+    if (dest != null) {
+        destLat = dest.lat;
+        destLng = dest.lng;
     }
 
 
@@ -86,13 +87,13 @@ export default function AddNewPost() {
         rating: 4,
         startingTime: departureTime,
         totalTime: duration,
-        lat: deptLat,
-        lng: deptLng,
+        lat: destLat,
+        lng: destLng,
         contactInfo: contactInfo,
         active: false,
         price: 10,
-        to: "SSSS",
-        from: "ABCDEF",
+        to: destString,
+        from: deptString,
         driver: "62cc934c3dc6303d5d1cd261"
     }
     const submit = () => {
@@ -123,8 +124,8 @@ export default function AddNewPost() {
         <div>
         <form className={classes.root} noValidate autoComplete="off" >
             <div>
-                <PlacesAutocomplete setSelected={setDept} selected={dept} title="Departure From"/>
-                <PlacesAutocomplete setSelected={setDest} selected={dest} title="Arrive At"/>
+                <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString} title="Departure From"/>
+                <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString} title="Arrive At"/>
                 <Button variant="contained" color="primary" onClick={calculateRoute}>
                     Calculate Route
                 </Button>

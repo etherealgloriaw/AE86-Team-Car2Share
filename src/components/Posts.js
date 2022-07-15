@@ -13,16 +13,22 @@ export const Posts = () => {
         dispatch(getPostAsync());
     }, []);
 
-    const renderedPosts = posts.map((slice) => (
+
+    const renderedPosts = posts.map((slice) => {
+        const date = new Date(slice.startingTime)
+        const dateString = date.toDateString() + " " +date.getHours()+ ":"
+            + ((date.getMinutes() > 9)? date.getMinutes(): ("0" + date.getMinutes()))+ ":" +
+            ((date.getSeconds() > 9)? date.getSeconds(): ("0" + date.getSeconds()))
+        return(
         <Grid item xs={12} md={12} key={Math.random()}>
           {
-            <Post name = {slice.name} startingTime = {slice.startingTime} from = {slice.from}
+            <Post name = {slice.name} startingTime = {dateString} from = {slice.from}
             to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
                   active={slice.active}/>
           }
         </Grid>
 
-    ))
+    )})
 
     return (
         <section className="posts">
