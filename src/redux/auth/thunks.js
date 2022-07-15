@@ -4,8 +4,8 @@ import AuthService from './services';
 
 export const loginSuccessAsync = createAsyncThunk(
     actionTypes.LOGIN_SUC,
-    async () =>{
-        return await AuthService.loginSuccess();
+    async (email) =>{
+        return await AuthService.loginSuccess(email);
     }
 )
 

@@ -22,6 +22,8 @@ const userSchema = new Schema({
     username: {type: String, required:true},
     introduction: {type: String},
     rating: {type: mongoose.Decimal128},
+    password: {type: String},
+    email: {type: String},
 }, { collection: 'users', versionKey: false});
 
 const historySchema = new Schema({
@@ -37,10 +39,10 @@ const historySchema = new Schema({
     startingTime:{type: Date},
     rating: {type: Number},
     active: {type: Boolean, default: true},
-    driver: {type: Schema.Types.ObjectId, ref:'userItem'},
-    // user: {type: Schema.Types.ObjectId, ref:'userItem'},
+    driver: {type: Schema.Types.ObjectId},
+    user: {type: Schema.Types.ObjectId},
 
-}, { collection: 'posts' , versionKey: false});
+}, { collection: 'user_history' , versionKey: false});
 
 const postItem = mongoose.model('postItem', historySchema, 'posts');
 const userItem = mongoose.model('userItem', userSchema, 'users');

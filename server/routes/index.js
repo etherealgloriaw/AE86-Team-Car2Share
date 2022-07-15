@@ -4,7 +4,6 @@ var router = express.Router();
 
 
 const posts = mySchemas.postItem
-console.log(posts)
 // get main page active posts
 router.get("/", async (req, res, next) => {
   // const data = await mySchemas.postItem.find({});

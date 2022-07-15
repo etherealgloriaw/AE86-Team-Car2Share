@@ -1,6 +1,7 @@
 import "./styles/Login.css"
-import React from 'react';
-import { Link as Jump } from "react-router-dom";
+import React, {useState ,useEffect} from 'react';
+import { Link as Jump, useLocation, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector } from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-
+import { loginSuccessAsync } from "../redux/auth/thunks";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,6 +51,34 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const [inputEmail, setInputEmail] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
+  const history = useNavigate();
+  const user = useSelector(state => state.auth.list)
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const emailChangeHandler = (e) => {
+    setInputEmail(e.target.value);
+  };
+
+  const passwordChangeHandler = (e) => {
+    setInputPassword(e.target.value);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault(); // to prevent the website reloading
+    let form = {email: inputEmail, password: inputPassword};
+    dispatch(loginSuccessAsync(form));
+    setInputEmail('');
+    setInputPassword('');
+  };
+
+  // useEffect(() => {
+  //     if(user.length != 0)
+  //       console.log(user[0]);
+  //       history('/Profile', {state: user[0], replace: false});
+  // });
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -74,6 +103,8 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={inputEmail}
+              onChange = {emailChangeHandler}
             />
             <TextField
               variant="outlined"
@@ -85,6 +116,8 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={inputPassword}
+              onChange = {passwordChangeHandler}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -96,6 +129,7 @@ export default function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick = {handleLogin}
             >
               Sign In
             </Button>

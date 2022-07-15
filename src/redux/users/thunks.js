@@ -4,8 +4,8 @@ import UserService from './services';
 
 export const getHistoryAsync = createAsyncThunk(
   actionTypes.GET_HISTORY,
-  async () =>{
-    return await UserService.getHistory();
+  async (name) =>{
+    return await UserService.getHistory(name);
 }
 )
 

@@ -16,15 +16,15 @@ const INITIAL_STATE = {
     extraReducers: (builder) => {
       builder
         .addCase(loginSuccessAsync.pending, (state) => {
-          state.getCards = REQUEST_STATE.PENDING;
+          state.getUsers = REQUEST_STATE.PENDING;
           state.error = null;
         })
         .addCase(loginSuccessAsync.fulfilled, (state, action) => {
-          state.getCards = REQUEST_STATE.FULFILLED;
+          state.getUsers = REQUEST_STATE.FULFILLED;
           state.list = action.payload;
         })
         .addCase(loginSuccessAsync.rejected, (state, action) => {
-          state.getCards = REQUEST_STATE.REJECTED;
+          state.getUsers = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
         // .addCase(loginFailedAsync.pending, (state) => {

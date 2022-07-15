@@ -17,27 +17,27 @@ const INITIAL_STATE = {
     extraReducers: (builder) => {
       builder
         .addCase(getHistoryAsync.pending, (state) => {
-          state.getCards = REQUEST_STATE.PENDING;
+          state.getUsers = REQUEST_STATE.PENDING;
           state.error = null;
         })
         .addCase(getHistoryAsync.fulfilled, (state, action) => {
-          state.getCards = REQUEST_STATE.FULFILLED;
+          state.getUsers = REQUEST_STATE.FULFILLED;
           state.list = action.payload;
         })
         .addCase(getHistoryAsync.rejected, (state, action) => {
-          state.getCards = REQUEST_STATE.REJECTED;
+          state.getUsers = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
         .addCase(joinPostAsync.pending, (state) => {
-          state.addCard = REQUEST_STATE.PENDING;
+          state.addUser = REQUEST_STATE.PENDING;
           state.error = null;
         })
         .addCase(joinPostAsync.fulfilled, (state, action) => {
-          state.addCard = REQUEST_STATE.FULFILLED;
+          state.addUser = REQUEST_STATE.FULFILLED;
           state.list.push(action.payload);
         })
         .addCase(joinPostAsync.rejected, (state, action) => {
-          state.addCard = REQUEST_STATE.REJECTED;
+          state.addUser = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
         .addCase(editProfileAsync.pending, (state) => {
