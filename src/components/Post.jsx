@@ -91,9 +91,10 @@ export const Post = (slice) => {
   }
 
   const handleDelete = () => {
+    // console.log(user[0])
     if (user.length == 0) {
       console.log("Please login")
-    } else if (user[0]._id == slice.name) {
+    } else if (user[0]._id == slice.name._id) {
       dispatch(
           deletePostAsync(slice.id)
       )

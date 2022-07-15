@@ -61,7 +61,7 @@ router.delete('/delete/:id', async (req, res, next) => {
   //     .catch(err => console.error(err))
   try {
     await mySchemas.postItem.deleteOne( {_id: req.params.id}).exec();
-    const allPosts = await mySchemas.postItem.find({}).exec();
+    const allPosts = await mySchemas.postItem.find({active : true}).populate("driver").exec();
     res.send(allPosts)
   } catch {
     console.log("err")
