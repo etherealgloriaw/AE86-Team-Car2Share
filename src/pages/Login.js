@@ -53,7 +53,7 @@ export default function Login() {
   const classes = useStyles();
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
-  const history = useNavigate();
+  let navigate = useNavigate();
   const user = useSelector(state => state.auth.list)
   const dispatch = useDispatch();
   const location = useLocation();
@@ -72,6 +72,7 @@ export default function Login() {
     dispatch(loginSuccessAsync(form));
     setInputEmail('');
     setInputPassword('');
+    navigate("/Profile", { replace: true });
   };
 
   // useEffect(() => {

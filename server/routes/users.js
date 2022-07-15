@@ -26,16 +26,21 @@ router.get('/:userid', async (req, res, next) => {
 });
 
 // user join a post
-router.post('/add', async (req, res, next) => {
-  const id = '62cc948a3dc6303d5d1cd263';
-  const post = {
-    startPoint: req.params.startPoint, destination: req.params.destination, lat: req.params.lat,
-    long: req.params.long, distance: req.params.distance, price: req.params.price, date: req.params.date,
-    contact_info: req.params.contact_info, seats: req.params.seats, isActive: true, driver: '62cc948a3dc6303d5d1cd263',
-    user: req.params.id
+router.post('/join', async (req, res, next) => {
+  const userId = mongoose.Types.ObjectId(req.body.user)
+  const postId = mongoose.Types.ObjectId(req.body.id)
+  const post = await mySchemas.postItem.findById(postId)
+  console.log(post)
+  const joinPost = {
+    original_id: postId,
+    from: post.from, to: post.to, lat: post.lat,
+    lng: post.lng, distance: post.distance, price: post.price, startingTime: post.startingTime,
+    contactInfo: post.contactInfo, availableSeats: post.availableSeats, active: true, driver: post.driver,
+    user: userId
   };
+  console.log(joinPost)
   try {
-    await mySchemas.historyItem(post).save().then(card => res.send(card))
+    await mySchemas.historyItem(joinPost).save().then(card => res.send(card))
       .catch(err => console.error(err));
   } catch (error) {
     console.log(error);

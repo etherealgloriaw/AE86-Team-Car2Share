@@ -8,17 +8,31 @@ const getHistory = async(name) => {
     return response.json();
 };
 
-const joinHistory = async(dest) =>{
+const joinHistory = async(post) =>{
+    console.log(post)
+    const response = await fetch(url + "/join", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post)
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
 }
 
 const editProfile = async(id) =>{
 
 }
 
-const exportUser = {
+const UserService = {
     getHistory,
     joinHistory,
     editProfile 
 };
 
-export default exportUser;
+export default UserService;

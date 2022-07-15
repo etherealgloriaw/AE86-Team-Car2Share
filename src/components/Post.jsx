@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -16,10 +17,10 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
-import {Tooltip} from "@material-ui/core";
+import { Tooltip } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import {postEdit, postActive} from "../reducer/SinglePost";
+import { joinPostAsync } from "../redux/users/thunks";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -39,12 +40,12 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-      active: {
-        color: "red"
-      },
-      inactive: {
-        color: "gray"
-      },
+  active: {
+    color: "red"
+  },
+  inactive: {
+    color: "gray"
+  },
   avatar: {
     backgroundColor: "#0d47a1",
   },
@@ -57,8 +58,8 @@ const useStyles = makeStyles((theme) => ({
 ));
 
 export const Post = (slice) => {
-  // const crrPost = useSelector((state) => state.posts.list.filter(slice._id = ))
   const classes = useStyles();
+  let navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
   const [active, setActive] = React.useState(slice.active);
   const handleExpandClick = () => {
@@ -66,19 +67,17 @@ export const Post = (slice) => {
   };
 
   const dispatch = useDispatch()
-
-
+  const user = useSelector(state => state.auth.list)
+  
   const handleJoin = () => {
-    console.log(slice)
-    // dispatch(
-    //     postActive({
-    //         id: slice.id,
-    //       // active: !active
-    //     })
-    // )
-      // setActive(!(slice.active))
-    console.log(slice.startingTime)
-      // console.log(slice.id)
+    console.log(user[0])
+    dispatch(
+      joinPostAsync({
+        id: slice.id,
+        user: user[0]._id
+      })
+    )
+    navigate("/Profile", { replace: true });
   }
 
   return (
@@ -108,19 +107,19 @@ export const Post = (slice) => {
           From: {slice.from}
           <div> </div>
           To: {slice.to}
-          <Typography variant="body2" color="textSecondary" align = "right" component="p">
-          Departure time: {slice.startingTime}
-        </Typography>
+          <Typography variant="body2" color="textSecondary" align="right" component="p">
+            Departure time: {slice.startingTime}
+          </Typography>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <Tooltip title="Join the post">
-        <IconButton aria-label="add to favorites" onClick={handleJoin}
-                    className={clsx({
-                      [classes.active]: active,
-                    })}>
-          <FavoriteIcon className = {classes.fav}/>
-        </IconButton>
+          <IconButton aria-label="add to favorites" onClick={handleJoin}
+            className={clsx({
+              [classes.active]: active,
+            })}>
+            <FavoriteIcon className={classes.fav} />
+          </IconButton>
         </Tooltip>
         <IconButton aria-label="share">
           <ShareIcon />

@@ -11,8 +11,8 @@ export const getHistoryAsync = createAsyncThunk(
 
 export const joinPostAsync = createAsyncThunk(
     actionTypes.JOIN_POST,
-    async () =>{
-        return await UserService.joinPost();
+    async (post) =>{
+        return await UserService.joinHistory(post);
     }
   )
 

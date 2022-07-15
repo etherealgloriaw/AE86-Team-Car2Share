@@ -12,6 +12,7 @@ export const Posts = () => {
     useEffect(() => {
         dispatch(getPostAsync());
     }, []);
+
     const renderedPosts = posts.map((slice) => (
         <Grid item xs={12} md={12} key={Math.random()}>
           {
