@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {initialState, postAdded, postEdit} from '../reducer/SinglePost.js'
 import { Link, useParams } from 'react-router-dom';
 import {editPostAsync} from "../redux/posts/thunks";
+import PlacesAutocomplete from "../components/PlacesAutocomplete";
+import Map from "../components/Map";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,7 +35,7 @@ function EditPost({ match }) {
     const dispatch = useDispatch();
     const classes = useStyles();
     const { postID } = useParams()
-    // console.log(postID)
+
     const post = useSelector(state => state.posts.list.find(p => p._id == postID))
     console.log(post)
     const [startingPoint, setStartingPoint] = useState(post.from)
@@ -43,13 +45,16 @@ function EditPost({ match }) {
     const dateFormat = dateStr.substring(0,dateStr.length-2)
     const [departureTime, setDepartureTime] = useState(dateFormat)
     const [contactInfo, setContactInfo] = useState(post.contactInfo)
+    const [dept, setDept] = useState(null);
+    const [dest, setDest] = useState(null)
+    const [directionResponse, setDirectionResponse] = useState(null)
+    const [distances, setDistances] = useState();
+    const [duration, setDuration] = useState(null)
+    const [deptString, setDeptString] = useState(post.from);
+    const [destString, setDestString] = useState(post.to)
 
     const handleChange = e => {
-        if (e.target.name == 'startingPoint') {
-            setStartingPoint(e.target.value);
-        } else if (e.target.name == 'destination') {
-            setDestination(e.target.value);
-        } else if (e.target.name == 'availableSeats') {
+    if (e.target.name == 'availableSeats') {
             setAvailableSeats(e.target.value);
         } else if (e.target.name == "departureTime") {
             setDepartureTime(e.target.value);
@@ -63,71 +68,142 @@ function EditPost({ match }) {
         availableSeats: 2,
         rating: post.rating,
         startingTime: departureTime,
-        totalTime: 10,
+        totalTime: duration,
         lat: post.lat,
         lng: post.lng,
         contactInfo: contactInfo,
-        active: false,
+        active: true,
         price: 10,
-        to: destination,
-        from: startingPoint,
+        to: destString,
+        from: deptString,
         driver: post.driver
     }
+
+
+    let destLat
+    let destLng
+
+    destLat = post.lat;
+    destLng = post.lng;
+
+    const calculateRoute = async() => {
+        if (dept == null || dest == null) {
+            return
+        }
+        console.log("Starting point:" + dept)
+        // eslint-disable-next-line no-undef
+        const directionService = new google.maps.DirectionsService()
+        const results = await directionService.route({
+            origin: dept,
+            destination: dest,
+            // eslint-disable-next-line no-undef
+            travelMode: google.maps.TravelMode.DRIVING
+        })
+        setDirectionResponse(results)
+        setDistances(results.routes[0].legs[0].distance.text)
+        setDuration(results.routes[0].legs[0].duration.text)
+    }
+
+    const markerList = [dept, dest]
 
     const submit = () => {
         dispatch(
             editPostAsync(edited)
         )
-        setStartingPoint('');
-        setDestination('');
+        // setStartingPoint('');
+        // setDestination('');
         setAvailableSeats('');
         setDepartureTime('');
         setContactInfo('');
 
     }
     return (
-        <form className={classes.root} noValidate autoComplete="off" >
-            <div>
-                <TextField required id="standard-required" label="Starting at"
-                           onChange={handleChange}
-                           name="startingPoint"
-                           value={startingPoint}/>
-                <TextField required id="standard-required" label="Destination"
-                           name="destination"
-                           onChange={handleChange}
-                           value={destination}/>
-                <TextField
-                    id="standard-number"
-                    label="Available seats"
-                    type="number"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    name = "availableSeats"
-                    onChange={handleChange}
-                    value={availableSeats}
-                />
-                <TextField required id="standard-required" label="Contact information"
-                           name = "contactInfo"
-                           value={contactInfo}
-                           onChange={handleChange}/>
-                <TextField
-                    id="datetime-local standard-required"
-                    label="Departure time"
-                    type="datetime-local"
-                    className={classes.textField}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    name = "departureTime"
-                    value={departureTime}
-                    onChange={handleChange}
-                />
-            </div>
-            <Button variant="contained" color="primary" onClick={submit} to='/'>
-                Submit
-            </Button>
-        </form>
+        // <form className={classes.root} noValidate autoComplete="off" >
+        //     <div>
+        //         <TextField required id="standard-required" label="Starting at"
+        //                    onChange={handleChange}
+        //                    name="startingPoint"
+        //                    value={startingPoint}/>
+        //         <TextField required id="standard-required" label="Destination"
+        //                    name="destination"
+        //                    onChange={handleChange}
+        //                    value={destination}/>
+        //         <TextField
+        //             id="standard-number"
+        //             label="Available seats"
+        //             type="number"
+        //             InputLabelProps={{
+        //                 shrink: true,
+        //             }}
+        //             name = "availableSeats"
+        //             onChange={handleChange}
+        //             value={availableSeats}
+        //         />
+        //         <TextField required id="standard-required" label="Contact information"
+        //                    name = "contactInfo"
+        //                    value={contactInfo}
+        //                    onChange={handleChange}/>
+        //         <TextField
+        //             id="datetime-local standard-required"
+        //             label="Departure time"
+        //             type="datetime-local"
+        //             className={classes.textField}
+        //             InputLabelProps={{
+        //                 shrink: true,
+        //             }}
+        //             name = "departureTime"
+        //             value={departureTime}
+        //             onChange={handleChange}
+        //         />
+        //     </div>
+        //     <Button variant="contained" color="primary" onClick={submit} to='/'>
+        //         Submit
+        //     </Button>
+        // </form>
+        <div>
+            <form className={classes.root} noValidate autoComplete="off" >
+                <div>
+                    <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString} title="Departure From"/>
+                    <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString} title="Arrive At"/>
+                    <Button variant="contained" color="primary" onClick={calculateRoute}>
+                        Calculate Route
+                    </Button>
+                    <h3>Estimated time of arrival: {duration}</h3>
+                    <h3>Distance: {distances}</h3>
+                    <TextField
+                        id="standard-number"
+                        label="Available seats"
+                        type="number"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        name = "availableSeats"
+                        onChange={handleChange}
+                        value={availableSeats}
+                    />
+                    <TextField required id="standard-required" label="Contact information"
+                               name = "contactInfo"
+                               value={contactInfo}
+                               onChange={handleChange}/>
+                    <TextField
+                        id="datetime-local standard-required"
+                        label="Departure time"
+                        type="datetime-local"
+                        className={classes.textField}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        name = "departureTime"
+                        value={departureTime}
+                        onChange={handleChange}
+                    />
+                </div>
+                <Button variant="contained" color="primary" onClick={submit} component={Link} to='/'>
+                    Submit
+                </Button>
+            </form>
+            <Map markerList={markerList} directionResponse={directionResponse} />
+        </div>
     );
 }
 

@@ -21,17 +21,17 @@ router.get("/", async (req, res, next) => {
 
 // get a single post (search)
 router.get('/:dest/:selection/:sorting', async (req, res, next) => {
-  dest = req.params.dest;
-  sorting = req.params.sorting;
-  
-  selection = req.params.selection;
+  var dest = req.params.dest;
+  var sorting = req.params.sorting;
+
+  var selection = req.params.selection;
   try {
     await mySchemas.postItem.find({$and:[{active: true}, {to: {$regex: dest, $options: 'i'}}]})
     .then(results => {
       if(sorting == "ascending"){
         if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
         if(selection == "rating") results.sort((a,b)=>parseFloat(a.rating)-(b.rating));
-        if(selection == "totalTime") results.sort((a,b)=>parseFloat(a.totalTime)-(b.totalTime));    
+        if(selection == "totalTime") results.sort((a,b)=>parseFloat(a.totalTime)-(b.totalTime));
       }else if(sorting == "descending"){
         // results.sort((a,b)=>{
         //   console.log("a:"+ a);
@@ -40,7 +40,7 @@ router.get('/:dest/:selection/:sorting', async (req, res, next) => {
         // })
         if(selection == "availableSeats") results.sort((a,b)=>parseFloat(b.availableSeats)-(a.availableSeats));
         if(selection == "rating") results.sort((a,b)=>parseFloat(b.rating)-(a.rating));
-        if(selection == "totalTime") results.sort((a,b)=>parseFloat(b.totalTime)-(a.totalTime));    
+        if(selection == "totalTime") results.sort((a,b)=>parseFloat(b.totalTime)-(a.totalTime));
       }
       console.log("results:" + results);
       res.send(JSON.stringify(results));
@@ -108,7 +108,7 @@ router.put('/Edit/:id', async (req, res, next) => {
     price: req.body.price,
     to: req.body.to,
     from: req.body.from,
-    driver: '62cc948a3dc6303d5d1cd263'
+    driver: req.body.driver,
   }
   await mySchemas.postItem.findByIdAndUpdate(id, post).then(
       card => res.send(card)
