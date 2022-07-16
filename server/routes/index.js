@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
 
 
 // get a single post (search)
-router.get('/:dest/:selection/:sorting', async (req, res, next) => {
+router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
   dest = req.params.dest;
   sorting = req.params.sorting;
   
@@ -42,7 +42,6 @@ router.get('/:dest/:selection/:sorting', async (req, res, next) => {
         if(selection == "rating") results.sort((a,b)=>parseFloat(b.rating)-(a.rating));
         if(selection == "totalTime") results.sort((a,b)=>parseFloat(b.totalTime)-(a.totalTime));    
       }
-      console.log("results:" + results);
       res.send(JSON.stringify(results));
     })
         .catch(err => console.error(err));
