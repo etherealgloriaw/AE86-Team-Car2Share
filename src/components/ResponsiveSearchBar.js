@@ -5,7 +5,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { useDispatch } from 'react-redux';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { initialState, postSearch } from '../reducer/SinglePost'
+import {searchPostAsync} from "../redux/posts/thunks";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,6 +56,8 @@ export const ResponsiveSearchBar = () => {
     const classes = useStyles();
 
     const[destination, setDestination] = useState('')
+    const[selection, setSelection] = useState('')
+    const[sorting, setSorting] = useState('')
 
     const handleChange = e =>{
         if(e.target.name == 'destination'){
@@ -66,35 +68,61 @@ export const ResponsiveSearchBar = () => {
     const dispatch = useDispatch()
 
     const handleSearch = () => {
-        dispatch(
-            postSearch(destination)
-        )
+        const searchReq = {
+            selection,
+            sorting,
+            destination
+        }
+            
+
+        console.log(searchReq);
         setDestination('');
+        dispatch(searchPostAsync(searchReq));
+        
       };
+
+    const selectionMade = (e) =>{
+        setSelection(e.target.value);
+    }
+
+    const sortingMade = (e) =>{
+        setSorting(e.target.value);
+    } 
 
     return (
         <div className={classes.search}>
-            {/* <InputBase
-                placeholder="From…"
-                classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                }}
-                // inputProps={{ 'aria-label': 'search' }}
-            /> */}
             <div></div>
             <InputBase onChange={handleChange}
+            value = {destination}
+                id = "destination"
                 name = "destination"
                 placeholder="To…"
                 classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
                 }}
-                // inputProps={{ 'aria-label': 'search' }}
             />
-            <IconButton aria-label="search">
-                <SearchIcon onClick = {handleSearch}/>
+            <IconButton aria-label="search" onClick = {handleSearch}>
+                <SearchIcon />
             </IconButton>
+
+            <div>
+            <div className="filter" >
+
+            <select onChange={selectionMade}>           
+                {/* <option value = "from-dist">Distance (starting point)</option>
+                <option value = "to-dist">Distance (destination)</option> */}
+                <option value = "rating">Ratings</option>
+                <option value = "totalTime">Total Time</option>
+                <option value = "availableSeats">Available Seats</option>              
+            </select>
+            </div>
+            <div className='sorting' onChange = {sortingMade}>
+                <input type="radio" name="option" value = "ascending"/>Ascending
+                <input type="radio" name="option" value = "descending" />Descending
+            </div>
+
+        </div>
         </div>
     )
 }

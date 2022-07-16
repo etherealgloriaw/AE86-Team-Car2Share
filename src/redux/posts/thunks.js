@@ -25,8 +25,8 @@ export const deletePostAsync = createAsyncThunk(
 
 export const searchPostAsync = createAsyncThunk(
   actionTypes.SEARCH_POST,
-  async (dest) => {
-      return await PostService.searchPost(dest)
+  async (searchReq) => {
+      return await PostService.searchPost(searchReq)
   }
 )
 

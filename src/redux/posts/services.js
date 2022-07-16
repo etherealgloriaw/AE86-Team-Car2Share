@@ -5,8 +5,24 @@ const getPosts = async() => {
     return response.json();
 };
 
-const searchPost = async(dest) =>{
-    console.log("search")
+const searchPost = async(searchReq) =>{
+    const dest = searchReq.destination;
+    const selection = searchReq.selection;
+    const sorting = searchReq.sorting;
+    console.log("sorting: " + sorting);
+    const response = await fetch(`http://localhost:3001/${dest}/${selection}/${sorting}`, {
+        method: 'GET',
+        headers:{
+            "Content-type": "application/json"
+        },
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
 }
 
 const deletePost = async(id) =>{
