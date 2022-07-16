@@ -26,7 +26,7 @@ router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
   
   selection = req.params.selection;
   try {
-    await mySchemas.postItem.find({$and:[{active: true}, {to: {$regex: dest, $options: 'i'}}]})
+    await mySchemas.postItem.find({$and:[{active: true}, {to: {$regex: dest, $options: 'i'}}]}).populate("driver")
     .then(results => {
       if(sorting == "ascending"){
         if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));

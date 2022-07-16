@@ -2,6 +2,7 @@
     position: absolute;
     display: inline;
     left: 250px;
+    top: 15px;
     border-radius: 9px;
     width: 150px;
     height: 220px;
@@ -14,7 +15,7 @@
 
 .sorting{
     position: absolute;
-    /* top: 75px; */
+    top: 15px;
     left: 450px;
     font-size: 15px;
 }
