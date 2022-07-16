@@ -90,7 +90,7 @@ export const ResponsiveSearchBar = () => {
     } 
 
     return (
-        <div className={classes.search}>
+        <div className={classes.search} >
             <div></div>
             <InputBase onChange={handleChange}
             value = {destination}
@@ -110,8 +110,6 @@ export const ResponsiveSearchBar = () => {
             <div className="filter" >
 
             <select onChange={selectionMade}>           
-                {/* <option value = "from-dist">Distance (starting point)</option>
-                <option value = "to-dist">Distance (destination)</option> */}
                 <option value = "rating">Ratings</option>
                 <option value = "totalTime">Total Time</option>
                 <option value = "availableSeats">Available Seats</option>              

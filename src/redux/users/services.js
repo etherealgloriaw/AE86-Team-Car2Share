@@ -8,8 +8,7 @@ const getHistory = async(name) => {
 };
 
 const getDriverHistory = async(name) => {
-    console.log(url +  "/driver/" + name)
-    const response = await fetch (url +  "/driver/" + name,{
+    const response = await fetch (url +  "/driver/history" + name,{
         method: 'GET'
     });
     return response.json();

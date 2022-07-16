@@ -43,50 +43,89 @@ export const UserHistory = () => {
 
   const [status, setStatus] = React.useState(true);
   const handleChange = (event) => {
-    setStatus(event.target.checked);
+    setStatus(!status);
     if (status)
-      dispatch(getHistoryAsync(user[0]._id));
-    else
-      console.log(user[0]._id)
       dispatch(getDriverHistoryAsync(user[0]._id));
+    else
+      dispatch(getHistoryAsync(user[0]._id));
   };
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (status)
-      dispatch(getHistoryAsync(user[0]._id));
-    else
-      dispatch(getDriverHistoryAsync(user[0]._id));
-  }, []);
+  // useEffect(() => {
+  //   if (status)
+  //     dispatch(getHistoryAsync(user[0]._id));
+  //   else
+  //     dispatch(getDriverHistoryAsync(user[0]._id));
+  // }, []);
 
-  const renderedPosts = posts.map((slice) => (
-    <Grid item xs={12} md={12} key={Math.random()}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {slice.driver.username}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={slice.driver.username}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          From: {slice.from}
-          <div></div>
-          To: {slice.to}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" align="right" component="p">
-          Departure time: {slice.startingTime}
-        </Typography>
-      </CardContent>
-    </Grid>
-  ))
+  const renderedPosts = posts.map((slice) => {
+    const date = new Date(slice.startingTime)
+    const dateString = date.toDateString() + " " + date.getHours() + ":"
+      + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
+      ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
+      return (
+        <Grid item xs={12} md={12} key={Math.random()}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              {slice.driver.username}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={slice.driver.username}
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            From: {slice.from}
+            <div></div>
+            To: {slice.to}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" align="right" component="p">
+            Departure time: {dateString}
+          </Typography>
+        </CardContent>
+      </Grid>
+      )
+  })
+
+  const renderedDriverPosts = posts.map((slice) => {
+    const date = new Date(slice.startingTime)
+    const dateString = date.toDateString() + " " + date.getHours() + ":"
+      + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
+      ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
+      return (
+        <Grid item xs={12} md={12} key={Math.random()}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              {slice.active ? 'Active' : 'Inactive'}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={slice.active ? 'Active' : 'Inactive'}
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            From: {slice.from}
+            <div></div>
+            To: {slice.to}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" align="right" component="p">
+            Departure time: {dateString}
+          </Typography>
+        </CardContent>
+      </Grid>
+      )
+  })
 
   return (
     <section className="posts">
@@ -98,7 +137,7 @@ export const UserHistory = () => {
       </FormGroup>
       <List style={{ maxHeight: '250%', overflow: 'auto' }}>
         {/* <Grid sx={{ overflowY: "scroll", maxHeight: "250px" }}, container spacing={2}> */}
-        {renderedPosts}
+        {status ? renderedPosts : renderedDriverPosts}
         {/* </Grid> */}
       </List>
     </section>
