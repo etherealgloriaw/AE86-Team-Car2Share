@@ -93,18 +93,33 @@ export const Post = (slice) => {
   const handleDelete = () => {
     // console.log(user[0])
     if (user.length == 0) {
-      console.log("Please login")
+      alert("Please login")
     } else if (user[0]._id == slice.name._id) {
       dispatch(
           deletePostAsync(slice.id)
       )
     } else {
-      console.log("No permission to delete this post.")
+      alert("No permission to delete this post.")
     }
 
 
     // navigate("/Profile", { replace: true });
   }
+
+  const handleEdit = () => {
+    // console.log(user[0])
+    if (user.length == 0) {
+      alert("Please login")
+    } else if (user[0]._id == slice.name._id) {
+      navigate(`/Edit/${slice.id}`, { replace: true })
+    } else {
+      alert("No permission to edit this post.")
+    }
+
+
+    // navigate("/Profile", { replace: true });
+  }
+
 
   return (
     <Card className={classes.root} key={Math.random()}>
@@ -151,7 +166,7 @@ export const Post = (slice) => {
           <DeleteIcon />
 
         </IconButton>
-        <IconButton aria-label="share" component={Link} to={`/Edit/${slice.id}`} >
+        <IconButton aria-label="share" onClick={handleEdit} >
           <EditIcon />
         </IconButton>
         <IconButton
