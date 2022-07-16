@@ -144,14 +144,15 @@ export const Post = (slice) => {
         /> */}
       <CardContent>
 
-        <Typography variant="body2" color="textSecondary" component="p">
-          From: {slice.from}
-          <div> </div>
-          To: {slice.to}
-          <Typography variant="body2" color="textSecondary" align="right" component="p">
-            Departure time: {slice.startingTime}
-          </Typography>
+        <Typography paragraph color="textSecondary" component="p">
+          <span style={{fontWeight: 'bold'}}>From: </span>{slice.from}
         </Typography>
+        <Typography paragraph color="textSecondary" component="p">
+          <span style={{fontWeight: 'bold'}}>To: </span>{slice.to}
+        </Typography>
+          <Typography paragraph color="textSecondary" component="p">
+            <span style={{fontWeight: 'bold'}}>Departure time: </span>{slice.startingTime}
+          </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <Tooltip title="Join the post">
@@ -183,6 +184,8 @@ export const Post = (slice) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Contact: {slice.contactInfo}</Typography>
+          <Typography paragraph>Rating: {slice.rating}</Typography>
+          <Typography paragraph>Available seats: {slice.availableSeats}</Typography>
         </CardContent>
       </Collapse>
     </Card>

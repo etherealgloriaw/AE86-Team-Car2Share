@@ -12,7 +12,7 @@ export const Posts = () => {
     useEffect(() => {
         dispatch(getPostAsync());
     }, []);
-    
+
 
     const renderedPosts = posts.map((slice) => {
         const date = new Date(slice.startingTime)
@@ -24,7 +24,8 @@ export const Posts = () => {
           {
             <Post name = {slice.driver} startingTime = {dateString} from = {slice.from}
             to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
-                  active={slice.active}/>
+                  active={slice.active} rating={slice.rating} price={slice.price}
+                  availableSeats={slice.availableSeats}/>
           }
         </Grid>
 

@@ -65,7 +65,7 @@ function EditPost({ match }) {
 
     const edited = {
         _id: post._id,
-        availableSeats: 2,
+        availableSeats: availableSeats,
         rating: post.rating,
         startingTime: departureTime,
         totalTime: duration,
@@ -118,48 +118,6 @@ function EditPost({ match }) {
 
     }
     return (
-        // <form className={classes.root} noValidate autoComplete="off" >
-        //     <div>
-        //         <TextField required id="standard-required" label="Starting at"
-        //                    onChange={handleChange}
-        //                    name="startingPoint"
-        //                    value={startingPoint}/>
-        //         <TextField required id="standard-required" label="Destination"
-        //                    name="destination"
-        //                    onChange={handleChange}
-        //                    value={destination}/>
-        //         <TextField
-        //             id="standard-number"
-        //             label="Available seats"
-        //             type="number"
-        //             InputLabelProps={{
-        //                 shrink: true,
-        //             }}
-        //             name = "availableSeats"
-        //             onChange={handleChange}
-        //             value={availableSeats}
-        //         />
-        //         <TextField required id="standard-required" label="Contact information"
-        //                    name = "contactInfo"
-        //                    value={contactInfo}
-        //                    onChange={handleChange}/>
-        //         <TextField
-        //             id="datetime-local standard-required"
-        //             label="Departure time"
-        //             type="datetime-local"
-        //             className={classes.textField}
-        //             InputLabelProps={{
-        //                 shrink: true,
-        //             }}
-        //             name = "departureTime"
-        //             value={departureTime}
-        //             onChange={handleChange}
-        //         />
-        //     </div>
-        //     <Button variant="contained" color="primary" onClick={submit} to='/'>
-        //         Submit
-        //     </Button>
-        // </form>
         <div>
             <form className={classes.root} noValidate autoComplete="off" >
                 <div>
