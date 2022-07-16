@@ -56,8 +56,8 @@ export const ResponsiveSearchBar = () => {
     const classes = useStyles();
 
     const[destination, setDestination] = useState('')
-    const[selection, setSelection] = useState('')
-    const[sorting, setSorting] = useState('')
+    const[selection, setSelection] = useState('rating')
+    const[sorting, setSorting] = useState('ascending')
 
     const handleChange = e =>{
         if(e.target.name == 'destination'){
