@@ -47,7 +47,7 @@ router.post('/join', async (req, res, next) => {
     original_id: postId,
     from: post.from, to: post.to, lat: post.lat,
     lng: post.lng, distance: post.distance, price: post.price, startingTime: post.startingTime,
-    contactInfo: post.contactInfo, availableSeats: post.availableSeats, active: true, driver: post.driver,
+    contactInfo: post.contactInfo, availableSeats: post.availableSeats, active: 1, driver: post.driver,
     user: userId
   };
   console.log(joinPost)

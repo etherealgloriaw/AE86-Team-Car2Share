@@ -6,9 +6,7 @@ var mongoose = require('mongoose')
 const posts = mySchemas.postItem
 // get main page active posts
 router.get("/", async (req, res, next) => {
-  // const data = await mySchemas.postItem.find({});
-  // console.log(data);
-  await posts.find({active : true}).populate("driver").exec((err, postData) => {
+  await posts.find({active : 0}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       res.send(JSON.stringify(postData));
@@ -26,7 +24,7 @@ router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
 
   var selection = req.params.selection;
   try {
-    await mySchemas.postItem.find({$and:[{active: true}, {to: {$regex: dest, $options: 'i'}}]}).populate("driver")
+    await mySchemas.postItem.find({$and:[{active: 0}, {to: {$regex: dest, $options: 'i'}}]}).populate("driver")
     .then(results => {
       if(sorting == "ascending"){
         if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
@@ -84,7 +82,7 @@ router.delete('/delete/:id', async (req, res, next) => {
   //     .catch(err => console.error(err))
   try {
     await mySchemas.postItem.deleteOne( {_id: req.params.id}).exec();
-    const allPosts = await mySchemas.postItem.find({active : true}).populate("driver").exec();
+    const allPosts = await mySchemas.postItem.find({active : 0}).populate("driver").exec();
     res.send(allPosts)
   } catch {
     console.log("err")

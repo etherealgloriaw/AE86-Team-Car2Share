@@ -14,7 +14,7 @@ const postSchema = new Schema({
     availableSeats: {type: Number},
     startingTime:{type: Date},
     rating: {type: Number},
-    active: {type: Boolean, default: true},
+    active: {type: Number, default: true},
     driver: {type: Schema.Types.ObjectId, ref: 'userItem'}
 }, { collection: 'posts' , versionKey: false});
 
@@ -39,7 +39,7 @@ const historySchema = new Schema({
     availableSeats: {type: Number},
     startingTime:{type: Date},
     rating: {type: Number},
-    active: {type: Boolean, default: true},
+    active: {type: Number, default: true},
     original_id: {type: Schema.Types.ObjectId, ref: 'postItem'},
     driver: {type: Schema.Types.ObjectId, ref: 'userItem'},
     user: {type: Schema.Types.ObjectId, ref: 'userItem'},
