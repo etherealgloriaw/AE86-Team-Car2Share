@@ -20,13 +20,13 @@ router.get("/", async (req, res, next) => {
 
 
 // get a single post (search)
-router.get('/:dest/:selection/:sorting', async (req, res, next) => {
+router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
   var dest = req.params.dest;
   var sorting = req.params.sorting;
 
   var selection = req.params.selection;
   try {
-    await mySchemas.postItem.find({$and:[{active: true}, {to: {$regex: dest, $options: 'i'}}]})
+    await mySchemas.postItem.find({$and:[{active: true}, {to: {$regex: dest, $options: 'i'}}]}).populate("driver")
     .then(results => {
       if(sorting == "ascending"){
         if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
