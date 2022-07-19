@@ -3,23 +3,16 @@ import { actionTypes } from './actionTypes';
 import AuthService from './services';
 
 export const loginSuccessAsync = createAsyncThunk(
-    actionTypes.LOGIN_SUC,
+    actionTypes.LOG_IN,
     async (email) =>{
-        return await AuthService.loginSuccess(email);
-    }
-)
-
-export const loginFailedAsync = createAsyncThunk(
-    actionTypes.LOGIN_FAILED,
-    async () =>{
-        return await AuthService.loginFailed();
+        return await AuthService.loginIn(email);
     }
 )
 
 export const signUpAsync = createAsyncThunk(
-    actionTypes.LOGIN_FAILED,
-    async () =>{
-        return await AuthService.signUp();
+    actionTypes.SIGN_UP,
+    async (form) =>{
+        return await AuthService.signUp(form);
     }
 )
 

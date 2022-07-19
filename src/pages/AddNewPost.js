@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {useDispatch, useSelector} from 'react-redux'
-import {initialState, postAdded} from '../reducer/SinglePost.js'
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Map from "../components/Map";
 import {useLoadScript} from "@react-google-maps/api";
@@ -45,7 +44,7 @@ export default function AddNewPost() {
     const [directionResponse, setDirectionResponse] = useState(null)
     const [distances, setDistances] = useState(null)
     const [duration, setDuration] = useState(null)
-    const user = useSelector(state => state.auth.list)
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     const calculateRoute = async() => {
         if (dept == null || dest == null) {
@@ -87,7 +86,7 @@ export default function AddNewPost() {
     
     const markerList = [dept, dest]
 
-    if (user.length > 0) {
+    if (user != null) {
         const submit = () => {
             dispatch(
                 addPostAsync(newPost)
@@ -111,7 +110,7 @@ export default function AddNewPost() {
             price: 10,
             to: destString,
             from: deptString,
-            driver: user[0]._id
+            driver: user._id
         }
         return (
             <div>

@@ -77,24 +77,23 @@ export const Post = (slice) => {
   };
 
   const dispatch = useDispatch()
-  const user = useSelector(state => state.auth.list)
+  const user = JSON.parse(localStorage.getItem('profile'));
 
   const handleJoin = () => {
-    console.log(user[0])
     dispatch(
       joinPostAsync({
         id: slice.id,
-        user: user[0]._id
+        user: user._id
       })
     )
-    navigate("/Profile", { replace: true });
+    navigate("/Profile", { replace: false });
   }
 
   const handleDelete = () => {
-    // console.log(user[0])
+    // console.log(user)
     if (user.length == 0) {
       alert("Please login")
-    } else if (user[0]._id == slice.name._id) {
+    } else if (user._id == slice.name._id) {
       dispatch(
           deletePostAsync(slice.id)
       )
@@ -107,11 +106,11 @@ export const Post = (slice) => {
   }
 
   const handleEdit = () => {
-    // console.log(user[0])
+    // console.log(user)
     if (user.length == 0) {
       alert("Please login")
-    } else if (user[0]._id == slice.name._id) {
-      navigate(`/Edit/${slice.id}`, { replace: true })
+    } else if (user._id == slice.name._id) {
+      navigate(`/Edit/${slice.id}`, { replace: false })
     } else {
       alert("No permission to edit this post.")
     }
