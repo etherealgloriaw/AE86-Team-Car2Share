@@ -53,7 +53,7 @@ router.post('/join', async (req, res, next) => {
   };
   console.log(joinPost)
   try {
-    await mySchemas.historyItem(joinPost).save().then(card => res.send(card))
+    await mySchemas.historyItem(joinPost).save().populate("driver").then(card => res.send(card))
       .catch(err => console.error(err));
   } catch (error) {
     console.log(error);

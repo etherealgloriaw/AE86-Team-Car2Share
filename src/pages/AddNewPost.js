@@ -83,7 +83,7 @@ export default function AddNewPost() {
         }
     }
 
-    
+
     const markerList = [dept, dest]
 
     if (user != null) {
@@ -97,7 +97,7 @@ export default function AddNewPost() {
             setDepartureTime('');
             setContactInfo('');
         }
-        
+
         const newPost = {
             availableSeats: availableSeats,
             rating: 4,
@@ -106,7 +106,7 @@ export default function AddNewPost() {
             lat: destLat,
             lng: destLng,
             contactInfo: contactInfo,
-            active: true,
+            active: 0,
             price: 10,
             to: destString,
             from: deptString,
