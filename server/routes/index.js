@@ -6,9 +6,7 @@ var mongoose = require('mongoose')
 const posts = mySchemas.postItem
 // get main page active posts
 router.get("/", async (req, res, next) => {
-  // const data = await mySchemas.postItem.find({});
-  // console.log(data);
-  await posts.find({active: 0}).populate("driver").exec((err, postData) => {
+  await posts.find({active : 0}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       res.send(JSON.stringify(postData));
@@ -20,7 +18,7 @@ router.get("/", async (req, res, next) => {
 
 
 // get a single post (search)
-router.get('/:dest/:selection/:sorting', async (req, res, next) => {
+router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
   var dest = req.params.dest;
   var sorting = req.params.sorting;
 
@@ -28,6 +26,7 @@ router.get('/:dest/:selection/:sorting', async (req, res, next) => {
   try {
     await mySchemas.postItem.find({$and:[{active: 0}, {to: {$regex: dest, $options: 'i'}}]})
     .populate("driver").then(results => {
+
       if(sorting == "ascending"){
         if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
         if(selection == "rating") results.sort((a,b)=>parseFloat(a.rating)-(b.rating));

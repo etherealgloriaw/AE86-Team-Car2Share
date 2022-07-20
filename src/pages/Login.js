@@ -69,17 +69,10 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault(); // to prevent the website reloading
     let form = {email: inputEmail, password: inputPassword};
-    dispatch(loginSuccessAsync(form));
     setInputEmail('');
     setInputPassword('');
-    navigate("/Profile", { replace: false });
+    dispatch(loginSuccessAsync(form)).then(() => {navigate("/Profile", { replace: false });});
   };
-
-  // useEffect(() => {
-  //     if(user.length != 0)
-  //       console.log(user[0]);
-  //       history('/Profile', {state: user[0], replace: false});
-  // });
 
   return (
     <Grid container component="main" className={classes.root}>

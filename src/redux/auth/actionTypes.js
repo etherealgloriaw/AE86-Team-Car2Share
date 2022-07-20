@@ -1,6 +1,6 @@
 export const actionTypes = {
-    LOGIN_SUC:'auth/loginSuccess',
-    LOGIN_FAILED:'auth/loginFailed',
+    LOG_IN:'auth/loginIn',
+    LOG_OUT:'auth/loginOut',
     SIGN_UP: 'auth/signUp',
     EDIT_PROFILE:'auth/editProfile'
 

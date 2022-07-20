@@ -1,8 +1,11 @@
 const router = require("express").Router();
-// const passport = require("passport");
-var mySchemas = require('../models/Schemas')
+const mySchemas = require('../models/Schemas');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const secret = 'test';
 
+// fake signin
 router.get("/:email", async (req, res, next) => {
 	console.log(req.params.email);
 	try {
@@ -22,12 +25,6 @@ router.patch('/Edit', async (req, res, next) => {
 	  .catch(err => console.error(err))
   })
 
-router.get("/login/failed", (req, res) => {
-	res.status(401).json({
-		error: true,
-		message: "Log in failure",
-	});
-});
 
 // router.get("/google", passport.authenticate("google", ["profile", "email"]));
 
@@ -44,12 +41,35 @@ router.get("/logout", (req, res) => {
 	res.redirect(process.env.CLIENT_URL);
 });
 
+// signIn a new user
+router.post('/signIn', async (req, res, next) => {
+	const user = {email: req.body.email, password: req.body.password};
+	try {
+	  const oldUser = await mySchemas.userItem.findOne({ email: user.email });
+	  if (oldUser == null) return res.status(400).json({ message: "User doesn't exist" });
+	  const isPasswordCorrect = await bcrypt.compare(user.password, oldUser.password);
+	  if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
+	  const token = jwt.sign( { email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" } );
+	  console.log(token);
+	  res.status(200).json({ result: oldUser, token });
+	} catch (error) {
+	  console.log(error);
+	}
+  });
+
+
 // signup a new user
 router.post('/signUp', async (req, res, next) => {
-	const user = {username: req.params.username, password: req.params.password}
+	const user = {email: req.body.email, username: req.body.username, password: req.body.password};
+	console.log(user);
 	try {
-	  await mySchemas.userItem(user).save().then(card => res.send(card))
-		.catch(err => console.error(err));
+	  const oldUser = await mySchemas.userItem.findOne({ email: user.email });
+	  if (oldUser) return res.status(400).json({ message: "User already exists" });
+	  const hashedPassword = await bcrypt.hash(user.password, 12);
+	  user.password = hashedPassword;
+	  const result = await mySchemas.userItem(user).save();
+	  const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
+	  res.status(201).json({ result, token });
 	} catch (error) {
 	  console.log(error);
 	}

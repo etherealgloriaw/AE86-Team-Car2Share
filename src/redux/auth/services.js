@@ -1,19 +1,37 @@
 const url = 'http://localhost:3001/Login';
 
-const loginSuccess = async(form) => {
-    var uri = url + "/" + form.email;
-    const response = await fetch (uri, {
-        method: 'GET'
+const loginIn = async(form) => {
+    console.log(form)
+    const response = await fetch(url + "/signIn", {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify(form)
     });
-    return response.json();
-}
-
-const loginFailed = async() =>{
-    console.log("loginFailed")
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
 }
 
 const signUp = async(form) => {
-    console.log("signUp")
+    console.log(form)
+    const response = await fetch(url + "/signUp", {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify(form)
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
 }
 
 const editProfile = async(edited) =>{
@@ -36,8 +54,7 @@ const editProfile = async(edited) =>{
 }
 
 const AuthService = {
-    loginSuccess,
-    loginFailed,
+    loginIn,
     signUp,
     editProfile
 };

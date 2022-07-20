@@ -1,6 +1,7 @@
 import "./styles/Login.css"
-import React from 'react';
-import { Link as Jump } from "react-router-dom";
+import React, {useState} from 'react';
+import { Link as Jump, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector } from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { signUpAsync } from "../redux/auth/thunks";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,63 +37,99 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function SignUp() {
-    const classes = useStyles();
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
-          <form className={classes.form} noValidate>
+  const classes = useStyles();
+  const [inputEmail, setInputEmail] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
+  const [inputUsername, setInputUsername] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const emailChangeHandler = (e) => {
+    setInputEmail(e.target.value);
+  };
+
+  const passwordChangeHandler = (e) => {
+    setInputPassword(e.target.value);
+  };
+
+  const usernameChangeHandler = (e) => {
+    setInputUsername(e.target.value);
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault(); // to prevent the website reloading
+    let form = {email: inputEmail, password: inputPassword, username: inputUsername};
+    setInputUsername('');
+    setInputEmail('');
+    setInputPassword('');
+    dispatch(signUpAsync(form)).then(() => {navigate("/Profile", { replace: false });});
+    // navigate("/Profile", { replace: false });
+  };
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign Up
+        </Typography>
+        <form className={classes.form} noValidate>
           <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="username"
-              label="username"
-              type="username"
-              id="username"
-              autoComplete="username"
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
-          </form>
-        </div>
-      </Container>
-    );
-  }
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="username"
+            label="username"
+            type="username"
+            id="username"
+            autoComplete="username"
+            value={inputUsername}
+            onChange = {usernameChangeHandler}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={inputEmail}
+            onChange = {emailChangeHandler}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={inputPassword}
+            onChange = {passwordChangeHandler}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick = {handleSignUp}
+          >
+            Sign Up
+          </Button>
+        </form>
+      </div>
+    </Container>
+  );
+}

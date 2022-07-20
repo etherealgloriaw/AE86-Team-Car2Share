@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mySchemas = require('../models/Schemas')
 var mongoose = require('mongoose')
+// var auth = require('../middleware/secret.js')
 // no use now
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');

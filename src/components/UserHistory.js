@@ -40,31 +40,25 @@ const useStyles = makeStyles((theme) => ({
 export const UserHistory = () => {
   const classes = useStyles();
   const posts = useSelector(state => state.users.list)
-  const user = useSelector(state => state.auth.list)
+  const user = JSON.parse(localStorage.getItem('profile'));
 
   const [status, setStatus] = React.useState(true);
   const handleChange = (event) => {
     setStatus(!status);
     if (status)
-      dispatch(getDriverHistoryAsync(user[0]._id));
+      dispatch(getDriverHistoryAsync(user._id));
     else
-      dispatch(getHistoryAsync(user[0]._id));
+      dispatch(getHistoryAsync(user._id));
   };
 
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (status)
-  //     dispatch(getHistoryAsync(user[0]._id));
-  //   else
-  //     dispatch(getDriverHistoryAsync(user[0]._id));
-  // }, []);
 
   const renderedPosts = posts.map((slice) => {
     const date = new Date(slice.startingTime)
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
+    console.log(slice.driver.username)
       return (
           <Grid item xs={12} md={12} key={Math.random()}>
             {

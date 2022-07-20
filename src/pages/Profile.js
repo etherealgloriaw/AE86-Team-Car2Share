@@ -1,8 +1,7 @@
 import "./styles/Login.css"
 import React from 'react';
-// import { Link as Jump } from "react-router-dom";
-import { Navigate } from 'react-router-dom'
-import { useSelector } from "react-redux";
+import { useNavigate, Navigate } from 'react-router-dom'
+import { useSelector, useDispatch } from "react-redux";
 import UserHistory from "../components/UserHistory";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -14,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import FormDialog from "../components/Edit";
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,23 +41,33 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
   const classes = useStyles();
   
-  const user = useSelector(state => state.auth.list);
+  const user = JSON.parse(localStorage.getItem('profile'));
+  // const user = useSelector(state => state.auth.currUser);
   console.log(user)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  if (user.length > 0) return <Container component="main" maxWidth="xs">
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate("/", { replace: false });
+  };
+
+  if (user != null) return <Container component="main" maxWidth="xs">
     <CssBaseline />
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h7">
-        {user[0].username}
+        {user.username}
       </Typography>
       <Typography component="h1" variant="h6">
-        {user[0].introduction}
+        {user.introduction}
       </Typography>
       <FormDialog />
-      
+      <Button variant="outlined" color="primary" onClick = {handleLogOut}>
+        Log Out
+      </Button>
     </div>
     <UserHistory />
   </Container>
