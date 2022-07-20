@@ -72,7 +72,7 @@ function EditPost({ match }) {
         lat: post.lat,
         lng: post.lng,
         contactInfo: contactInfo,
-        active: true,
+        active: 0,
         price: 10,
         to: destString,
         from: deptString,

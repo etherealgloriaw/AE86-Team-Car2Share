@@ -8,7 +8,7 @@ const posts = mySchemas.postItem
 router.get("/", async (req, res, next) => {
   // const data = await mySchemas.postItem.find({});
   // console.log(data);
-  await posts.find({active : true}).populate("driver").exec((err, postData) => {
+  await posts.find({active: 0}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       res.send(JSON.stringify(postData));
@@ -26,8 +26,8 @@ router.get('/:dest/:selection/:sorting', async (req, res, next) => {
 
   var selection = req.params.selection;
   try {
-    await mySchemas.postItem.find({$and:[{active: true}, {to: {$regex: dest, $options: 'i'}}]})
-    .then(results => {
+    await mySchemas.postItem.find({$and:[{active: 0}, {to: {$regex: dest, $options: 'i'}}]})
+    .populate("driver").then(results => {
       if(sorting == "ascending"){
         if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
         if(selection == "rating") results.sort((a,b)=>parseFloat(a.rating)-(b.rating));
@@ -70,7 +70,7 @@ router.post('/add', async (req, res, next) => {
   console.log(post)
 
   try {
-    await mySchemas.postItem(post).save().then(card => res.send(card))
+    await mySchemas.postItem(post).save().populate("driver").then(card => res.send(card))
         .catch(err => console.error(err));
   } catch (error) {
     console.log(error);
@@ -84,7 +84,7 @@ router.delete('/delete/:id', async (req, res, next) => {
   //     .catch(err => console.error(err))
   try {
     await mySchemas.postItem.deleteOne( {_id: req.params.id}).exec();
-    const allPosts = await mySchemas.postItem.find({active : true}).populate("driver").exec();
+    const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
     res.send(allPosts)
   } catch {
     console.log("err")
@@ -110,7 +110,7 @@ router.put('/Edit/:id', async (req, res, next) => {
     from: req.body.from,
     driver: req.body.driver,
   }
-  await mySchemas.postItem.findByIdAndUpdate(id, post).then(
+  await mySchemas.postItem.findByIdAndUpdate(id, post).populate("driver").then(
       card => res.send(card)
   )
       .catch(err => console.error(err))

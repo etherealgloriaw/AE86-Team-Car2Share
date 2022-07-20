@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {Post} from "./Post";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,31 +66,14 @@ export const UserHistory = () => {
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
       return (
-        <Grid item xs={12} md={12} key={Math.random()}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {slice.driver.username}
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title={slice.driver.username}
-        />
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            From: {slice.from}
-            <div></div>
-            To: {slice.to}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" align="right" component="p">
-            Departure time: {dateString}
-          </Typography>
-        </CardContent>
-      </Grid>
+          <Grid item xs={12} md={12} key={Math.random()}>
+            {
+              <Post name = {slice.driver} startingTime = {dateString} from = {slice.from}
+                    to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
+                    active={slice.active} rating={slice.rating} price={slice.price}
+                    availableSeats={slice.availableSeats}/>
+            }
+          </Grid>
       )
   })
 

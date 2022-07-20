@@ -87,6 +87,7 @@ export const Post = (slice) => {
         user: user[0]._id
       })
     )
+    setActive(1);
     navigate("/Profile", { replace: true });
   }
 
