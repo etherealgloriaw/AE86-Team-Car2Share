@@ -52,10 +52,28 @@ const editProfile = async(edited) =>{
 
 }
 
+const rateUser = async(user) =>{
+    const response = await fetch(url + "/rate", {
+        method: 'PATCH',
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify(user)
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
+
+}
+
 const AuthService = {
     loginIn,
     signUp,
-    editProfile
+    editProfile,
+    rateUser
 };
 
 export default AuthService;

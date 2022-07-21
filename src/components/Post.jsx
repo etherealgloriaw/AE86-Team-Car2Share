@@ -117,10 +117,6 @@ export const Post = (slice) => {
     // navigate("/Profile", { replace: true });
   }
 
-  const handleJump = () => {
-    console.log(user)
-    // navigate("/Profile", { replace: true });
-  }
 
   var profile = '/Profile/' + slice.name._id
   // console.log(profile)
@@ -132,11 +128,6 @@ export const Post = (slice) => {
           <Avatar aria-label="recipe" className={classes.avatar} >
             {slice.name.username}
           </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings" onClick={handleJump}>
-            <MoreVertIcon />
-          </IconButton>
         }
         title={slice.name.username}
         starting_time={slice.startingTime}
