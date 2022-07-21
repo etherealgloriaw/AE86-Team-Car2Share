@@ -41,11 +41,13 @@ function Home() {
             <div className={classes.root}>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
-                        <Posts />
+                        <Posts selected={selected} setSelected={setSelected} posts={postList}/>
                     </Grid>
                     <Grid item xs={7}>
                        <Map markerList={postList.map((post) => {
-                           return {lat: Number(post.lat.$numberDecimal), lng: Number(post.lng.$numberDecimal)}})}/>
+                           return {coordinates: {lat: Number(post.lat.$numberDecimal), lng: Number(post.lng.$numberDecimal)},
+                           id: post._id}})}
+                       selected={selected} setSelected={setSelected}/>
                     </Grid>
                 </Grid>
             </div>

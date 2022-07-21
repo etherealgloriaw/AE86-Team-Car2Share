@@ -6,7 +6,7 @@ import './style/posts.css'
 import {getPostAsync} from "../redux/posts/thunks";
 
 
-export const Posts = () => {
+export const Posts = (props) => {
     const posts = useSelector(state => state.posts.list)
     const dispatch = useDispatch();
     useEffect(() => {
@@ -25,7 +25,7 @@ export const Posts = () => {
             <Post name = {slice.driver} startingTime = {dateString} from = {slice.from}
             to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
                   active={slice.active} rating={slice.rating} price={slice.price}
-                  availableSeats={slice.availableSeats}/>
+                  availableSeats={slice.availableSeats} selected={props.selected} setSelected={props.setSelected}/>
           }
         </Grid>
 

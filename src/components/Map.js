@@ -25,9 +25,10 @@ export default function Map(props) {
 
     return (
         <Grid item xs={12}>
-             <Paper className={classes.paper}><GoogleMap zoom={10} center={{lat: 49.261443, lng:-123.256696}}  mapContainerStyle={containerStyle} mapContainerClassName="map-container">
+             <Paper className={classes.paper}><GoogleMap zoom={11} center={{lat: 49.26361670730985, lng:-123.14095958202498}}  mapContainerStyle={containerStyle} mapContainerClassName="map-container">
                 {props.markerList.map((marker => {
-                    return <MyMarker position={marker}/>
+                    return <MyMarker marker={marker.coordinates} selected={props.selected} setSelected={props.setSelected}
+                    id={marker.id}/>
                 }))}
                  {props.directionResponse && (<DirectionsRenderer directions={props.directionResponse}/>)}
             </GoogleMap></Paper>

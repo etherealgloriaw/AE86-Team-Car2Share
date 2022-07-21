@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
@@ -121,13 +121,23 @@ export const Post = (slice) => {
   }
 
     const handleHover = () => {
-        // eslint-disable-next-line no-undef
         setRaised(true)
+        slice.setSelected(slice.id)
     }
 
     const handleOut = () => {
       setRaised(false)
+        slice.setSelected(null)
     }
+
+    useEffect(() => {
+        if (slice.selected === null) {
+            setRaised(false)
+        } else if (slice.id === slice.selected) {
+            // eslint-disable-next-line no-undef
+            setRaised(true)
+        }
+    }, [slice.selected, slice.id])
 
   return (
     <Card className={classes.root} key={Math.random()} raised={raised} onMouseOver={handleHover} onMouseOut={handleOut}>
