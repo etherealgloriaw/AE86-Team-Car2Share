@@ -72,6 +72,7 @@ export const Post = (slice) => {
   let navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
   const [active, setActive] = React.useState(slice.active);
+  const [raised, setRaised] = React.useState(false)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -119,9 +120,17 @@ export const Post = (slice) => {
     // navigate("/Profile", { replace: true });
   }
 
+    const handleHover = () => {
+        // eslint-disable-next-line no-undef
+        setRaised(true)
+    }
+
+    const handleOut = () => {
+      setRaised(false)
+    }
 
   return (
-    <Card className={classes.root} key={Math.random()}>
+    <Card className={classes.root} key={Math.random()} raised={raised} onMouseOver={handleHover} onMouseOut={handleOut}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar} component={Link} to='/Profile'>
