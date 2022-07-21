@@ -54,13 +54,12 @@ export const PostHistory = (slice) => {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(0);
     const rate = useSelector(state => state.auth.rate);
-
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     const handleRate = () => {
-        if (rate == null) setOpen(true);
+        if (rate == null || rate._id != slice.name._id) setOpen(true);
         else alert('You have rated this drive!');
     };
 
@@ -144,7 +143,7 @@ export const PostHistory = (slice) => {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography paragraph>Contact: {slice.contactInfo}</Typography>
-                    <Typography paragraph>Rating: {rate == null ? slice.rating : rate.rating.$numberDecimal}</Typography>
+                    <Typography paragraph>Rating: {rate == null || rate._id != slice.name._id ? slice.rating : rate.rating.$numberDecimal}</Typography>
                     <Typography paragraph>Available seats: {slice.availableSeats}</Typography>
                 </CardContent>
             </Collapse>
