@@ -21,33 +21,50 @@ router.get("/", async (req, res, next) => {
 router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
   var dest = req.params.dest;
   var sorting = req.params.sorting;
-
   var selection = req.params.selection;
-  try {
-    await mySchemas.postItem.find({$and:[{active: 0}, {to: {$regex: dest, $options: 'i'}}]})
-    .populate("driver").then(results => {
-
-      if(sorting == "ascending"){
-        if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
-        if(selection == "rating") results.sort((a,b)=>parseFloat(a.rating)-(b.rating));
-        if(selection == "totalTime") results.sort((a,b)=>parseFloat(a.totalTime)-(b.totalTime));
-      }else if(sorting == "descending"){
-        // results.sort((a,b)=>{
-        //   console.log("a:"+ a);
-        //   console.log("b:" + JSON.stringify(b.availableSeats));
-        //   parseFloat(a.${selection})-(b.selection);
-        // })
-        if(selection == "availableSeats") results.sort((a,b)=>parseFloat(b.availableSeats)-(a.availableSeats));
-        if(selection == "rating") results.sort((a,b)=>parseFloat(b.rating)-(a.rating));
-        if(selection == "totalTime") results.sort((a,b)=>parseFloat(b.totalTime)-(a.totalTime));
-      }
-      console.log("results:" + results);
-      res.send(JSON.stringify(results));
-    })
-        .catch(err => console.error(err));
-  } catch (error) {
-    console.log(error);
+  console.log("Dest: " + dest);
+  if(dest != "NULL"){
+    try {
+      await mySchemas.postItem.find({$and:[{active: 0}, {to: {$regex: dest, $options: 'i'}}]})
+      .populate("driver").then(results => {
+        if(sorting == "ascending"){
+          if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
+          if(selection == "rating") results.sort((a,b)=>parseFloat(a.rating)-(b.rating));
+          if(selection == "totalTime") results.sort((a,b)=>parseFloat(a.totalTime)-(b.totalTime));
+        }else if(sorting == "descending"){
+          if(selection == "availableSeats") results.sort((a,b)=>parseFloat(b.availableSeats)-(a.availableSeats));
+          if(selection == "rating") results.sort((a,b)=>parseFloat(b.rating)-(a.rating));
+          if(selection == "totalTime") results.sort((a,b)=>parseFloat(b.totalTime)-(a.totalTime));
+        }
+        console.log("results:" + results);
+        res.send(JSON.stringify(results));
+      })
+          .catch(err => console.error(err));
+    } catch (error) {
+      console.log(error);
+    }
+  }else{
+    try {
+      await mySchemas.postItem.find({active: 0}).populate("driver").then(results => {
+        if(sorting == "ascending"){
+          if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
+          if(selection == "rating") results.sort((a,b)=>parseFloat(a.rating)-(b.rating));
+          if(selection == "totalTime") results.sort((a,b)=>parseFloat(a.totalTime)-(b.totalTime));
+        }else if(sorting == "descending"){
+          console.log("descending");
+          if(selection == "availableSeats") results.sort((a,b)=>parseFloat(b.availableSeats)-(a.availableSeats));
+          if(selection == "rating") results.sort((a,b)=>parseFloat(b.rating)-(a.rating));
+          if(selection == "totalTime") results.sort((a,b)=>parseFloat(b.totalTime)-(a.totalTime));
+        }
+        // console.log("results:" + results);
+        res.send(JSON.stringify(results));
+      })
+          .catch(err => console.error(err));
+    } catch (error) {
+      console.log(error);
+    }
   }
+  
 });
 
 /* add a new post. */
