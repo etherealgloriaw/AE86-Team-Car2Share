@@ -35,7 +35,6 @@ const signUp = async(form) => {
 }
 
 const editProfile = async(edited) =>{
-    console.log(edited)
     const id = edited._id;
     const response = await fetch(url + "/Edit", {
         method: 'PATCH',

@@ -34,7 +34,8 @@ const INITIAL_STATE = {
         })
         .addCase(editProfileAsync.fulfilled, (state, action) => {
           state.editUser = REQUEST_STATE.FULFILLED;
-          state.list= action.payload;
+          var result = {_id: action.payload._id, username: action.payload.username, introduction: action.payload.introduction}
+          localStorage.setItem('profile', JSON.stringify(result));
         })
         .addCase(editProfileAsync.rejected, (state, action) => {
           state.editUser= REQUEST_STATE.REJECTED;

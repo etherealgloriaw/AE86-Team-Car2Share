@@ -14,7 +14,6 @@ export default function FormDialog() {
   const [introduction, setIntroduction] = useState('')
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile'));
-  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,7 +32,7 @@ export default function FormDialog() {
 }
 
   const handleSubmit = () => {
-    const form = {id: user._id, username: name, introduction: introduction}
+    var form = {id: user._id, username: name, introduction: introduction}
     dispatch(
       editProfileAsync(form)
     )

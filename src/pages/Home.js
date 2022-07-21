@@ -28,6 +28,7 @@ function Home() {
     const classes = useStyles();
     const [ libraries ] = useState(['places']);
     const postList = useSelector(state => state.posts.list);
+    // localStorage.clear();
     useLoadScript({
         googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',
         libraries

@@ -24,7 +24,7 @@ router.get('/:userid', async (req, res, next) => {
 });
 
 router.get('/driver/:userid', async (req, res, next) => {
-  const id = mongoose.Types.ObjectId(req.params.userid.trim())
+  const id = mongoose.Types.ObjectId(req.params.userid)
   const userID = await mySchemas.userItem.findById(id)
   console.log(userID)
   const result = await mySchemas.postItem.find({driver: {$eq: userID._id}}).populate("driver").exec((err, postData) => {
@@ -43,7 +43,6 @@ router.post('/join', async (req, res, next) => {
   const userId = mongoose.Types.ObjectId(req.body.user)
   const postId = mongoose.Types.ObjectId(req.body.id)
   const post = await mySchemas.postItem.findById(postId)
-  console.log(post)
   const joinPost = {
     original_id: postId,
     from: post.from, to: post.to, lat: post.lat,
@@ -51,7 +50,6 @@ router.post('/join', async (req, res, next) => {
     contactInfo: post.contactInfo, availableSeats: post.availableSeats, active: 1, driver: post.driver,
     user: userId
   };
-  console.log(joinPost)
   try {
     await mySchemas.historyItem(joinPost).save().populate("driver").then(card => res.send(card))
       .catch(err => console.error(err));

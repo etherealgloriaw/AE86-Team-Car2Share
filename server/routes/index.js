@@ -66,7 +66,6 @@ router.post('/add', async (req, res, next) => {
     from: req.body.from,
     driver: mongoose.Types.ObjectId(req.body.driver)
   };
-  console.log(post)
 
   try {
     await mySchemas.postItem(post).save().populate("driver").then(card => res.send(card))
@@ -94,7 +93,6 @@ router.delete('/delete/:id', async (req, res, next) => {
 /* Edit a post. */
 router.put('/Edit/:id', async (req, res, next) => {
   const id = req.params.id;
-  console.log(id)
   const post = {
     availableSeats: req.body.availableSeats,
     rating: req.body.rating,
