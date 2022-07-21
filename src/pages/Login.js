@@ -71,7 +71,7 @@ export default function Login() {
     let form = {email: inputEmail, password: inputPassword};
     setInputEmail('');
     setInputPassword('');
-    dispatch(loginSuccessAsync(form)).then(() => {navigate("/Profile", { replace: false });});
+    dispatch(loginSuccessAsync(form)).then(() => {navigate("/Profile", { replace: true });});
   };
 
   return (
