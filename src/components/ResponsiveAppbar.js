@@ -56,7 +56,11 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const user = JSON.parse(localStorage.getItem('profile'));
+  var profileURL = '/Profile/';
+  if (user != null) profileURL = '/Profile/' + user._id;
+  else profileURL = '/Login'
+  
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -106,7 +110,7 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Current Travel</p>
       </MenuItem> */}
-      <MenuItem component={Link} to='/Profile' onClick={handleProfileMenuOpen}>
+      <MenuItem component={Link} to={profileURL} onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">
           <Badge badgeContent={0} color="secondary">
             <DashboardIcon />

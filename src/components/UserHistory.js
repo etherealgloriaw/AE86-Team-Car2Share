@@ -58,7 +58,6 @@ export const UserHistory = () => {
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
-    console.log(slice.driver.username)
       return (
           <Grid item xs={12} md={12} key={Math.random()}>
             {

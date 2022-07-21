@@ -86,7 +86,7 @@ export const Post = (slice) => {
         user: user._id
       })
     )
-    navigate("/Profile", { replace: false });
+    navigate("/Profile/" + user._id, { replace: false });
   }
 
   const handleDelete = () => {
@@ -114,22 +114,27 @@ export const Post = (slice) => {
     } else {
       alert("No permission to edit this post.")
     }
-
-
     // navigate("/Profile", { replace: true });
   }
 
+  const handleJump = () => {
+    console.log(user)
+    // navigate("/Profile", { replace: true });
+  }
+
+  var profile = '/Profile/' + slice.name._id
+  // console.log(profile)
 
   return (
     <Card className={classes.root} key={Math.random()}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar} component={Link} to='/Profile'>
+          <Avatar aria-label="recipe" className={classes.avatar} >
             {slice.name.username}
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label="settings" onClick={handleJump}>
             <MoreVertIcon />
           </IconButton>
         }
