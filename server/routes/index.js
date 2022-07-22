@@ -64,7 +64,7 @@ router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
       console.log(error);
     }
   }
-  
+
 });
 
 /* add a new post. */
@@ -130,4 +130,13 @@ router.put('/Edit/:id', async (req, res, next) => {
       .catch(err => console.error(err))
 })
 
-module.exports = router;
+
+router.patch('/finish/:id', async (req, res, next) => {
+  const id = req.params.id;
+  await mySchemas.postItem.findByIdAndUpdate(id, {active: 2}).populate("driver").then(
+      card => res.send(card)
+  )
+      .catch(err => console.error(err))
+})
+
+module.exports = router

@@ -31,6 +31,14 @@ export const searchPostAsync = createAsyncThunk(
 )
 
 
+export const finishPostAsync = createAsyncThunk(
+    actionTypes.FINISH_POST,
+    async (id) => {
+        console.log(id)
+        return await PostService.finishPost(id);
+    }
+)
+
 export const editPostAsync = createAsyncThunk(
   actionTypes.EDIT_POST,
   async (edited) => {

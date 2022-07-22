@@ -15,9 +15,10 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import {Post} from "./Post";
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import {deletePostAsync} from "../redux/posts/thunks";
+import {deletePostAsync,finishPostAsync } from "../redux/posts/thunks";
 import { useNavigate } from 'react-router-dom'
 
 import { PostHistory } from "./PostHistory";
@@ -95,8 +96,6 @@ export const UserHistory = () => {
       statusStr = "Finished"
     }
 
-
-
     const handleDelete = () => {
       dispatch(
           deletePostAsync(slice._id)
@@ -106,6 +105,13 @@ export const UserHistory = () => {
     const handleEdit = () => {
       navigate(`/Edit/${slice._id}`, { replace: false })
     }
+
+    const handleFinish = () => {
+      dispatch(
+          finishPostAsync(slice._id)
+      )
+    }
+
 
     return (
         <Grid item xs={12} md={12} key={Math.random()}>
@@ -123,13 +129,13 @@ export const UserHistory = () => {
           title={statusStr}
         />
         <CardContent>
-          <Typography variant="body1" color="textFirst" component="p">
+          <Typography variant="body1" color="black" component="p">
             <span style={{fontWeight: 'bold'}}>From: </span>{slice.from}
           </Typography>
-          <Typography variant="body1" color="textFirst" component="p">
+          <Typography variant="body1" color="black" component="p">
             <span style={{fontWeight: 'bold'}}>To: </span>{slice.from}{slice.to}
           </Typography>
-          <Typography variant="body1" color="textFirst" component="p">
+          <Typography variant="body1" color="black" component="p">
             <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -146,6 +152,9 @@ export const UserHistory = () => {
           </IconButton>
           <IconButton aria-label="share" onClick={handleEdit} >
             <EditIcon />
+          </IconButton>
+          <IconButton aria-label="share" onClick={handleFinish} >
+            <CheckBoxIcon />
           </IconButton>
 
         </CardContent>
