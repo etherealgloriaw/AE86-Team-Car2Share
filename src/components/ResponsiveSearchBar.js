@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 export const ResponsiveSearchBar = () => {
     const classes = useStyles();
 
-    const[destination, setDestination] = useState('')
+    var[destination, setDestination] = useState('')
     const[selection, setSelection] = useState('rating')
     const[sorting, setSorting] = useState('ascending')
 
@@ -68,6 +68,10 @@ export const ResponsiveSearchBar = () => {
     const dispatch = useDispatch()
 
     const handleSearch = () => {
+        if(destination == ""){
+            destination = "NULL"
+        }
+
         const searchReq = {
             selection,
             sorting,

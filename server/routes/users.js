@@ -15,7 +15,7 @@ router.get('/:userid', async (req, res, next) => {
   const result = await mySchemas.historyItem.find({user: {$eq: userID._id}}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
-      console.log(postData)
+      // console.log(postData)
       res.send(JSON.stringify(postData));
     } else {
       res.end();
@@ -30,7 +30,7 @@ router.get('/driver/:userid', async (req, res, next) => {
   const result = await mySchemas.postItem.find({driver: {$eq: userID._id}}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
-      console.log(postData)
+      // console.log(postData)
       res.send(JSON.stringify(postData));
     } else {
       res.end();

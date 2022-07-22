@@ -13,11 +13,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import {Post} from "./Post";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import {deletePostAsync} from "../redux/posts/thunks";
 import { useNavigate } from 'react-router-dom'
+
+import { PostHistory } from "./PostHistory";
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -67,7 +71,7 @@ export const UserHistory = () => {
       return (
           <Grid item xs={12} md={12} key={Math.random()}>
             {
-              <Post name = {slice.driver} startingTime = {dateString} from = {slice.from}
+              <PostHistory name = {slice.driver} startingTime = {dateString} from = {slice.from}
                     to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
                     active={slice.active} rating={slice.rating} price={slice.price}
                     availableSeats={slice.availableSeats}/>

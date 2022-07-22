@@ -24,6 +24,7 @@ const userSchema = new Schema({
     rating: {type: mongoose.Decimal128},
     password: {type: String},
     email: {type: String},
+    join_date: {type: Date}
 }, { collection: 'users', versionKey: false});
 
 const historySchema = new Schema({
@@ -37,12 +38,11 @@ const historySchema = new Schema({
     contactInfo: {type: String},
     availableSeats: {type: Number},
     startingTime:{type: Date},
-    rating: {type: Number},
+    rating: {type: Number, default: 0},
     active: {type: Number, default: 0},
     original_id: {type: Schema.Types.ObjectId, ref: 'postItem'},
     driver: {type: Schema.Types.ObjectId, ref: 'userItem'},
-    user: {type: Schema.Types.ObjectId, ref: 'userItem'},
-
+    user: {type: Schema.Types.ObjectId, ref: 'userItem'}
 }, { collection: 'user_history' , versionKey: false});
 
 const postItem = mongoose.model('postItem', historySchema, 'posts');
