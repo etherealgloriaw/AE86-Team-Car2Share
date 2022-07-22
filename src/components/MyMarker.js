@@ -13,6 +13,9 @@ export default function MyMarker (props) {
         //setAnimation(false)
         props.setSelected(null)
     }
+    const handleClick = () => {
+        props.setPopup(props.id)
+    }
     useEffect(() => {
         if (props.selected !== props.id) {
             setAnimation(null)
@@ -22,5 +25,6 @@ export default function MyMarker (props) {
         }
     }, [props.selected, props.id])
 
-    return <Marker position={props.marker} animation={animation} onMouseOver={handleHover} onMouseOut={handleOut}/>
+    return <Marker position={props.marker} animation={animation} onMouseOver={handleHover} onMouseOut={handleOut}
+    onClick={handleClick}/>
 }

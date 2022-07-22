@@ -1,7 +1,7 @@
 import Posts from "../components/Posts";
 import { ResponsiveSearchBar } from "../components/ResponsiveSearchBar";
 import { Filter } from "../components/Filter";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useMemo } from 'react';
 import Map from '../components/Map'
 import './Home.css'
@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {useLoadScript} from "@react-google-maps/api";
+import Popup from "../components/Popup"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,6 +30,19 @@ function Home() {
     const [ libraries ] = useState(['places']);
     const postList = useSelector(state => state.posts.list);
     const [selected, setSelected] = useState(null)
+    const [popup, setPopup] = useState(null)
+    const [popupData, setPopupData] = useState(null);
+    useEffect(() => {
+        if (popup !== null) {
+            setPopupData(postList.find(post => {
+            return post._id === popup
+        }))
+        } else {
+            setPopupData(null)
+        }
+        console.log("Home Popup:" + popup)
+        console.log(popupData)
+    }, [popup, postList])
     // localStorage.clear();
     useLoadScript({
         googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',
@@ -41,16 +55,17 @@ function Home() {
             <div className={classes.root}>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
-                        <Posts selected={selected} setSelected={setSelected} posts={postList}/>
+                        <Posts selected={selected} setSelected={setSelected} posts={postList} setPopup={setPopup}/>
                     </Grid>
                     <Grid item xs={7}>
                        <Map markerList={postList.map((post) => {
                            return {coordinates: {lat: Number(post.lat.$numberDecimal), lng: Number(post.lng.$numberDecimal)},
                            id: post._id}})}
-                       selected={selected} setSelected={setSelected}/>
+                       selected={selected} setSelected={setSelected} setPopup={setPopup}/>
                     </Grid>
                 </Grid>
             </div>
+            {popupData ? (<Popup togglePopup={setPopup} data={popupData}/>) : null}
         </div>
 
     )

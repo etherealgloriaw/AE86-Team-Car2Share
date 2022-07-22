@@ -25,7 +25,8 @@ export const Posts = (props) => {
             <Post name = {slice.driver} startingTime = {dateString} from = {slice.from}
             to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
                   active={slice.active} rating={slice.rating} price={slice.price}
-                  availableSeats={slice.availableSeats} selected={props.selected} setSelected={props.setSelected}/>
+                  availableSeats={slice.availableSeats} selected={props.selected} setSelected={props.setSelected}
+                  setPopup={props.setPopup}/>
           }
         </Grid>
 

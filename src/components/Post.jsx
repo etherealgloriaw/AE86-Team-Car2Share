@@ -17,7 +17,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
-import { Tooltip } from "@material-ui/core";
+import {CardActionArea, Tooltip} from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -116,9 +116,12 @@ export const Post = (slice) => {
       alert("No permission to edit this post.")
     }
 
-
     // navigate("/Profile", { replace: true });
   }
+
+    const handleClick = () => {
+      slice.setPopup(slice.id)
+    }
 
     const handleHover = () => {
         setRaised(true)
@@ -148,7 +151,7 @@ export const Post = (slice) => {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label="settings" onClick={handleClick}>
             <MoreVertIcon />
           </IconButton>
         }
@@ -161,7 +164,7 @@ export const Post = (slice) => {
           title="Paella dish"
         /> */}
       <CardContent>
-
+          <CardActionArea onClick={handleClick}>
         <Typography paragraph color="textSecondary" component="p">
           <span style={{fontWeight: 'bold'}}>From: </span>{slice.from}
         </Typography>
@@ -171,6 +174,7 @@ export const Post = (slice) => {
           <Typography paragraph color="textSecondary" component="p">
             <span style={{fontWeight: 'bold'}}>Departure time: </span>{slice.startingTime}
           </Typography>
+          </CardActionArea>
       </CardContent>
       <CardActions disableSpacing>
         <Tooltip title="Join the post">
