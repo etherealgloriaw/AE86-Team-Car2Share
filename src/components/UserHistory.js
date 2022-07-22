@@ -13,6 +13,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import {Post} from "./Post";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import {deletePostAsync} from "../redux/posts/thunks";
+import { useNavigate } from 'react-router-dom'
+
 import { PostHistory } from "./PostHistory";
 
 
@@ -40,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const UserHistory = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
   const posts = useSelector(state => state.users.list)
   const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -52,7 +61,7 @@ export const UserHistory = () => {
       dispatch(getHistoryAsync(user._id));
   };
 
-  const dispatch = useDispatch();
+
 
   const renderedPosts = posts.map((slice) => {
     const date = new Date(slice.startingTime)
@@ -76,12 +85,34 @@ export const UserHistory = () => {
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
-      return (
+    const status = slice.active;
+    let statusStr = "";
+    if (status == 0) {
+      statusStr = "In the future"
+    } else if(status == 1) {
+      statusStr = "Ongoing"
+    } else if(status == 2) {
+      statusStr = "Finished"
+    }
+
+
+
+    const handleDelete = () => {
+      dispatch(
+          deletePostAsync(slice._id)
+      )
+    }
+
+    const handleEdit = () => {
+      navigate(`/Edit/${slice._id}`, { replace: false })
+    }
+
+    return (
         <Grid item xs={12} md={12} key={Math.random()}>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
-              {slice.active ? 'Active' : 'Inactive'}
+              {user.username}
             </Avatar>
           }
           action={
@@ -89,18 +120,36 @@ export const UserHistory = () => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={slice.active ? 'Active' : 'Inactive'}
+          title={statusStr}
         />
         <CardContent>
+          <Typography variant="body1" color="textFirst" component="p">
+            <span style={{fontWeight: 'bold'}}>From: </span>{slice.from}
+          </Typography>
+          <Typography variant="body1" color="textFirst" component="p">
+            <span style={{fontWeight: 'bold'}}>To: </span>{slice.from}{slice.to}
+          </Typography>
+          <Typography variant="body1" color="textFirst" component="p">
+            <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}
+          </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            From: {slice.from}
-            <div></div>
-            To: {slice.to}
+            <span style={{fontWeight: 'bold'}}>Available Seats: </span>{slice.availableSeats}
           </Typography>
-          <Typography variant="body2" color="textSecondary" align="right" component="p">
-            Departure time: {dateString}
+          <Typography variant="body2" color="textSecondary" component="p">
+            <span style={{fontWeight: 'bold'}}>Price:  </span>{slice.price}
           </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}
+          </Typography>
+          <IconButton aria-label="share" onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+          <IconButton aria-label="share" onClick={handleEdit} >
+            <EditIcon />
+          </IconButton>
+
         </CardContent>
+
       </Grid>
       )
   })

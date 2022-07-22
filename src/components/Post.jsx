@@ -90,32 +90,6 @@ export const Post = (slice) => {
     navigate("/Profile/" + user._id, { replace: false });
   }
 
-  const handleDelete = () => {
-    // console.log(user)
-    if (user.length == 0) {
-      alert("Please login")
-    } else if (user._id == slice.name._id) {
-      dispatch(
-          deletePostAsync(slice.id)
-      )
-    } else {
-      alert("No permission to delete this post.")
-    }
-
-
-    // navigate("/Profile", { replace: true });
-  }
-
-  const handleEdit = () => {
-    // console.log(user)
-    if (user.length == 0) {
-      alert("Please login")
-    } else if (user._id == slice.name._id) {
-      navigate(`/Edit/${slice.id}`, { replace: false })
-    } else {
-      alert("No permission to edit this post.")
-    }
-  }
 
     const handleClick = () => {
       slice.setPopup(slice.id)
@@ -181,13 +155,6 @@ export const Post = (slice) => {
             <FavoriteIcon className={classes.fav} />
           </IconButton>
         </Tooltip>
-        <IconButton aria-label="share" onClick={handleDelete}>
-          <DeleteIcon />
-
-        </IconButton>
-        <IconButton aria-label="share" onClick={handleEdit} >
-          <EditIcon />
-        </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,

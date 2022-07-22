@@ -36,9 +36,10 @@ function EditPost({ match }) {
     const { postID } = useParams()
 
     const post = useSelector(state => state.posts.list.find(p => p._id == postID))
-    console.log(post)
-    const [startingPoint, setStartingPoint] = useState(post.from)
-    const [destination, setDestination] = useState(post.to)
+    const posts = useSelector(state => state.posts.list)
+    console.log(posts)
+    // const [startingPoint, setStartingPoint] = useState(post.from)
+    // const [destination, setDestination] = useState(post.to)
     const [availableSeats, setAvailableSeats] = useState(post.availableSeats)
     const dateStr = post.startingTime.toString()
     const dateFormat = dateStr.substring(0,dateStr.length-2)
@@ -109,8 +110,6 @@ function EditPost({ match }) {
         dispatch(
             editPostAsync(edited)
         )
-        // setStartingPoint('');
-        // setDestination('');
         setAvailableSeats('');
         setDepartureTime('');
         setContactInfo('');
