@@ -54,7 +54,6 @@ export default function Login() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   let navigate = useNavigate();
-  const user = useSelector(state => state.auth.list)
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -71,7 +70,7 @@ export default function Login() {
     let form = {email: inputEmail, password: inputPassword};
     setInputEmail('');
     setInputPassword('');
-    dispatch(loginSuccessAsync(form)).then(() => {navigate("/Profile", { replace: false });});
+    dispatch(loginSuccessAsync(form)).then((user) => {navigate('/Profile/' + user._id, { replace: false });});
   };
 
   return (

@@ -9,7 +9,6 @@ const searchPost = async(searchReq) =>{
     const dest = searchReq.destination;
     const selection = searchReq.selection;
     const sorting = searchReq.sorting;
-    console.log("sorting: " + sorting);
     const response = await fetch(`http://localhost:3001/search/${dest}/${selection}/${sorting}`, {
         method: 'GET',
         headers:{

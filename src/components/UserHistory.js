@@ -13,7 +13,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {Post} from "./Post";
+import { PostHistory } from "./PostHistory";
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -58,11 +59,10 @@ export const UserHistory = () => {
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
-    console.log(slice.driver.username)
       return (
           <Grid item xs={12} md={12} key={Math.random()}>
             {
-              <Post name = {slice.driver} startingTime = {dateString} from = {slice.from}
+              <PostHistory name = {slice.driver} startingTime = {dateString} from = {slice.from}
                     to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
                     active={slice.active} rating={slice.rating} price={slice.price}
                     availableSeats={slice.availableSeats}/>
