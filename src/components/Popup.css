@@ -1,0 +1,44 @@
+/*part of the CSS styling for the popup window was adapted from
+https://www.cluemediator.com/create-simple-popup-in-reactjs*/
+.popup-box {
+    position: fixed;
+    background: rgba(33, 33, 33, 0.31);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.box {
+    position: relative;
+    width: 70%;
+    height: auto;
+    max-height: 70vh;
+    margin: calc(100vh - 85vh - 20px) auto 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #1000;
+    overflow: auto;
+}
+
+.rating {
+    display:flex; flex-direction:row;
+}
+
+.box {
+    display:flex; flex-direction:row;
+}
+
+.detail {
+    margin: auto
+}
+
+.map {
+    margin: auto
+}
+
+.stars{
+    margin-top: 2vh;
+    margin-left: 1vw
+}
