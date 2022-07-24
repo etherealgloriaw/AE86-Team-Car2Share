@@ -132,11 +132,16 @@ router.put('/Edit/:id', async (req, res, next) => {
 
 
 router.patch('/finish/:id', async (req, res, next) => {
-  const id = req.params.id;
-  await mySchemas.postItem.findByIdAndUpdate(id, {active: 2}).populate("driver").then(
-      card => res.send(card)
-  )
-      .catch(err => console.error(err))
+  try {
+    const id = req.params.id;
+    await mySchemas.postItem.findByIdAndUpdate(id, {active: 2}).populate("driver");
+    const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
+    res.send(allPosts)
+  } catch (e) {
+    console.error(e)
+  }
+
+
 })
 
 module.exports = router
