@@ -133,7 +133,7 @@ export const UserHistory = () => {
             <span style={{fontWeight: 'bold'}}>From: </span>{slice.from}
           </Typography>
           <Typography variant="body1" color="black" component="p">
-            <span style={{fontWeight: 'bold'}}>To: </span>{slice.from}{slice.to}
+            <span style={{fontWeight: 'bold'}}>To: </span>{slice.to}
           </Typography>
           <Typography variant="body1" color="black" component="p">
             <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}
@@ -146,6 +146,9 @@ export const UserHistory = () => {
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <span style={{fontWeight: 'bold'}}>Contact: </span>{slice.contactInfo}
           </Typography>
           <IconButton aria-label="share" onClick={handleDelete}>
             <DeleteIcon />

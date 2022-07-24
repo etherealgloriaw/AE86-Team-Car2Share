@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
 const posts = mySchemas.postItem
 // get main page active posts
 router.get("/", async (req, res, next) => {
-  await posts.find({}).populate("driver").exec((err, postData) => {
+  await posts.find({active: 0}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       res.send(JSON.stringify(postData));
