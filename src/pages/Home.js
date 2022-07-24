@@ -61,7 +61,7 @@ function Home() {
                        <Map markerList={postList.map((post) => {
                            return {coordinates: {lat: Number(post.lat.$numberDecimal), lng: Number(post.lng.$numberDecimal)},
                            id: post._id}})}
-                       selected={selected} setSelected={setSelected} setPopup={setPopup}/>
+                       selected={selected} setSelected={setSelected} setPopup={setPopup} forHome={true}/>
                     </Grid>
                 </Grid>
             </div>

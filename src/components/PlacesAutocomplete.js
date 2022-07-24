@@ -47,7 +47,7 @@ export default function PlacesAutocomplete(props) {
     return (
         <Autocomplete
             id="autocomplete"
-            value={value}
+            value={props.forEdit? props.string:value}
             freeSolo
             clearOnEscape={true}
             disabled={!ready}

@@ -29,8 +29,13 @@ export default function Map(props) {
                  <GoogleMap zoom={11} center={{lat: 49.26361670730985, lng:-123.14095958202498}}
                             mapContainerStyle={containerStyle} mapContainerClassName="map-container">
                 {props.markerList.map((marker => {
-                    return <MyMarker marker={marker.coordinates} selected={props.selected} setSelected={props.setSelected}
-                    id={marker.id} setPopup={props.setPopup}/>
+                    if(props.forHome){
+                        return <MyMarker marker={marker.coordinates} selected={props.selected} setSelected={props.setSelected}
+                                         id={marker.id} setPopup={props.setPopup}/>
+                    } else {
+                        return <Marker position={marker}/>
+                    }
+
                 }))}
                  {props.directions && (<DirectionsRenderer directions={props.directions}/>)}
             </GoogleMap></Paper>
