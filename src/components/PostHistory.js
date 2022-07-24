@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 ));
 
 export const PostHistory = (slice) => {
+    console.log(slice)
     const classes = useStyles();
     let navigate = useNavigate();
     const [expanded, setExpanded] = React.useState(false);
