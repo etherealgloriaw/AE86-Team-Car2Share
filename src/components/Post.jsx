@@ -178,9 +178,9 @@ export const Post = (slice) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Contact: {slice.contactInfo}</Typography>
-          <Typography paragraph>Rating: {slice.rating}</Typography>
-          <Typography paragraph>Available seats: {slice.availableSeats}</Typography>
+          <Typography paragraph color="textSecondary"> <span style={{fontWeight: 'bold'}}>Contact: </span>{slice.contactInfo}</Typography>
+          <Typography paragraph color="textSecondary"> <span style={{fontWeight: 'bold'}}>Rating: </span>{slice.rating}</Typography>
+          <Typography paragraph color="textSecondary"><span style={{fontWeight: 'bold'}}>Available seats: </span>{slice.availableSeats}</Typography>
         </CardContent>
       </Collapse>
     </Card>

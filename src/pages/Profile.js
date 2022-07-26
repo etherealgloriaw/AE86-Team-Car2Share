@@ -1,7 +1,7 @@
 import "./styles/Login.css"
 import React from 'react';
 import { useNavigate, Navigate } from 'react-router-dom'
-import { useSelector, useDispatch } from "react-redux";
+import {useDispatch } from "react-redux";
 import UserHistory from "../components/UserHistory";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -43,7 +43,7 @@ export default function Profile() {
   
   const user = JSON.parse(localStorage.getItem('profile'));
   // const user = useSelector(state => state.auth.currUser);
-  console.log(user)
+  // console.log(user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -14,6 +14,11 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { PostHistory } from "./PostHistory";
+import {AppBar} from '@material-ui/core';
+import {Toolbar} from '@material-ui/core';
+import {Button} from '@material-ui/core';
+import { SignalCellular0Bar } from "@material-ui/icons";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +49,8 @@ export const UserHistory = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
 
   const [status, setStatus] = React.useState(true);
+  var time = 'History'
+
   const handleChange = (event) => {
     setStatus(!status);
     if (status)
@@ -54,7 +61,40 @@ export const UserHistory = () => {
 
   const dispatch = useDispatch();
 
-  const renderedPosts = posts.map((slice) => {
+  const handleHistoryPost = () =>{
+    time = 'History';
+    // posts.filter(function(slice){
+    //   return slice.active== "0";
+    // })
+  }
+
+  const handleOngoingPost = () =>{
+    time = 'Ongoing'
+    // console.log("post: " + posts)
+    // posts.filter(function(slice){
+    //   console.log("active: " + JSON.stringify(slice))
+    //   return slice.active === "1";
+    // })
+    // console.log("post: " + posts)
+  }
+
+  const handleUpcomingPost = () =>{
+    time = 'Upcoming'
+    // console.log("Time: " + time)
+    // posts.filter(function(slice){
+    //   return slice.active== "2";
+    // })
+  }
+
+
+  var renderedPosts = posts.map((slice) => {
+    if(time == "Histroy"){
+      if(slice.active != "0") return
+    }else if(time == "Upcoming"){
+      if(slice.active != "2") return
+    }else{
+      if(slice.active != "1") return
+    }
     const date = new Date(slice.startingTime)
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
@@ -71,7 +111,7 @@ export const UserHistory = () => {
       )
   })
 
-  const renderedDriverPosts = posts.map((slice) => {
+  var renderedDriverPosts = posts.map((slice) => {
     const date = new Date(slice.startingTime)
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
@@ -89,7 +129,7 @@ export const UserHistory = () => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={slice.active ? 'Active' : 'Inactive'}
+          // title={slice.active ? 'Active' : 'Inactive'}
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -105,6 +145,9 @@ export const UserHistory = () => {
       )
   })
 
+  
+
+
   return (
     <section className="posts">
       <FormGroup>
@@ -113,6 +156,17 @@ export const UserHistory = () => {
           label={status ? 'Passenger' : 'Driver'}
         />
       </FormGroup>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              </Typography>
+              <Button color="inherit" onClick = {handleOngoingPost}>Ongoing</Button>
+              <Button color="inherit" onClick = {handleUpcomingPost}>Upcoming</Button>
+              <Button color="inherit" onClick = {handleHistoryPost}>History</Button>
+              </Toolbar>
+              </AppBar>
       <List style={{ maxHeight: '250%', overflow: 'auto' }}>
         {/* <Grid sx={{ overflowY: "scroll", maxHeight: "250px" }}, container spacing={2}> */}
         {status ? renderedPosts : renderedDriverPosts}

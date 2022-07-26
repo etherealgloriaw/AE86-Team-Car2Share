@@ -25,7 +25,7 @@ router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
   console.log("Dest: " + dest);
   if(dest != "NULL"){
     try {
-      await mySchemas.postItem.find({$and:[{active: 0}, {to: {$regex: dest, $options: 'i'}}]})
+      await posts.find({$and:[{active: 0}, {to: {$regex: dest, $options: 'i'}}]})
       .populate("driver").then(results => {
         if(sorting == "ascending"){
           if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
@@ -36,7 +36,6 @@ router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
           if(selection == "rating") results.sort((a,b)=>parseFloat(b.rating)-(a.rating));
           if(selection == "totalTime") results.sort((a,b)=>parseFloat(b.totalTime)-(a.totalTime));
         }
-        console.log("results:" + results);
         res.send(JSON.stringify(results));
       })
           .catch(err => console.error(err));
@@ -45,7 +44,7 @@ router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
     }
   }else{
     try {
-      await mySchemas.postItem.find({active: 0}).populate("driver").then(results => {
+      await posts.find({active: 0}).populate("driver").then(results => {
         if(sorting == "ascending"){
           if(selection == "availableSeats") results.sort((a,b)=>parseFloat(a.availableSeats)-(b.availableSeats));
           if(selection == "rating") results.sort((a,b)=>parseFloat(a.rating)-(b.rating));
