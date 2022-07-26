@@ -116,12 +116,12 @@ export default function AddNewPost() {
             <div>
             <form className={classes.root} noValidate autoComplete="off" >
                 <div>
-                    <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString} title="Departure From"/>
-                    <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString} title="Arrive At"/>
+                    <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString} title="Departure From" forEdit={false}/>
+                    <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString} title="Arrive At" forEdit={false}/>
                     <Button variant="contained" color="primary" onClick={calculateRoute}>
                         Calculate Route
                     </Button>
-                    <h3>Estimated time of arrival: {duration}</h3>
+                    <h3>Estimated Travel Time: {duration}</h3>
                     <h3>Distance: {distances}</h3>
                     <TextField
                         id="standard-number"
@@ -155,7 +155,7 @@ export default function AddNewPost() {
                     Submit
                 </Button>
             </form>
-            <Map markerList={markerList} directionResponse={directionResponse} />
+            <Map markerList={markerList} directions={directionResponse} forHome={false} />
             </div>
         )
     } else return < Navigate to='/Login' />

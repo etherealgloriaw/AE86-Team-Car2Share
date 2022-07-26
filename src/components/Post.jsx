@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,7 +17,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
-import { Tooltip } from "@material-ui/core";
+import {CardActionArea, Tooltip} from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -72,6 +72,7 @@ export const Post = (slice) => {
   let navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
   const [active, setActive] = React.useState(slice.active);
+  const [raised, setRaised] = React.useState(false)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -89,40 +90,35 @@ export const Post = (slice) => {
     navigate("/Profile/" + user._id, { replace: false });
   }
 
-  const handleDelete = () => {
-    // console.log(user)
-    if (user.length == 0) {
-      alert("Please login")
-    } else if (user._id == slice.name._id) {
-      dispatch(
-          deletePostAsync(slice.id)
-      )
-    } else {
-      alert("No permission to delete this post.")
+
+    const handleClick = () => {
+      slice.setPopup(slice.id)
     }
 
-
-    // navigate("/Profile", { replace: true });
-  }
-
-  const handleEdit = () => {
-    // console.log(user)
-    if (user.length == 0) {
-      alert("Please login")
-    } else if (user._id == slice.name._id) {
-      navigate(`/Edit/${slice.id}`, { replace: false })
-    } else {
-      alert("No permission to edit this post.")
+    const handleHover = () => {
+        setRaised(true)
+        slice.setSelected(slice.id)
     }
-    // navigate("/Profile", { replace: true });
-  }
 
+    const handleOut = () => {
+      setRaised(false)
+        slice.setSelected(null)
+    }
+
+    useEffect(() => {
+        if (slice.selected === null) {
+            setRaised(false)
+        } else if (slice.id === slice.selected) {
+            // eslint-disable-next-line no-undef
+            setRaised(true)
+        }
+    }, [slice.selected, slice.id])
 
   var profile = '/Profile/' + slice.name._id
   // console.log(profile)
 
   return (
-    <Card className={classes.root} key={Math.random()}>
+    <Card className={classes.root} key={Math.random()} raised={raised} onMouseOver={handleHover} onMouseOut={handleOut}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar} >
@@ -138,7 +134,7 @@ export const Post = (slice) => {
           title="Paella dish"
         /> */}
       <CardContent>
-
+          <CardActionArea onClick={handleClick}>
         <Typography paragraph color="textSecondary" component="p">
           <span style={{fontWeight: 'bold'}}>From: </span>{slice.from}
         </Typography>
@@ -148,6 +144,7 @@ export const Post = (slice) => {
           <Typography paragraph color="textSecondary" component="p">
             <span style={{fontWeight: 'bold'}}>Departure time: </span>{slice.startingTime}
           </Typography>
+          </CardActionArea>
       </CardContent>
       <CardActions disableSpacing>
         <Tooltip title="Join the post">
@@ -158,13 +155,6 @@ export const Post = (slice) => {
             <FavoriteIcon className={classes.fav} />
           </IconButton>
         </Tooltip>
-        <IconButton aria-label="share" onClick={handleDelete}>
-          <DeleteIcon />
-
-        </IconButton>
-        <IconButton aria-label="share" onClick={handleEdit} >
-          <EditIcon />
-        </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,

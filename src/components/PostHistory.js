@@ -85,11 +85,6 @@ export const PostHistory = (slice) => {
                 title={slice.name.username}
                 starting_time={slice.startingTime}
             />
-            {/* <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
-        /> */}
             <CardContent>
                 <Typography paragraph color="textSecondary" component="p">
                     <span style={{ fontWeight: 'bold' }}>From: </span>{slice.from}
@@ -120,14 +115,6 @@ export const PostHistory = (slice) => {
                             />
                         </Box>
                     </DialogContent>
-                    {/* <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={handleSubmit} color="primary">
-                            Submit
-                        </Button>
-                    </DialogActions> */}
                 </Dialog>
                 <IconButton
                     className={clsx(classes.expand, {

@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
 const posts = mySchemas.postItem
 // get main page active posts
 router.get("/", async (req, res, next) => {
-  await posts.find({active : 0}).populate("driver").exec((err, postData) => {
+  await posts.find({active: 0}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       res.send(JSON.stringify(postData));
@@ -63,7 +63,7 @@ router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
       console.log(error);
     }
   }
-  
+
 });
 
 /* add a new post. */
@@ -129,4 +129,18 @@ router.put('/Edit/:id', async (req, res, next) => {
       .catch(err => console.error(err))
 })
 
-module.exports = router;
+
+router.patch('/finish/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    await mySchemas.postItem.findByIdAndUpdate(id, {active: 2}).populate("driver");
+    const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
+    res.send(allPosts)
+  } catch (e) {
+    console.error(e)
+  }
+
+
+})
+
+module.exports = router

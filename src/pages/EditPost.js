@@ -36,9 +36,10 @@ function EditPost({ match }) {
     const { postID } = useParams()
 
     const post = useSelector(state => state.posts.list.find(p => p._id == postID))
-    console.log(post)
-    const [startingPoint, setStartingPoint] = useState(post.from)
-    const [destination, setDestination] = useState(post.to)
+    const posts = useSelector(state => state.posts.list)
+    console.log(posts)
+    // const [startingPoint, setStartingPoint] = useState(post.from)
+    // const [destination, setDestination] = useState(post.to)
     const [availableSeats, setAvailableSeats] = useState(post.availableSeats)
     const dateStr = post.startingTime.toString()
     const dateFormat = dateStr.substring(0,dateStr.length-2)
@@ -93,8 +94,8 @@ function EditPost({ match }) {
         // eslint-disable-next-line no-undef
         const directionService = new google.maps.DirectionsService()
         const results = await directionService.route({
-            origin: dept,
-            destination: dest,
+            origin: deptString,
+            destination: destString,
             // eslint-disable-next-line no-undef
             travelMode: google.maps.TravelMode.DRIVING
         })
@@ -109,8 +110,6 @@ function EditPost({ match }) {
         dispatch(
             editPostAsync(edited)
         )
-        // setStartingPoint('');
-        // setDestination('');
         setAvailableSeats('');
         setDepartureTime('');
         setContactInfo('');
@@ -120,13 +119,13 @@ function EditPost({ match }) {
         <div>
             <form className={classes.root} noValidate autoComplete="off" >
                 <div>
-                    <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString} title="Departure From"/>
-                    <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString} title="Arrive At"/>
+                    <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString} title="Departure From" forEdit={true} string={deptString}/>
+                    <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString} title="Arrive At" forEdit={true} string={destString}/>
                     <Button variant="contained" color="primary" onClick={calculateRoute}>
                         Calculate Route
                     </Button>
-                    <h3>Estimated time of arrival: {duration}</h3>
-                    <h3>Distance: {distances}</h3>
+                    <h3>New Estimated Travel Time: {duration}</h3>
+                    <h3>New Distance: {distances}</h3>
                     <TextField
                         id="standard-number"
                         label="Available seats"
@@ -159,7 +158,7 @@ function EditPost({ match }) {
                     Submit
                 </Button>
             </form>
-            <Map markerList={markerList} directionResponse={directionResponse} />
+            <Map markerList={markerList} directions={directionResponse} forHome={false}/>
         </div>
     );
 }

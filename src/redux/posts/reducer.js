@@ -1,6 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
-import { addPostAsync, getPostAsync,deletePostAsync, searchPostAsync, editPostAsync, joinPostAsync } from './thunks';
+import {
+    addPostAsync,
+    getPostAsync,
+    deletePostAsync,
+    searchPostAsync,
+    editPostAsync,
+    joinPostAsync,
+    finishPostAsync
+} from './thunks';
 
 
 const INITIAL_STATE = {
@@ -11,6 +19,7 @@ const INITIAL_STATE = {
     findPost:REQUEST_STATE.IDLE,
     joinPost: REQUEST_STATE.IDLE,
     editPost: REQUEST_STATE.IDLE,
+    finishPost: REQUEST_STATE.IDLE,
     error: null
   };
 
@@ -92,6 +101,18 @@ const postsSlice = createSlice({
           .addCase(joinPostAsync.rejected, (state, action) => {
             state.joinPost = REQUEST_STATE.REJECTED;
             state.error = action.error;
+          })
+          .addCase(finishPostAsync.pending, (state) => {
+              state.finishPost = REQUEST_STATE.PENDING;
+              state.error = null;
+          })
+          .addCase(finishPostAsync.fulfilled, (state, action) => {
+              state.finishPost = REQUEST_STATE.FULFILLED;
+              state.list= action.payload;
+          })
+          .addCase(finishPostAsync.rejected, (state, action) => {
+              state.finishPost = REQUEST_STATE.REJECTED;
+              state.error = action.error;
           });
     }
   });

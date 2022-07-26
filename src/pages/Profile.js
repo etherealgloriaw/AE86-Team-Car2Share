@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
   const classes = useStyles();
-  
+
   const user = JSON.parse(localStorage.getItem('profile'));
   // const user = useSelector(state => state.auth.currUser);
   // console.log(user)

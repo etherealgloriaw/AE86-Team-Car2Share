@@ -41,6 +41,22 @@ const deletePost = async(id) =>{
     return data;
 };
 
+const finishPost = async(id) =>{
+    const response = await fetch(`http://localhost:3001/finish/${id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-type": "application/json"
+        }
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
+};
+
 const addPost = async(newPost)=>{
     const response = await fetch('http://localhost:3001/add', {
         method: 'POST',
@@ -88,4 +104,5 @@ export default {
     editPost,
     joinPost,
     searchPost,
+    finishPost
 };
