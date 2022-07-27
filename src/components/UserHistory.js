@@ -18,7 +18,12 @@ import {AppBar} from '@material-ui/core';
 import {Toolbar} from '@material-ui/core';
 import {Button} from '@material-ui/core';
 import { SignalCellular0Bar } from "@material-ui/icons";
-
+import {Post} from "./Post";
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import {deletePostAsync,finishPostAsync } from "../redux/posts/thunks";
+import { useNavigate } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const UserHistory = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
   const posts = useSelector(state => state.users.list)
   const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -59,8 +66,6 @@ export const UserHistory = () => {
       dispatch(getHistoryAsync(user._id));
   };
 
-  const dispatch = useDispatch();
-
   const handleHistoryPost = () =>{
     time = 'History';
     // posts.filter(function(slice){
@@ -69,7 +74,7 @@ export const UserHistory = () => {
   }
 
   const handleOngoingPost = () =>{
-    time = 'Ongoing'
+    time = 'Ongoing';
     // console.log("post: " + posts)
     // posts.filter(function(slice){
     //   console.log("active: " + JSON.stringify(slice))
@@ -79,7 +84,7 @@ export const UserHistory = () => {
   }
 
   const handleUpcomingPost = () =>{
-    time = 'Upcoming'
+    time = 'Upcoming';
     // console.log("Time: " + time)
     // posts.filter(function(slice){
     //   return slice.active== "2";
@@ -89,6 +94,7 @@ export const UserHistory = () => {
 
   var renderedPosts = posts.map((slice) => {
     if(time == "Histroy"){
+      console.log("History")
       if(slice.active != "0") return
     }else if(time == "Upcoming"){
       if(slice.active != "2") return
@@ -116,7 +122,34 @@ export const UserHistory = () => {
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
-      return (
+    const status = slice.active;
+    let statusStr = "";
+    if (status == "0") {
+      statusStr = "In the future"
+    } else if(status == "1") {
+      statusStr = "Ongoing"
+    } else if(status == 2) {
+      statusStr = "Finished"
+    }
+
+    const handleDelete = () => {
+      dispatch(
+          deletePostAsync(slice._id)
+      )
+    }
+
+    const handleEdit = () => {
+      navigate(`/Edit/${slice._id}`, { replace: false })
+    }
+
+    const handleFinish = () => {
+      dispatch(
+          finishPostAsync(slice._id)
+      )
+    }
+
+
+    return (
         <Grid item xs={12} md={12} key={Math.random()}>
         <CardHeader
           avatar={
@@ -129,7 +162,8 @@ export const UserHistory = () => {
               <MoreVertIcon />
             </IconButton>
           }
-          // title={slice.active ? 'Active' : 'Inactive'}
+          title={statusStr}
+          
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -140,6 +174,19 @@ export const UserHistory = () => {
           <Typography variant="body2" color="textSecondary" align="right" component="p">
             Departure time: {dateString}
           </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}
+          </Typography>
+          <IconButton aria-label="share" onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+          <IconButton aria-label="share" onClick={handleEdit} >
+            <EditIcon />
+          </IconButton>
+          <IconButton aria-label="share" onClick={handleFinish} >
+            <CheckBoxIcon />
+          </IconButton>
+
         </CardContent>
       </Grid>
       )
