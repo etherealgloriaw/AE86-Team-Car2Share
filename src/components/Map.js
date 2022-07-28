@@ -33,7 +33,10 @@ export default function Map(props) {
                         return <MyMarker marker={marker.coordinates} selected={props.selected} setSelected={props.setSelected}
                                          id={marker.id} setPopup={props.setPopup}/>
                     } else {
-                        return <Marker position={marker}/>
+                        if (!props.directions) {
+                            return <Marker position={marker}/>
+                        }
+                        return null
                     }
 
                 }))}
