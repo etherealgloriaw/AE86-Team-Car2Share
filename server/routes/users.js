@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mySchemas = require('../models/Schemas')
 var mongoose = require('mongoose')
+var nodeoutlook = require('nodejs-nodemailer-outlook')
 // var auth = require('../middleware/secret.js')
 // no use now
 router.get('/', function (req, res, next) {
@@ -50,12 +51,33 @@ router.post('/join', async (req, res, next) => {
     contactInfo: post.contactInfo, availableSeats: post.availableSeats, active: 1, driver: post.driver,
     user: userId
   };
-  try {
-    await mySchemas.historyItem(joinPost).save().populate("driver").then(card => res.send(card))
-      .catch(err => console.error(err));
-  } catch (error) {
-    console.log(error);
-  }
+  const driverID = mongoose.Types.ObjectId(post.driver)
+  const driver = await mySchemas.userItem.findById(driverID)
+  await mySchemas.historyItem(joinPost).save();
+  await mySchemas.historyItem.find({user: {$eq: userId}}).populate("driver").exec((err, postData) => {
+      if (err) throw err;
+      if (postData) {
+      nodeoutlook.sendEmail({
+        auth: {
+            user: "car2share@outlook.com",
+            pass: "Notification"
+        },
+        from: 'car2share@outlook.com',
+        to: driver.email,
+        subject: 'Someone has joined your post!',
+        text: ` Hello ${driver.username}, your post from ${post.from} to ${post.to} start at ${post.startingTime} has been joined by a user, please check the status in Car2Share!
+        
+        Car2Share Official`,
+        replyTo: 'car2share@outlook.com',
+        attachments: [],
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i)
+    });
+        res.send(JSON.stringify(postData));
+      } else {
+        res.end();
+      }
+    });
 });
 
 

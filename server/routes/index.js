@@ -2,11 +2,14 @@ var mySchemas = require('../models/Schemas')
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose')
+var dateTime = require('node-datetime');
 
 const posts = mySchemas.postItem
-// get main page active posts
+
+/// get main page active posts
 router.get("/", async (req, res, next) => {
-  await posts.find({active: 0}).populate("driver").exec((err, postData) => {
+  var dt = dateTime.create();
+  await posts.find({$and:[{active: 0, startingTime: {$gt: dt._now}}]}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       res.send(JSON.stringify(postData));
