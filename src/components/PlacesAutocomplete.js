@@ -8,13 +8,18 @@ import TextField from "@material-ui/core/TextField" ;
 
 
 export default function PlacesAutocomplete(props) {
+    // eslint-disable-next-line no-undef
+
     const {
         ready,
         value,
         setValue,
         suggestions: {status, data},
         clearSuggestions,
-    } = usePlacesAutocomplete();
+    } = usePlacesAutocomplete({requestOptions: {
+        bounds: props.boundary
+        }}
+    );
 
 
     const handleSelect = async (address) => {
@@ -66,7 +71,8 @@ export default function PlacesAutocomplete(props) {
             options={data.map(({ description}) => description)}
             renderInput={(params) => {
                 if (props.label === props.error || props.error === 3){
-                    return <TextField error helperText={"Please choose address from list"}
+                    return <TextField error helperText={props.posErrorMsg? props.posErrorMsg:
+                        "Please choose address from list"}
                                       {...params} label={props.title} margin="normal"/>
                 } else return (
                 <TextField required {...params} label={props.title} margin="normal"/>
