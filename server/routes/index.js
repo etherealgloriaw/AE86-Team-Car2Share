@@ -5,8 +5,8 @@ var mongoose = require('mongoose')
 var dateTime = require('node-datetime');
 
 const posts = mySchemas.postItem
-// get main page active posts
 
+/// get main page active posts
 router.get("/", async (req, res, next) => {
   var dt = dateTime.create();
   await posts.find({$and:[{active: 0, startingTime: {$gt: dt._now}}]}).populate("driver").exec((err, postData) => {
