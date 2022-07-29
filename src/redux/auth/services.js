@@ -35,7 +35,7 @@ const signUp = async(form) => {
 }
 
 const editProfile = async(edited) =>{
-    const id = edited._id;
+    // const id = edited._id;
     const response = await fetch(url + "/Edit", {
         method: 'PATCH',
         headers: {

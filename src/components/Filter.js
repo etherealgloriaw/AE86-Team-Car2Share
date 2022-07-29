@@ -1,4 +1,3 @@
-import React from 'react';
 import "./style/Filter.css"
 
 export const Filter = () => {

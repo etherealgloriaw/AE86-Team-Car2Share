@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import { Grid, List } from "@material-ui/core";
 import { Post } from "./Post";
@@ -11,7 +11,7 @@ export const Posts = (props) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getPostAsync());
-    }, []);
+    }, [dispatch]);
 
 
     const renderedPosts = posts.map((slice) => {

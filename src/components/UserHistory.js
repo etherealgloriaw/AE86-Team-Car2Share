@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { Grid, List } from "@material-ui/core";
 import './style/posts.css'
@@ -17,8 +17,6 @@ import { PostHistory } from "./PostHistory";
 import {AppBar} from '@material-ui/core';
 import {Toolbar} from '@material-ui/core';
 import {Button} from '@material-ui/core';
-import { SignalCellular0Bar } from "@material-ui/icons";
-import {Post} from "./Post";
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -93,13 +91,13 @@ export const UserHistory = () => {
 
 
   var renderedPosts = posts.map((slice) => {
-    if(time == "Histroy"){
+    if(time === "History"){
       console.log("History")
-      if(slice.active != "0") return
-    }else if(time == "Upcoming"){
-      if(slice.active != "2") return
+      if(slice.active !== "0") return
+    }else if(time === "Upcoming"){
+      if(slice.active !== "2") return
     }else{
-      if(slice.active != "1") return
+      if(slice.active !== "1") return
     }
     const date = new Date(slice.startingTime)
     const dateString = date.toDateString() + " " + date.getHours() + ":"

@@ -1,13 +1,9 @@
 import "./styles/Login.css"
 import React from 'react';
 import { useNavigate, Navigate } from 'react-router-dom'
-import {useDispatch } from "react-redux";
 import UserHistory from "../components/UserHistory";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -44,7 +40,6 @@ export default function Profile() {
   const user = JSON.parse(localStorage.getItem('profile'));
   // const user = useSelector(state => state.auth.currUser);
   // console.log(user)
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogOut = () => {

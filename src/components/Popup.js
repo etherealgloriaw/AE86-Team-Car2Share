@@ -2,7 +2,7 @@
 // https://www.cluemediator.com/create-simple-popup-in-reactjs
 import './Popup.css'
 import {DirectionsRenderer, GoogleMap} from "@react-google-maps/api";
-import React, {useEffect, useMemo, useState} from "react";
+import React, { useMemo, useState} from "react";
 import {Rating} from "@material-ui/lab";
 // import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
@@ -35,7 +35,7 @@ export default function Popup(props) {
             calculateRoute()
         }
 
-    }, [props.data])
+    }, [props.data, calculateRoute])
     return (
         <div className="popup-box">
             <div className="box">

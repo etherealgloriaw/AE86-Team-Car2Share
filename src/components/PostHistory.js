@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import {FavoriteIcon, ShareIcon, MoreVertIcon} from '@material-ui/icons';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Rating from '@material-ui/lab/Rating';
-import {Card, CardHeader, CardContent,CardActions, Collapse, Avatar, Box, IconButton, Typography, Tooltip, Grid,
-    DialogActions, Dialog,Button, DialogContent, DialogContentText, DialogTitle, Slide} from "@material-ui/core";
+import {Card, CardHeader, CardContent,CardActions, Collapse, Avatar, Box, IconButton, Typography,
+    Dialog, DialogContent, DialogTitle} from "@material-ui/core";
 import { rateUserAsync } from "../redux/auth/thunks";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,9 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const PostHistory = (slice) => {
     const classes = useStyles();
-    let navigate = useNavigate();
     const [expanded, setExpanded] = React.useState(false);
-    const [active, setActive] = React.useState(slice.active);
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(0);
     const rate = useSelector(state => state.auth.rate);
@@ -59,7 +55,7 @@ export const PostHistory = (slice) => {
     };
 
     const handleRate = () => {
-        if (rate == null || rate._id != slice.name._id) setOpen(true);
+        if (rate == null || rate._id !== slice.name._id) setOpen(true);
         else alert('You have rated this drive!');
     };
 
@@ -68,11 +64,11 @@ export const PostHistory = (slice) => {
     };
 
     const dispatch = useDispatch()
-    const user = JSON.parse(localStorage.getItem('profile'));
+    // const user = JSON.parse(localStorage.getItem('profile'));
 
-    const handleSubmit = () => {
-        setOpen(false);
-    };
+    // const handleSubmit = () => {
+    //     setOpen(false);
+    // };
 
     return (
         <Card className={classes.root} key={Math.random()}>
@@ -130,7 +126,7 @@ export const PostHistory = (slice) => {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography paragraph>Contact: {slice.contactInfo}</Typography>
-                    <Typography paragraph>Rating: {rate == null || rate._id != slice.name._id ? slice.rating : rate.rating.$numberDecimal}</Typography>
+                    <Typography paragraph>Rating: {rate == null || rate._id !== slice.name._id ? slice.rating : rate.rating.$numberDecimal}</Typography>
                     <Typography paragraph>Available seats: {slice.availableSeats}</Typography>
                 </CardContent>
             </Collapse>

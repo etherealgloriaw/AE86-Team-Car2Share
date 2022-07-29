@@ -97,7 +97,7 @@ const joinPost = async(id, active)=> {
     console.log("join")
 }
 
-export default {
+const PostService = {
     getPosts,
     addPost,
     deletePost,
@@ -106,3 +106,5 @@ export default {
     searchPost,
     finishPost
 };
+
+export default PostService;

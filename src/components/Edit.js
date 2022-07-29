@@ -4,9 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {editProfileAsync} from "../redux/auth/thunks";
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
@@ -24,9 +23,9 @@ export default function FormDialog() {
   };
 
   const handleChange = e => {
-    if (e.target.id == 'name') {
+    if (e.target.id === 'name') {
         setName(e.target.value);
-    } else if (e.target.id == "intro") {
+    } else if (e.target.id === "intro") {
         setIntroduction(e.target.value);
     } 
 }

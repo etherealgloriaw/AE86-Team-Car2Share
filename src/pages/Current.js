@@ -1,12 +1,8 @@
 import { Post } from '../components/Post';
-import Card from '@material-ui/core/Card';
 import React from 'react';
 import Map from "../components/Map";
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import {useLoadScript} from "@react-google-maps/api";
-
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,

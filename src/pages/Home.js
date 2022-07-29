@@ -2,12 +2,10 @@ import Posts from "../components/Posts";
 import { ResponsiveSearchBar } from "../components/ResponsiveSearchBar";
 import { Filter } from "../components/Filter";
 import React, {useEffect, useState} from 'react';
-import { useMemo } from 'react';
 import Map from '../components/Map'
 import './Home.css'
 import { useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {useLoadScript} from "@react-google-maps/api";
 import Popup from "../components/Popup"
@@ -42,7 +40,7 @@ function Home() {
         }
         console.log("Home Popup:" + popup)
         console.log(popupData)
-    }, [popup, postList])
+    }, [popup, postList, popupData])
     // localStorage.clear();
     useLoadScript({
         googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',

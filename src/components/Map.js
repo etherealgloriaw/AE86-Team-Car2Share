@@ -1,8 +1,7 @@
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {GoogleMap, Marker, DirectionsRenderer} from "@react-google-maps/api";
-import React, {useState} from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import MyMarker from "./MyMarker";
 

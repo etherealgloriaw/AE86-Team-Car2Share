@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { useDispatch } from 'react-redux';
 import { alpha, makeStyles } from '@material-ui/core/styles';
@@ -60,7 +59,7 @@ export const ResponsiveSearchBar = () => {
     const[sorting, setSorting] = useState('ascending')
 
     const handleChange = e =>{
-        if(e.target.name == 'destination'){
+        if(e.target.name === 'destination'){
             setDestination(e.target.value);
         }
     }
@@ -68,7 +67,7 @@ export const ResponsiveSearchBar = () => {
     const dispatch = useDispatch()
 
     const handleSearch = () => {
-        if(destination == ""){
+        if(destination === ""){
             destination = "NULL"
         }
 

@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Map from "../components/Map";
-import {Link, Navigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {addPostAsync} from "../redux/posts/thunks";
 import {useGeolocated} from "react-geolocated";
 import {FormControl, FormHelperText, IconButton, Input, InputLabel} from "@material-ui/core";

@@ -1,35 +1,17 @@
-import React, {useEffect, useState} from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import React, {useEffect} from "react";
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EditIcon from '@material-ui/icons/Edit';
 import {CardActionArea, Tooltip} from "@material-ui/core";
-import { Grid } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import DeleteIcon from '@material-ui/icons/Delete';
 import { joinPostAsync } from "../redux/users/thunks";
-import {deletePostAsync} from "../redux/posts/thunks";
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -69,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 export const Post = (slice) => {
   const classes = useStyles();
   let navigate = useNavigate();
-  const [active, setActive] = React.useState(slice.active);
   const [raised, setRaised] = React.useState(false)
 
   const dispatch = useDispatch()
@@ -109,7 +90,6 @@ export const Post = (slice) => {
         }
     }, [slice.selected, slice.id])
 
-  var profile = '/Profile/' + slice.name._id
   // console.log(profile)
 
   return (
@@ -138,10 +118,7 @@ export const Post = (slice) => {
       </CardContent>
       <CardActions disableSpacing>
         <Tooltip title="Join the post">
-          <IconButton aria-label="add to favorites" onClick={handleJoin}
-            className={clsx({
-              [classes.active]: active,
-            })}>
+          <IconButton aria-label="add to favorites" onClick={handleJoin}>
             <FavoriteIcon className={classes.fav} />
           </IconButton>
         </Tooltip>
