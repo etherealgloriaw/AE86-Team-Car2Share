@@ -49,6 +49,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+function isValidEmail(email) {
+  return /\S+@\S+\.\S+/.test(email);
+}
+
 export default function Login() {
   const classes = useStyles();
   const [inputEmail, setInputEmail] = useState('');
@@ -67,6 +72,9 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault(); // to prevent the website reloading
+    if (!isValidEmail(inputEmail)) {
+      alert('Email is invalid')
+    }
     let form = {email: inputEmail, password: inputPassword};
     setInputEmail('');
     setInputPassword('');

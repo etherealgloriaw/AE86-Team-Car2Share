@@ -69,12 +69,8 @@ const useStyles = makeStyles((theme) => ({
 export const Post = (slice) => {
   const classes = useStyles();
   let navigate = useNavigate();
-  const [expanded, setExpanded] = React.useState(false);
   const [active, setActive] = React.useState(slice.active);
   const [raised, setRaised] = React.useState(false)
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -127,11 +123,6 @@ export const Post = (slice) => {
         title={slice.name.username}
         starting_time={slice.startingTime}
       />
-      {/* <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
-        /> */}
       <CardContent>
           <CardActionArea onClick={handleClick}>
         <Typography paragraph color="textSecondary" component="p">
@@ -154,24 +145,7 @@ export const Post = (slice) => {
             <FavoriteIcon className={classes.fav} />
           </IconButton>
         </Tooltip>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph color="textSecondary"> <span style={{fontWeight: 'bold'}}>Contact: </span>{slice.contactInfo}</Typography>
-          <Typography paragraph color="textSecondary"> <span style={{fontWeight: 'bold'}}>Rating: </span>{slice.rating}</Typography>
-          <Typography paragraph color="textSecondary"><span style={{fontWeight: 'bold'}}>Available seats: </span>{slice.availableSeats}</Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   )
 
