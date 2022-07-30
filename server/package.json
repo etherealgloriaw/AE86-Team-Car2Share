@@ -20,6 +20,8 @@
     "node-datetime": "^2.1.2",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
-    "reactjs-popup": "^2.0.5"
+    "reactjs-popup": "^2.0.5",
+    "nodejs-nodemailer-outlook": "^1.2.4",
+    "nodemailer": "^6.7.7"
   }
 }
