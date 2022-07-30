@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const mySchemas = require('../models/Schemas');
+const mySchemas = require('../models/schemas');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -44,6 +44,8 @@ router.get("/logout", (req, res) => {
 // signIn a new user
 router.post('/signIn', async (req, res, next) => {
 	const user = { email: req.body.email, password: req.body.password };
+
+	console.log(user);
 	try {
 		const oldUser = await mySchemas.userItem.findOne({ email: user.email });
 		if (oldUser == null) return res.status(400).json({ message: "User doesn't exist" });

@@ -1,4 +1,4 @@
-var mySchemas = require('../models/Schemas')
+var mySchemas = require('../models/schemas')
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose')

@@ -51,3 +51,4 @@ const historyItem = mongoose.model('historyItem', historySchema, 'users_history'
 const mySchemas = {'postItem': postItem, 'userItem': userItem, 'historyItem': historyItem};
 
 module.exports = mySchemas;
+

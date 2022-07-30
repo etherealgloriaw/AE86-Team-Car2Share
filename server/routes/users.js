@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var mySchemas = require('../models/Schemas')
+var mySchemas = require('../models/schemas')
 var mongoose = require('mongoose')
 var nodeoutlook = require('nodejs-nodemailer-outlook')
 // var auth = require('../middleware/secret.js')

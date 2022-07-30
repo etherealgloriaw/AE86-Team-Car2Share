@@ -1,4 +1,4 @@
-const url = 'http://localhost:3001/Login';
+var url = 'http://15.222.245.76:3001/Login'
 
 const loginIn = async(form) => {
     console.log(form)
@@ -10,6 +10,7 @@ const loginIn = async(form) => {
         body: JSON.stringify(form)
     });
     const data = await response.json();
+    console.log(data)
     if (!response.ok) {
         const errorMsg = data?.message;
         throw new Error(errorMsg)
