@@ -19,7 +19,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(cors());
 app.use('/', indexRouter);
 app.use('/Profile', usersRouter);
@@ -41,12 +41,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-//
-// mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-//     .then(() => console.log('Server Running on Port'))
-//     .catch((error) => console.log(error));
-
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then( ()=> {
         console.log('DB connected!');
@@ -59,5 +53,9 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build/index.html'));
+});
 
 module.exports = app;

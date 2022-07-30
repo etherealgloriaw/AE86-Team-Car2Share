@@ -1,4 +1,4 @@
-const url = 'http://localhost:3001/Login';
+const url = 'Login';
 
 const loginIn = async(form) => {
     console.log(form)

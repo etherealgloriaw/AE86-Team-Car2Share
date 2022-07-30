@@ -1,5 +1,5 @@
 const getPosts = async() => {
-    const response = await fetch ('http://localhost:3001',{
+    const response = await fetch ('/',{
         method: 'GET'
     });
     return response.json();
@@ -9,7 +9,7 @@ const searchPost = async(searchReq) =>{
     const dest = searchReq.destination;
     const selection = searchReq.selection;
     const sorting = searchReq.sorting;
-    const response = await fetch(`http://localhost:3001/search/${dest}/${selection}/${sorting}`, {
+    const response = await fetch(`search/${dest}/${selection}/${sorting}`, {
         method: 'GET',
         headers:{
             "Content-type": "application/json"
@@ -26,7 +26,7 @@ const searchPost = async(searchReq) =>{
 
 const deletePost = async(id) =>{
     console.log(id)
-    const response = await fetch(`http://localhost:3001/delete/${id}`, {
+    const response = await fetch(`delete/${id}`, {
         method: 'DELETE',
         headers: {
             "Content-type": "application/json"
@@ -42,7 +42,7 @@ const deletePost = async(id) =>{
 };
 
 const finishPost = async(id) =>{
-    const response = await fetch(`http://localhost:3001/finish/${id}`, {
+    const response = await fetch(`finish/${id}`, {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json"
@@ -58,7 +58,7 @@ const finishPost = async(id) =>{
 };
 
 const addPost = async(newPost)=>{
-    const response = await fetch('http://localhost:3001/add', {
+    const response = await fetch('add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ const addPost = async(newPost)=>{
 
 const editPost = async(edited) =>{
     const id = edited._id;
-    const response = await fetch(`http://localhost:3001/Edit/${id}`, {
+    const response = await fetch(`Edit/${id}`, {
         method: 'PUT',
         headers: {
             "Content-type": "application/json",

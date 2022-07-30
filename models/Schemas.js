@@ -45,7 +45,7 @@ const historySchema = new Schema({
     user: {type: Schema.Types.ObjectId, ref: 'userItem'}
 }, { collection: 'user_history' , versionKey: false});
 
-const postItem = mongoose.model('postItem', historySchema, 'posts');
+const postItem = mongoose.model('postItem', postSchema, 'posts');
 const userItem = mongoose.model('userItem', userSchema, 'users');
 const historyItem = mongoose.model('historyItem', historySchema, 'users_history');
 const mySchemas = {'postItem': postItem, 'userItem': userItem, 'historyItem': historyItem};
