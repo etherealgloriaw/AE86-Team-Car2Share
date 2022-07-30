@@ -1,5 +1,5 @@
 const getPosts = async() => {
-    const response = await fetch ('https://ae86-car.herokuapp.com',{
+    const response = await fetch ('',{
         method: 'GET'
     });
     console.log(response);
