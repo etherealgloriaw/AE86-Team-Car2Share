@@ -4,10 +4,6 @@ var mySchemas = require('../models/Schemas')
 var mongoose = require('mongoose')
 var nodeoutlook = require('nodejs-nodemailer-outlook')
 // var auth = require('../middleware/secret.js')
-// no use now
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
 
 // get profile history posts
 router.get('/:userid', async (req, res, next) => {
