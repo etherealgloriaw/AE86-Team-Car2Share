@@ -2,6 +2,7 @@ const getPosts = async() => {
     const response = await fetch ('/',{
         method: 'GET'
     });
+    console.log(response);
     return response.json();
 };
 
