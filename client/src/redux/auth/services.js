@@ -36,7 +36,7 @@ const signUp = async(form) => {
 
 const editProfile = async(edited) =>{
     // const id = edited._id;
-    const response = await fetch(url + "/Edit", {
+    const response = await fetch(`/${url}/${id}`, {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json",

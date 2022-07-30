@@ -1,14 +1,14 @@
-const url = '';
+const url = 'Profile';
 
 const getHistory = async(name) => {
-    const response = await fetch (url +  "/" + name,{
+    const response = await fetch (`/${url}/${name}`,{
         method: 'GET'
     });
     return response.json();
 };
 
 const getDriverHistory = async(name) => {
-    const response = await fetch (url +  "/driver/" + name,{
+    const response = await fetch (`/${url}/driver/${name}`,{
         method: 'GET'
     });
     return response.json();
