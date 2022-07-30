@@ -30,7 +30,7 @@ The additional functionality could include automatic matching system according t
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Visualize the carpool routes via a map interface ✅
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Users could label their trips, such as shopping and traveling
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Users could search destination, and sort the result based on different factors
 
 ○ stretch requirements
 
@@ -39,6 +39,8 @@ The additional functionality could include automatic matching system according t
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Users could select to pick up the passengers within the distance they choose, and the circle is presented in the map
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Users can publish their carpool photos and feelings in their account
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d. Users could label their trips, such as shopping and traveling
 
 ## Small Tasks:
 ○ Task 1: The requestors and car owners could add, edit, delete, view carpool request, such as destination, home, price, date and number of available seats
