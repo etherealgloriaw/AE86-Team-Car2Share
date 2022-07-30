@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const UserHistory = () => {
   const classes = useStyles();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  let navigate = useNavigate();
   const posts = useSelector(state => state.users.list)
   const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -91,24 +91,18 @@ export const UserHistory = () => {
 
 
   var renderedPosts = posts.map((slice) => {
-    // eslint-disable-next-line
-    if(time == "History"){
+    if(time == "Histroy"){
       console.log("History")
-      // eslint-disable-next-line
       if(slice.active != "0") return
-      // eslint-disable-next-line
     }else if(time == "Upcoming"){
-      // eslint-disable-next-line
       if(slice.active != "2") return
     }else{
-      // eslint-disable-next-line
       if(slice.active != "1") return
     }
     const date = new Date(slice.startingTime)
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
-    console.log(slice);
       return (
           <Grid item xs={12} md={12} key={Math.random()}>
             {
@@ -128,13 +122,10 @@ export const UserHistory = () => {
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
     const status = slice.active;
     let statusStr = "";
-    // eslint-disable-next-line
     if (status == "0") {
       statusStr = "In the future"
-      // eslint-disable-next-line
     } else if(status == "1") {
       statusStr = "Ongoing"
-      // eslint-disable-next-line
     } else if(status == 2) {
       statusStr = "Finished"
     }

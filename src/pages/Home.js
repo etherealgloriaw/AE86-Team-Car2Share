@@ -33,7 +33,7 @@ function Home() {
     useEffect(() => {
         if (popup !== null) {
             setPopupData(postList.find(post => {
-            return post._id === popup
+            return post._id == popup
         }))
         } else {
             setPopupData(null)

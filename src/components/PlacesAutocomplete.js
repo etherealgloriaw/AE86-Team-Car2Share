@@ -60,7 +60,7 @@ export default function PlacesAutocomplete(props) {
             freeSolo
             clearOnEscape={true}
             disabled={!ready}
-            loading={!(ready && (status === "OK"))}
+            loading={!(ready && (status == "OK"))}
             onInputChange={(event, value) => {
                 setValue(value)
                 }
@@ -70,7 +70,7 @@ export default function PlacesAutocomplete(props) {
             }}
             options={data.map(({ description}) => description)}
             renderInput={(params) => {
-                if (props.label === props.error || props.error === 3){
+                if (props.label == props.error || props.error == 3){
                     return <TextField error helperText={props.posErrorMsg? props.posErrorMsg:
                         "Please choose address from list"}
                                       {...params} label={props.title} margin="normal"/>

@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const PostHistory = (slice) => {
     const classes = useStyles();
+    // let navigate = useNavigate();
     const [expanded, setExpanded] = React.useState(false);
-    // eslint-disable-next-line
     const [active, setActive] = React.useState(slice.active);
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(0);
@@ -57,7 +57,6 @@ export const PostHistory = (slice) => {
     };
 
     const handleRate = () => {
-        // eslint-disable-next-line
         if (rate == null || rate._id != slice.name._id) setOpen(true);
         else alert('You have rated this drive!');
     };
@@ -67,10 +66,9 @@ export const PostHistory = (slice) => {
     };
 
     const dispatch = useDispatch()
-    // const user = JSON.parse(localStorage.getItem('profile'));
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     const handleSubmit = () => {
-        // eslint-disable-next-line
         setOpen(false);
     };
 

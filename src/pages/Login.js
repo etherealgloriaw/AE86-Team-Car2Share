@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: 'url(https://im.vsco.co/aws-us-west-2/0bc2b8/44033854/5c4e93d9c0a5ab2a01192d8b/vsco5c4e93db4d626.jpg?w=480)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      theme.palette.type == 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },

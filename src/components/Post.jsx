@@ -82,9 +82,9 @@ export const Post = (slice) => {
     }
 
     useEffect(() => {
-        if (slice.selected === null) {
+        if (slice.selected == null) {
             setRaised(false)
-        } else if (slice.id === slice.selected) {
+        } else if (slice.id == slice.selected) {
             // eslint-disable-next-line no-undef
             setRaised(true)
         }

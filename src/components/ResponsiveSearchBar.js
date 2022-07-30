@@ -59,7 +59,7 @@ export const ResponsiveSearchBar = () => {
     const[sorting, setSorting] = useState('ascending')
 
     const handleChange = e =>{
-        if(e.target.name === 'destination'){
+        if(e.target.name == 'destination'){
             setDestination(e.target.value);
         }
     }
@@ -67,7 +67,7 @@ export const ResponsiveSearchBar = () => {
     const dispatch = useDispatch()
 
     const handleSearch = () => {
-        if(destination === ""){
+        if(destination == ""){
             destination = "NULL"
         }
 

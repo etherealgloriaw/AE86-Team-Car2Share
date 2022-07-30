@@ -148,7 +148,7 @@ export default function AddNewPost() {
                 .then((response) => {
                     if (response.results[0]) {
                         response.results.every((result) => {
-                            if (result.address_components[0].types[0] === 'street_number') {
+                            if (result.address_components[0].types[0] == 'street_number') {
                                 setDeptString(result.formatted_address)
                                 setForEdit(true)
                                 return false
@@ -169,7 +169,7 @@ export default function AddNewPost() {
     const checkInUBC = () => {
         if (dept) {
             if (calcDistance(dept, {lat: 49.260859, lng: -123.248456}) > 1.5) {
-                if(posErrorVar === 2) {
+                if(posErrorVar == 2) {
                     setPosError(3)
                     posErrorVar = 3
                 } else {
@@ -234,14 +234,14 @@ export default function AddNewPost() {
 
 
     const handleChange = e => {
-        if (e.target.name === 'availableSeats') {
+        if (e.target.name == 'availableSeats') {
             setAvailableSeats(e.target.value);
-        } else if (e.target.name === "departureTime") {
+        } else if (e.target.name == "departureTime") {
             setDepartureTime(e.target.value);
-        } else if (e.target.name === "contactInfo") {
+        } else if (e.target.name == "contactInfo") {
             console.log(e.target.value)
             setContactInfo(e.target.value);
-        } else if (e.target.name === "price") {
+        } else if (e.target.name == "price") {
             console.log(e.target.value)
             setPrice(e.target.value)
         }
@@ -265,7 +265,7 @@ export default function AddNewPost() {
             driver: user._id
         }
         const addPost = () => {
-            if ((posErrorVar === 0) && (!seatsErrorVar) && (!contactInfoErrorVar) && (!dateErrorVar) &&
+            if ((posErrorVar == 0) && (!seatsErrorVar) && (!contactInfoErrorVar) && (!dateErrorVar) &&
                 (!priceErrorVar)) {
                 dispatch(addPostAsync(newPost))
                 alert("Added")

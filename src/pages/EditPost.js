@@ -35,7 +35,7 @@ function EditPost({ match }) {
     const classes = useStyles();
     const { postID } = useParams()
 
-    const post = useSelector(state => state.posts.list.find(p => p._id === postID))
+    const post = useSelector(state => state.posts.list.find(p => p._id == postID))
     const posts = useSelector(state => state.posts.list)
     console.log(posts)
     // const [startingPoint, setStartingPoint] = useState(post.from)
@@ -54,11 +54,11 @@ function EditPost({ match }) {
     const [destString, setDestString] = useState(post.to)
 
     const handleChange = e => {
-    if (e.target.name === 'availableSeats') {
+    if (e.target.name == 'availableSeats') {
             setAvailableSeats(e.target.value);
-        } else if (e.target.name === "departureTime") {
+        } else if (e.target.name == "departureTime") {
             setDepartureTime(e.target.value);
-        } else if (e.target.name === "contactInfo") {
+        } else if (e.target.name == "contactInfo") {
             setContactInfo(e.target.value);
         }
     }
@@ -160,4 +160,3 @@ function EditPost({ match }) {
 }
 
 export default EditPost;
-

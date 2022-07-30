@@ -23,9 +23,9 @@ export default function FormDialog() {
   };
 
   const handleChange = e => {
-    if (e.target.id === 'name') {
+    if (e.target.id == 'name') {
         setName(e.target.value);
-    } else if (e.target.id === "intro") {
+    } else if (e.target.id == "intro") {
         setIntroduction(e.target.value);
     } 
 }
