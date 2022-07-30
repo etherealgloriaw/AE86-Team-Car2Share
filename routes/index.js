@@ -12,6 +12,7 @@ router.get("/home", async (req, res, next) => {
   await posts.find({$and:[{active: 0, startingTime: {$gt: dt._now}}]}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
+      console.log(postData);
       res.send(JSON.stringify(postData));
     } else {
       res.end();

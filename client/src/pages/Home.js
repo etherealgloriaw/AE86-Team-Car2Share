@@ -30,7 +30,6 @@ function Home() {
     const [selected, setSelected] = useState(null)
     const [popup, setPopup] = useState(null)
     const [popupData, setPopupData] = useState(null);
-    console.log(postList);
     useEffect(() => {
         if (popup !== null) {
             setPopupData(postList.find(post => {

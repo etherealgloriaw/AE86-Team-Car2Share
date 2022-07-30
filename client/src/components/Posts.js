@@ -13,7 +13,7 @@ export const Posts = (props) => {
         dispatch(getPostAsync());
     }, [dispatch]);
 
-
+    console.log(posts);
     const renderedPosts = posts.map((slice) => {
         const date = new Date(slice.startingTime)
         const dateString = date.toDateString() + " " +date.getHours()+ ":"
