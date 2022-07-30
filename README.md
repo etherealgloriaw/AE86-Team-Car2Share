@@ -16,29 +16,29 @@ The additional functionality could include automatic matching system according t
 ## Project task requirements:
 ○ minimal requirements
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. The requestors and car owners could add, edit, delete, view carpool request, such as destination, home, price, date and number of available seats
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. The requestors and car owners could add, edit, delete, view carpool request, such as destination, home, price, date and number of available seats ✅
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. User statistics, such as the carpool history, ratings
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. User statistics, such as the carpool history, ratings ✅
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Basic user authentication
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Basic user authentication ✅
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d. Users can publish their carpool photos and feelings in their account
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. User could join the post ✅
 
 ○ standard requirements
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Find the nearest carpool requests and orders in the map to make the users interact each other
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Find the nearest carpool requests and orders in the map to make the users interact each other ✅
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Recommend the monthly popular destination
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Visualize the carpool routes via a map interface ✅
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Visualize the carpool routes via a map interface
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d. Users could label their trips, such as shopping and traveling
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Users could label their trips, such as shopping and traveling
 
 ○ stretch requirements
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Recommend the price for carpool based on history average
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Users could select to pick up the passengers within the distance they choose, and the circle is presented in the map
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Users can publish their carpool photos and feelings in their account
 
 ## Small Tasks:
 ○ Task 1: The requestors and car owners could add, edit, delete, view carpool request, such as destination, home, price, date and number of available seats
