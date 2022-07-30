@@ -30,6 +30,7 @@ function Home() {
     const [selected, setSelected] = useState(null)
     const [popup, setPopup] = useState(null)
     const [popupData, setPopupData] = useState(null);
+    console.log(postList);
     useEffect(() => {
         if (popup !== null) {
             setPopupData(postList.find(post => {
@@ -38,8 +39,6 @@ function Home() {
         } else {
             setPopupData(null)
         }
-        console.log("Home Popup:" + popup)
-        console.log(popupData)
     }, [popup, postList, popupData])
     // localStorage.clear();
     useLoadScript({
