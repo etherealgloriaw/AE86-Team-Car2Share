@@ -1,5 +1,5 @@
 const getPosts = async() => {
-    const response = await fetch ('',{
+    const response = await fetch ('/home',{
         method: 'GET'
     });
     console.log(response);
