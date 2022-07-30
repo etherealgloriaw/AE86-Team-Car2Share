@@ -59,7 +59,7 @@ export default function SignUp() {
     setInputUsername('');
     setInputEmail('');
     setInputPassword('');
-    dispatch(signUpAsync(form)).then((user) => {navigate('Profile/' + user._id, { replace: false });});
+    dispatch(signUpAsync(form)).then((user) => {navigate('/Profile/' + user._id, { replace: false });});
     // navigate("/Profile", { replace: false });
   };
 
