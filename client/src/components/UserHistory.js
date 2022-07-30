@@ -169,9 +169,7 @@ export const UserHistory = () => {
             <div></div>
             To: {slice.to}
           </Typography>
-          <Typography variant="body2" color="textSecondary" align="right" component="p">
-            Departure time: {dateString}
-          </Typography>
+    
           <Typography variant="body2" color="textSecondary" component="p">
             <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}
           </Typography>

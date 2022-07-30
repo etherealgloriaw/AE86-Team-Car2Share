@@ -5,6 +5,14 @@ import { useDispatch } from 'react-redux';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import {searchPostAsync} from "../redux/posts/thunks";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import './style/Filter.css'
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,6 +55,12 @@ const useStyles = makeStyles((theme) => ({
             },
         },
     },
+    formControl: {
+        position: 'absolute',
+        width: 150,
+        height: 220,
+        margin: theme.spacing(1),
+    },
 }));
 
 
@@ -85,6 +99,7 @@ export const ResponsiveSearchBar = () => {
       };
 
     const selectionMade = (e) =>{
+        console.log("selection made: " + e.target.value)
         setSelection(e.target.value);
     }
 
@@ -93,8 +108,8 @@ export const ResponsiveSearchBar = () => {
     } 
 
     return (
+        <div>
         <div className={classes.search} >
-            <div></div>
             <InputBase onChange={handleChange}
             value = {destination}
                 id = "destination"
@@ -108,22 +123,30 @@ export const ResponsiveSearchBar = () => {
             <IconButton aria-label="search" onClick = {handleSearch}>
                 <SearchIcon />
             </IconButton>
-
-            <div>
-            <div className="filter" >
-
-            <select onChange={selectionMade}>           
-                <option value = "rating">Ratings</option>
-                <option value = "totalTime">Total Time</option>
-                <option value = "availableSeats">Available Seats</option>              
-            </select>
-            </div>
-            <div className='sorting' onChange = {sortingMade}>
-                <input type="radio" name="option" value = "ascending"/>Ascending
-                <input type="radio" name="option" value = "descending" />Descending
-            </div>
-
         </div>
-        </div>
+        
+        <div className="filter" >
+        <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-controlled-select-label"></InputLabel>
+                    <Select
+                        labelId="demo-controlled-select-label"
+                        id="demo-controlled-select"
+                        value={selection}
+                        onChange={selectionMade}
+                        >
+                        <MenuItem value={"rating"}>Ratings</MenuItem>
+                        <MenuItem value={"totalTime"}>Total Time</MenuItem>
+                        <MenuItem value={"availableSeats"}>Available Seats</MenuItem>
+                    </Select> 
+                    </FormControl></div>
+            <div className="sorting" >
+            <FormControl component="fieldset">
+                <RadioGroup row aria-label="sorting" name="sorting"  onChange={sortingMade}>
+                    <FormControlLabel value="ascending" control={<Radio />} label="ascending" />
+                    <FormControlLabel value="descending" control={<Radio />} label="descending" />
+                </RadioGroup>
+                </FormControl>
+            </div>
+            </div>
     )
 }
