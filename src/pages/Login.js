@@ -74,11 +74,12 @@ export default function Login() {
     e.preventDefault(); // to prevent the website reloading
     if (!isValidEmail(inputEmail)) {
       alert('Email is invalid')
+    } else {
+      let form = {email: inputEmail, password: inputPassword};
+      setInputEmail('');
+      setInputPassword('');
+      dispatch(loginSuccessAsync(form)).then((user) => {navigate('/Profile/' + user._id, { replace: false });});
     }
-    let form = {email: inputEmail, password: inputPassword};
-    setInputEmail('');
-    setInputPassword('');
-    dispatch(loginSuccessAsync(form)).then((user) => {navigate('/Profile/' + user._id, { replace: false });});
   };
 
   return (
