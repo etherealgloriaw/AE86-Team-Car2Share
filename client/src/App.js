@@ -37,7 +37,7 @@ function App() {
                     <BrowserRouter>
                         <PrimarySearchAppBar/>
                         <Routes>
-                            <Route path="/" element={<Home/>}> </Route>
+                            <Route path="/home" element={<Home/>}> </Route>
                             <Route path="/Login" element={<Login/>}> </Route>
                             <Route path="/Profile/:userId" element={<Profile/>}> </Route>
                             <Route path="/SignUp" element={<SignUp/>}> </Route>

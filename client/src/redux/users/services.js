@@ -1,4 +1,4 @@
-const url = 'Profile';
+const url = '';
 
 const getHistory = async(name) => {
     const response = await fetch (url +  "/" + name,{
