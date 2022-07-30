@@ -30,7 +30,7 @@ The additional functionality could include automatic matching system according t
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Visualize the carpool routes via a map interface ✅
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Users could search destinations, and sort the result based on different factors
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Users could search destinations, and sort the result based on different factors✅
 
 ○ stretch requirements
 
