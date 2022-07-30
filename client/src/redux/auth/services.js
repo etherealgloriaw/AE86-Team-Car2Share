@@ -36,7 +36,7 @@ const signUp = async(form) => {
 
 const editProfile = async(edited) =>{
     // const id = edited._id;
-    const response = await fetch(url + "/Edit", {
+    const response = await fetch("Login/Edit", {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json",
@@ -53,7 +53,7 @@ const editProfile = async(edited) =>{
 }
 
 const rateUser = async(user) =>{
-    const response = await fetch(url + "/rate", {
+    const response = await fetch("Login/rate", {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json",
