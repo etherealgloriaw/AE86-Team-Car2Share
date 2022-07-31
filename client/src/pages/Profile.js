@@ -10,14 +10,9 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import FormDialog from "../components/Edit";
 import Button from '@material-ui/core/Button';
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   avatar: {
     margin: theme.spacing(3),
     backgroundColor: theme.palette.secondary.main,
@@ -31,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
     // width: '50%',
     margin: theme.spacing(1),
   },
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(0),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }
 }));
 
 
@@ -47,24 +50,30 @@ export default function Profile() {
   //   navigate("/", { replace: false });
   // };
 
-  if (user != null) return <Container component="main" maxWidth="xs">
-    <CssBaseline />
-    <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h7">
-        {user.username}
-      </Typography>
-      <Typography component="h1" variant="h6">
-        {user.introduction}
-      </Typography>
-      <FormDialog />
-      {/* <Button variant="outlined" color="primary" onClick = {handleLogOut}>
-        Log Out
-      </Button> */}
+  if (user != null) return (
+    // <Container component="main" maxWidth="xs">
+    <div className={classes.root}>
+      <CssBaseline />
+      <Grid container spacing={2} container justify="flex-end">
+        <Grid item >
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h7">
+            {user.username}
+          </Typography>
+          <Typography component="h1" variant="h6">
+            {user.introduction}
+          </Typography>
+          <FormDialog />
+        </Grid>
+        <Grid item xs={6}>
+          <UserHistory />
+        </Grid>
+      </Grid>
     </div>
-    <UserHistory />
-  </Container>
+
+    // </Container>
+  )
   else return < Navigate to='/Login' />
 }

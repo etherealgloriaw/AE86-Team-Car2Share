@@ -1,19 +1,20 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Map from "../components/Map";
-import {Navigate} from "react-router-dom";
-import {addPostAsync} from "../redux/posts/thunks";
-import {useGeolocated} from "react-geolocated";
-import {FormControl, FormHelperText, IconButton, Input, InputLabel} from "@material-ui/core";
+import { Navigate } from "react-router-dom";
+import { addPostAsync } from "../redux/posts/thunks";
+import { useGeolocated } from "react-geolocated";
+import { FormControl, FormHelperText, IconButton, Input, InputLabel } from "@material-ui/core";
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import MaskedInput from "react-text-mask/dist/reactTextMask";
 import PropTypes from "prop-types";
 import NumberFormat from "react-number-format";
 import { useNavigate } from "react-router-dom";
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -129,7 +130,7 @@ export default function AddNewPost() {
     let priceErrorVar = false
     const navigate = useNavigate();
 
-    const {coords, isGeolocationAvailable, isGeolocationEnabled} =
+    const { coords, isGeolocationAvailable, isGeolocationEnabled } =
         useGeolocated({
             positionOptions: {
                 enableHighAccuracy: false,
@@ -141,10 +142,10 @@ export default function AddNewPost() {
         if (isGeolocationAvailable && isGeolocationEnabled) {
             // eslint-disable-next-line no-undef
             const geocoder = new google.maps.Geocoder();
-            let location = {lat: coords.latitude, lng: coords.longitude}
+            let location = { lat: coords.latitude, lng: coords.longitude }
             setDept(location)
             geocoder
-                .geocode({location: location})
+                .geocode({ location: location })
                 .then((response) => {
                     if (response.results[0]) {
                         response.results.every((result) => {
@@ -168,8 +169,8 @@ export default function AddNewPost() {
 
     const checkInUBC = () => {
         if (dept) {
-            if (calcDistance(dept, {lat: 49.260859, lng: -123.248456}) > 1.5) {
-                if(posErrorVar == 2) {
+            if (calcDistance(dept, { lat: 49.260859, lng: -123.248456 }) > 1.5) {
+                if (posErrorVar == 2) {
                     setPosError(3)
                     posErrorVar = 3
                 } else {
@@ -321,95 +322,100 @@ export default function AddNewPost() {
 
 
         // eslint-disable-next-line no-undef
-        const deptBounds = new google.maps.LatLngBounds({lat: 49.010569, lng: -123.466741},
-            {lat: 50.555913, lng:-119.017361})
+        const deptBounds = new google.maps.LatLngBounds({ lat: 49.010569, lng: -123.466741 },
+            { lat: 50.555913, lng: -119.017361 })
         // eslint-disable-next-line no-undef
-        const destBounds = new google.maps.LatLngBounds({lat: 49.241624, lng: -123.273167},
-            {lat: 49.241624, lng:-123.273167})
+        const destBounds = new google.maps.LatLngBounds({ lat: 49.241624, lng: -123.273167 },
+            { lat: 49.241624, lng: -123.273167 })
 
         return (
             <div>
                 <form className={classes.root} noValidate autoComplete="off">
-                    <div>
-
-
-                        <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString}
-                                            title="Departure From" forEdit={forEdit} string={deptString} label={1}
-                                            error={posError} boundary={deptBounds} posErrorMsg={posErrorMsg}/>
-                        <IconButton aria-label="Use current location" onClick={handleLocation}>
-                            <MyLocationIcon/>
-                        </IconButton>
-                        <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString}
-                                            title="Arrive At"
-                                            forEdit={false} label={2} error={posError} boundary={destBounds}/>
-                        <Button variant="contained" color="primary" onClick={calculateRoute}>
-                            Calculate Route
-                        </Button>
-                        <TextField
-                            required
-                            id="standard-number"
-                            label="Available seats"
-                            type="number"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            error={seatsError}
-                            name="availableSeats"
-                            onChange={handleChange}
-                            value={availableSeats}
-                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                            helperText={seatsError? "Invalid input" : null}
-                        />
-                        <FormControl error={contactInfoError}>
-                            <InputLabel htmlFor="formatted-text-mask-input">Contact information</InputLabel>
-                            <Input
-                                value={contactInfo}
+                    <Grid container spacing={2}>
+                        <Grid item>
+                            <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString}
+                                title="Departure From" forEdit={forEdit} string={deptString} label={1}
+                                error={posError} boundary={deptBounds} posErrorMsg={posErrorMsg} />
+                            <IconButton aria-label="Use current location" onClick={handleLocation}>
+                                <MyLocationIcon />
+                            </IconButton>
+                            <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString}
+                                title="Arrive At"
+                                forEdit={false} label={2} error={posError} boundary={destBounds} />
+                            <Button variant="contained" color="primary" onClick={calculateRoute}>
+                                Calculate Route
+                            </Button>
+                            <h3>Estimated Travel Time: {duration}</h3>
+                            <h3>Distance: {distances}</h3>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                required
+                                id="standard-number"
+                                label="Available seats"
+                                type="number"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                error={seatsError}
+                                name="availableSeats"
                                 onChange={handleChange}
-                                name="contactInfo"
-                                id="formatted-text-mask-input"
-                                inputComponent={TextMaskCustom}
-
+                                value={availableSeats}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                helperText={seatsError ? "Invalid input" : null}
                             />
-                            {contactInfoError? <FormHelperText id="component-error-text">Invalid phone number
-                            </FormHelperText>: null}
-                        </FormControl>
-
-                        <TextField
-                            label="Price"
-                            value={price.numberformat}
-                            onChange={handleChange}
-                            name="price"
-                            id="formatted-numberformat-input"
-                            InputProps={{
-                                inputComponent: NumberFormatCustom,
-                            }}
-                            error={priceError}
-                            helperText={priceError? "Invalid price" : null}
-                        />
-                        <TextField
-                            id="datetime-local standard-required"
-                            required
-                            error={dateError}
-                            label="Departure time"
-                            type="datetime-local"
-                            className={classes.textField}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            name="departureTime"
-                            value={departureTime}
-                            onChange={handleChange}
-                            helperText={dateError? "Invalid departure time" : null}
-                        />
-                        <h3>Estimated Travel Time: {duration}</h3>
-                        <h3>Distance: {distances}</h3>
-                    </div>
+                        </Grid>
+                        <Grid item >
+                            <TextField
+                                label="Price"
+                                value={price.numberformat}
+                                onChange={handleChange}
+                                name="price"
+                                id="formatted-numberformat-input"
+                                InputProps={{
+                                    inputComponent: NumberFormatCustom,
+                                }}
+                                error={priceError}
+                                helperText={priceError ? "Invalid price" : null}
+                            />
+                            <TextField
+                                id="datetime-local standard-required"
+                                required
+                                error={dateError}
+                                label="Departure time"
+                                type="datetime-local"
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                name="departureTime"
+                                value={departureTime}
+                                onChange={handleChange}
+                                helperText={dateError ? "Invalid departure time" : null}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <FormControl error={contactInfoError}>
+                                <InputLabel htmlFor="formatted-text-mask-input">Contact information</InputLabel>
+                                <Input
+                                    value={contactInfo}
+                                    onChange={handleChange}
+                                    name="contactInfo"
+                                    id="formatted-text-mask-input"
+                                    inputComponent={TextMaskCustom}
+                                />
+                                {contactInfoError ? <FormHelperText id="component-error-text">Invalid phone number
+                                </FormHelperText> : null}
+                            </FormControl>
+                        </Grid>
+                        
+                    </Grid>
                     <Button variant="contained" color="primary" onClick={submit}>
                         Submit
                     </Button>
                 </form>
-                <Map markerList={markerList} directions={directionResponse} forHome={false}/>
+                <Map markerList={markerList} directions={directionResponse} forHome={false} />
             </div>
         )
-    } else return < Navigate to='/Login'/>
+    } else return < Navigate to='/Login' />
 }
