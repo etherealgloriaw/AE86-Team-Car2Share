@@ -78,6 +78,14 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+    if (loginWord == "Log Out") localStorage.clear();
+};
+
+  var loginWord = user ? "Log Out" : "Login";
+  
+
   const menuId = 'primary-search-account-menu';
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -115,7 +123,7 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
-      <MenuItem component={Link} to='/Login' onClick={handleProfileMenuOpen}>
+      <MenuItem component={Link} to='/Login' onClick={handleLogMenuOpen}>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -124,7 +132,7 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Login</p>
+        <p>{loginWord}</p>
       </MenuItem>
       <MenuItem component={Link} to='/Add' onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">

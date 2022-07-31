@@ -42,10 +42,10 @@ export default function Profile() {
   // console.log(user)
   const navigate = useNavigate();
 
-  const handleLogOut = () => {
-    localStorage.clear();
-    navigate("/", { replace: false });
-  };
+  // const handleLogOut = () => {
+  //   localStorage.clear();
+  //   navigate("/", { replace: false });
+  // };
 
   if (user != null) return <Container component="main" maxWidth="xs">
     <CssBaseline />
@@ -60,9 +60,9 @@ export default function Profile() {
         {user.introduction}
       </Typography>
       <FormDialog />
-      <Button variant="outlined" color="primary" onClick = {handleLogOut}>
+      {/* <Button variant="outlined" color="primary" onClick = {handleLogOut}>
         Log Out
-      </Button>
+      </Button> */}
     </div>
     <UserHistory />
   </Container>
