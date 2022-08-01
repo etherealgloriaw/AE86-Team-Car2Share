@@ -48,6 +48,7 @@ router.post('/join', async (req, res, next) => {
   };
   const driverID = mongoose.Types.ObjectId(post.driver)
   const driver = await mySchemas.userItem.findById(driverID)
+  await mySchemas.postItem.findByIdAndUpdate(postId, joinPost);
   await mySchemas.historyItem(joinPost).save();
   await mySchemas.historyItem.find({user: {$eq: userId}}).populate("driver").exec((err, postData) => {
       if (err) throw err;

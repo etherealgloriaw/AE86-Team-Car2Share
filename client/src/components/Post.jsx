@@ -26,12 +26,13 @@ const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
+      maxWidth: "100%",
 
   },
   root: {
       marginTop: '2%',
       marginLeft: '6%',
-      marginRight: '6%',
+      marginRight: '3%',
     maxWidth: "100%",
     maxHeight: 350,
     marginBottom: '3%',
@@ -107,13 +108,29 @@ export const Post = (slice) => {
   const user = JSON.parse(localStorage.getItem('profile'));
 
   const handleJoin = () => {
-    dispatch(
-      joinPostAsync({
-        id: slice.id,
-        user: user._id
-      })
-    )
-    navigate("/Profile/" + user._id, { replace: false });
+    // dispatch(
+    //   joinPostAsync({
+    //     id: slice.id,
+    //     user: user._id
+    //   })
+    // )
+      console.log(user._id)
+      if (user == null || user.length == 0) {
+          alert("Please login")
+          navigate("/Login")
+      } else if (user._id == slice.name._id) {
+          console.log(user._id)
+          alert("Can't join your own post")
+      } else {
+          console.log(user._id)
+          dispatch(
+              joinPostAsync({
+                  id: slice.id,
+                  user: user._id
+              })
+          )
+          navigate("/Profile/" + user._id, { replace: false });
+      }
   }
 
 
