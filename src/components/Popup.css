@@ -42,3 +42,7 @@ https://www.cluemediator.com/create-simple-popup-in-reactjs*/
     margin-top: 2vh;
     margin-left: 1vw
 }
+
+.closeButton {
+    margin-buttom: 2vh;
+}
