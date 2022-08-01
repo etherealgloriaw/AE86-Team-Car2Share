@@ -22,6 +22,7 @@ import ThumbUpTwoToneIcon from '@material-ui/icons/ThumbUpTwoTone';
 import DirectionsRailwayTwoToneIcon from '@material-ui/icons/DirectionsRailwayTwoTone';
 import QueryBuilderTwoToneIcon from '@material-ui/icons/QueryBuilderTwoTone';
 import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
+import AccessAlarmTwoToneIcon from '@material-ui/icons/AccessAlarmTwoTone';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,7 +41,7 @@ export default function Popup(props) {
     const containerStyle = {
         position: 'relative',
         width: "39vw",
-        height: "42vh",
+        height: "50vh",
         marginTop: 10,
         borderBottomLeftRadius: 6,
         borderBottomRightRadius: 6,
@@ -71,6 +72,11 @@ export default function Popup(props) {
         }
 
     }, [props.data])
+
+    const date = new Date(props.data.startingTime)
+    const dateString = date.toDateString() + " " +date.getHours()+ ":"
+        + ((date.getMinutes() > 9)? date.getMinutes(): ("0" + date.getMinutes()))+ ":" +
+        ((date.getSeconds() > 9)? date.getSeconds(): ("0" + date.getSeconds()))
     return (
         // <div className="popup-box">
         //     <div className="box">
@@ -149,6 +155,15 @@ export default function Popup(props) {
                 <div className="map">
                     <div className={classes.root}>
                         <List component="nav" aria-label="main mailbox folders">
+                            <ListItem>
+                                <ListItemIcon>
+                                    <AccessAlarmTwoToneIcon />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary= "Departure Time: "
+                                    secondary={dateString}
+                                />
+                            </ListItem>
                             <ListItem>
                                 <ListItemIcon>
                                     <FaceTwoToneIcon />
