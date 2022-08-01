@@ -14,8 +14,11 @@ import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    margin: theme.spacing(3),
+    // margin: theme.spacing(3),
+
     backgroundColor: theme.palette.secondary.main,
+    width: theme.spacing(20),
+    height: theme.spacing(20),
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -33,6 +36,29 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  userProfile: {
+    textAlign: "center",
+    backgroundColor: "#ECECEC",
+    alignItems: "center",
+    borderBottomLeftRadius: 6,
+    borderTopLeftRadius: 6,
+    borderBottomRightRadius: 6,
+    borderTopRightRadius: 6,
+    marginRight: 100,
+    marginTop: "2%",
+    marginLeft: "2%"
+  },
+  introduction: {
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  carImage: {
+    maxWidth: "100%",
+    maxHeight: "100%"
+  },
+  userHistory: {
+    marginTop: 0
   }
 }));
 
@@ -54,21 +80,32 @@ export default function Profile() {
     // <Container component="main" maxWidth="xs">
     <div className={classes.root}>
       <CssBaseline />
-      <Grid container spacing={2} container justify="flex-end">
-        <Grid item >
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h7">
+      <Grid container direction="row" spacing={3} alignItems="center"  justify="flex-start">
+        <Grid  item
+                 className={classes.userProfile} xs={5} justify="center"
+               container item spacing={4}
+        direction="column">
+          <Grid item >
+            <Avatar className={classes.avatar} src="https://i.ytimg.com/vi/Q_doqjFGL-Q/maxresdefault.jpg">
+              {/*<LockOutlinedIcon />*/}
+            </Avatar>
+          </Grid>
+          <Grid >
+          <Typography className={classes.introduction} component="h1" variant="h7">
             {user.username}
           </Typography>
-          <Typography component="h1" variant="h6">
+          <Typography className={classes.introduction} component="h1" variant="h6">
             {user.introduction}
           </Typography>
-          <FormDialog />
+            <FormDialog className={classes.introduction} />
+            <Typography className={classes.introduction} component="h1" variant="h6">
+              Car: Lamborghini Urus
+            </Typography>
+            <img className={classes.introduction} className={classes.carImage} src="https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/models_gw/hero-banner/2022/04_12/gate_models_og_01.jpg" alt="car" />
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <UserHistory />
+        <Grid item xs={5} alignItems="end" className="userHistory">
+            <UserHistory />
         </Grid>
       </Grid>
     </div>

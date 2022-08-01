@@ -41,7 +41,7 @@ export default function Popup(props) {
     const containerStyle = {
         position: 'relative',
         width: "39vw",
-        height: "50vh",
+        height: "57vh",
         marginTop: 10,
         borderBottomLeftRadius: 6,
         borderBottomRightRadius: 6,

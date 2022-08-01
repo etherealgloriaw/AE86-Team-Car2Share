@@ -22,6 +22,13 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import {deletePostAsync,finishPostAsync } from "../redux/posts/thunks";
 import { useNavigate } from 'react-router-dom'
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import DriveEtaTwoToneIcon from "@material-ui/icons/DriveEtaTwoTone";
+import ListItemText from "@material-ui/core/ListItemText";
+import TrackChangesTwoToneIcon from "@material-ui/icons/TrackChangesTwoTone";
+import AccessAlarmTwoToneIcon from "@material-ui/icons/AccessAlarmTwoTone";
+import {Card} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   avatar: {
-    margin: theme.spacing(3),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
@@ -43,6 +49,33 @@ const useStyles = makeStyles((theme) => ({
     // height: '50%',
     // width: '50%',
     margin: theme.spacing(1),
+  },
+  itemList: {
+    paddingLeft: "4%",
+    maxHeight: "20%",
+  },
+  item: {
+    maxHeight: 55,
+    marginBottom: 10,
+  },
+  cardHeader: {
+    marginTop: "5%",
+    maxHeight: 1,
+    paddingLeft: "3.5%"
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: "100%",
+  },
+  root: {
+    maxWidth: "100%",
+    marginTop: '2%',
+    marginLeft: '3%',
+    marginRight: '3%',
+    maxHeight: '100%',
+    marginBottom: '3%',
+    backgroundColor: "#ECECEC",
   },
 }));
 
@@ -148,8 +181,8 @@ export const UserHistory = () => {
 
 
     return (
-        <Grid item xs={12} md={12} key={Math.random()}>
-        <CardHeader
+        <Card className={classes.root} key={Math.random()}>
+        <CardHeader className={classes.cardHeader}
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
               {slice.active ? 'Active' : 'Inactive'}
@@ -161,18 +194,46 @@ export const UserHistory = () => {
             </IconButton>
           }
           title={statusStr}
-          
         />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            From: {slice.from}
-            <div></div>
-            To: {slice.to}
-          </Typography>
-    
-          <Typography variant="body2" color="textSecondary" component="p">
-            <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}
-          </Typography>
+          {/*<Typography variant="body2" color="textSecondary" component="p">*/}
+          {/*  From: {slice.from}*/}
+          {/*  <div></div>*/}
+          {/*  To: {slice.to}*/}
+          {/*</Typography>*/}
+
+          {/*<Typography variant="body2" color="textSecondary" component="p">*/}
+          {/*  <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}*/}
+          {/*</Typography>*/}
+          <List className={classes.itemList}>
+            <ListItem className={classes.item}>
+              <ListItemIcon>
+                <DriveEtaTwoToneIcon />
+              </ListItemIcon>
+              <ListItemText
+                  primary= "From: "
+                  secondary={slice.from}
+              />
+            </ListItem>
+            <ListItem className={classes.item}>
+              <ListItemIcon>
+                <TrackChangesTwoToneIcon />
+              </ListItemIcon>
+              <ListItemText
+                  primary= "To: "
+                  secondary={slice.to}
+              />
+            </ListItem>
+            <ListItem className={classes.item}>
+              <ListItemIcon>
+                <AccessAlarmTwoToneIcon />
+              </ListItemIcon>
+              <ListItemText
+                  primary= "Departure Time: "
+                  secondary={slice.startingTime}
+              />
+            </ListItem>
+          </List>
           <IconButton aria-label="share" onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
@@ -184,15 +245,15 @@ export const UserHistory = () => {
           </IconButton>
 
         </CardContent>
-      </Grid>
+      </Card>
       )
   })
 
-  
+
 
 
   return (
-    <section className="posts">
+    <section className="postsInProfilePage">
       <FormGroup>
         <FormControlLabel
           control={<Switch checked={status} onChange={handleChange} aria-label="login switch" />}

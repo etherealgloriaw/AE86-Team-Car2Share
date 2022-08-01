@@ -8,14 +8,28 @@ import Rating from '@material-ui/lab/Rating';
 import {Card, CardHeader, CardContent,CardActions, Collapse, Avatar, Box, IconButton, Typography,
     Dialog, DialogContent, DialogTitle} from "@material-ui/core";
 import { rateUserAsync } from "../redux/auth/thunks";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import DriveEtaTwoToneIcon from "@material-ui/icons/DriveEtaTwoTone";
+import ListItemText from "@material-ui/core/ListItemText";
+import TrackChangesTwoToneIcon from "@material-ui/icons/TrackChangesTwoTone";
+import AccessAlarmTwoToneIcon from "@material-ui/icons/AccessAlarmTwoTone";
+import List from "@material-ui/core/List";
 
 const useStyles = makeStyles((theme) => ({
     card: {
         display: 'flex',
         flexDirection: 'column',
+        maxWidth: "100%",
     },
     root: {
-        maxWidth: 520,
+        marginTop: '2%',
+        marginLeft: '3%',
+        marginRight: '3%',
+        maxWidth: "100%",
+        maxHeight: '100%',
+        marginBottom: '3%',
+        backgroundColor: "#ECECEC",
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -41,6 +55,19 @@ const useStyles = makeStyles((theme) => ({
             color: 'red',
         }
     },
+        itemList: {
+            paddingLeft: "4%",
+            maxHeight: "20%",
+        },
+        item: {
+            maxHeight: 55,
+            marginBottom: 10,
+        },
+        cardHeader: {
+            marginTop: "5%",
+            maxHeight: 1,
+            paddingLeft: "3.5%"
+        },
 }
 ));
 
@@ -74,7 +101,7 @@ export const PostHistory = (slice) => {
 
     return (
         <Card className={classes.root} key={Math.random()}>
-            <CardHeader
+            <CardHeader className="cardHeader"
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar} >
                         {slice.name.username}
@@ -84,15 +111,44 @@ export const PostHistory = (slice) => {
                 starting_time={slice.startingTime}
             />
             <CardContent>
-                <Typography paragraph color="textSecondary" component="p">
-                    <span style={{ fontWeight: 'bold' }}>From: </span>{slice.from}
-                </Typography>
-                <Typography paragraph color="textSecondary" component="p">
-                    <span style={{ fontWeight: 'bold' }}>To: </span>{slice.to}
-                </Typography>
-                <Typography paragraph color="textSecondary" component="p">
-                    <span style={{ fontWeight: 'bold' }}>Departure time: </span>{slice.startingTime}
-                </Typography>
+                {/*<Typography paragraph color="textSecondary" component="p">*/}
+                {/*    <span style={{ fontWeight: 'bold' }}>From: </span>{slice.from}*/}
+                {/*</Typography>*/}
+                {/*<Typography paragraph color="textSecondary" component="p">*/}
+                {/*    <span style={{ fontWeight: 'bold' }}>To: </span>{slice.to}*/}
+                {/*</Typography>*/}
+                {/*<Typography paragraph color="textSecondary" component="p">*/}
+                {/*    <span style={{ fontWeight: 'bold' }}>Departure time: </span>{slice.startingTime}*/}
+                {/*</Typography>*/}
+                <List className={classes.itemList}>
+                    <ListItem className={classes.item}>
+                        <ListItemIcon>
+                            <DriveEtaTwoToneIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary= "From: "
+                            secondary={slice.from}
+                        />
+                    </ListItem>
+                    <ListItem className={classes.item}>
+                        <ListItemIcon>
+                            <TrackChangesTwoToneIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary= "To: "
+                            secondary={slice.to}
+                        />
+                    </ListItem>
+                    <ListItem className={classes.item}>
+                        <ListItemIcon>
+                            <AccessAlarmTwoToneIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary= "Departure Time: "
+                            secondary={slice.startingTime}
+                        />
+                    </ListItem>
+                </List>
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="share" onClick={handleRate} >
