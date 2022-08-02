@@ -19,8 +19,9 @@ router.get("/:email", async (req, res, next) => {
 // edit profile
 router.patch('/Edit', async (req, res, next) => {
 	const id = mongoose.Types.ObjectId(req.body.id);
-	const post = { username: req.body.username, introduction: req.body.introduction };
-	console.log(post)
+	console.log(req.body)
+	const post = { username: req.body.username, introduction: req.body.introduction, avatar_address: req.body.avatar,
+		driving_experience: req.body.drivingEx};
 	await mySchemas.userItem.findByIdAndUpdate(id, post, { new: true }).then(card => res.send(card))
 		.catch(err => console.error(err))
 })
@@ -95,6 +96,23 @@ router.patch('/rate', async (req, res, next) => {
 	const post = { rating: currRate.toFixed(2) };
 	await mySchemas.userItem.findByIdAndUpdate(id, post, { new: true }).then(card => res.send(card))
 		.catch(err => console.error(err))
+});
+
+// upload new photos
+router.patch('/upload', async (req, res, next) => {
+	const id = mongoose.Types.ObjectId(req.body.id);
+	const photos = req.body.photos;
+	console.log(photos);
+	await mySchemas.userItem.findOneAndUpdate(
+		{ _id: id }, 
+		{ $addToSet: { images: photos } },
+	   function (error, success) {
+			 if (error) {
+				 console.log(error);
+			 } else {
+				 console.log(success);
+			 }
+		 });
 });
 
 module.exports = router;

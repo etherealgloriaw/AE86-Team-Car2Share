@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
-import { loginSuccessAsync, editProfileAsync, rateUserAsync} from './thunks';
+import { loginSuccessAsync, loginFailedAsync, signUpAsync, editProfileAsync, rateUserAsync, uploadPhotoAsync} from './thunks';
 
 const INITIAL_STATE = {
     rate: null,
+    images: [],
     getUsers: REQUEST_STATE.IDLE,
     addUser: REQUEST_STATE.IDLE,
     editUser: REQUEST_STATE.IDLE,
     logOutUser: REQUEST_STATE.IDLE,
     rateUser: REQUEST_STATE.IDLE,
+    uploadPhoto: REQUEST_STATE.IDLE,
     error: null
   };
 
@@ -53,6 +55,18 @@ const INITIAL_STATE = {
         })
         .addCase(rateUserAsync.rejected, (state, action) => {
           state.rateUser = REQUEST_STATE.REJECTED;
+          state.error = action.error;
+        })
+        .addCase(uploadPhotoAsync.pending, (state) => {
+          state.uploadPhoto  = REQUEST_STATE.PENDING;
+          state.error = null;
+        })
+        .addCase(uploadPhotoAsync.fulfilled, (state, action) => {
+          state.uploadPhoto = REQUEST_STATE.FULFILLED;
+          state.images = action.payload;
+        })
+        .addCase(uploadPhotoAsync.rejected, (state, action) => {
+          state.uploadPhoto  = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
 

@@ -10,12 +10,12 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import FormDialog from "../components/Edit";
 import Button from '@material-ui/core/Button';
-import { Grid } from "@material-ui/core";
+import { Grid, Box, Card } from "@material-ui/core";
+import AddPic from "../components/AddPic";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
     // margin: theme.spacing(3),
-
     backgroundColor: theme.palette.secondary.main,
     width: theme.spacing(20),
     height: theme.spacing(20),
@@ -40,14 +40,14 @@ const useStyles = makeStyles((theme) => ({
   userProfile: {
     textAlign: "center",
     backgroundColor: "#ECECEC",
-    alignItems: "center",
+    // alignItems: "center",
     borderBottomLeftRadius: 6,
     borderTopLeftRadius: 6,
     borderBottomRightRadius: 6,
     borderTopRightRadius: 6,
-    marginRight: 100,
-    marginTop: "2%",
-    marginLeft: "2%"
+    // marginRight: 100,
+    // marginTop: "2%",
+    // marginLeft: "2%"
   },
   introduction: {
     textAlign: "center",
@@ -65,47 +65,49 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
   const classes = useStyles();
-
   const user = JSON.parse(localStorage.getItem('profile'));
-  // const user = useSelector(state => state.auth.currUser);
-  // console.log(user)
   const navigate = useNavigate();
-
-  // const handleLogOut = () => {
-  //   localStorage.clear();
-  //   navigate("/", { replace: false });
-  // };
-
+  var avatarAdd = "https://icons-for-free.com/download-icon-avatar-1320568024619304547_512.png"
   if (user != null) return (
     // <Container component="main" maxWidth="xs">
     <div className={classes.root}>
       <CssBaseline />
-      <Grid container direction="row" spacing={3} alignItems="center"  justify="flex-start">
-        <Grid  item
-                 className={classes.userProfile} xs={5} justify="center"
-               container item spacing={4}
-        direction="column">
-          <Grid item >
-            <Avatar className={classes.avatar} src="https://i.ytimg.com/vi/Q_doqjFGL-Q/maxresdefault.jpg">
-              {/*<LockOutlinedIcon />*/}
-            </Avatar>
-          </Grid>
-          <Grid >
-          <Typography className={classes.introduction} component="h1" variant="h7">
-            {user.username}
-          </Typography>
-          <Typography className={classes.introduction} component="h1" variant="h6">
-            {user.introduction}
-          </Typography>
-            <FormDialog className={classes.introduction} />
-            <Typography className={classes.introduction} component="h1" variant="h6">
-              Car: Lamborghini Urus
+      <Grid container direction="row" spacing={3} alignItems="center" justify="flex-end">
+        <Grid item xs={12} md={6}>
+          <Box display="flex"
+            justifyContent="center">
+            <Avatar className={classes.avatar} src={avatarAdd} />
+          </Box>
+          <Box display="flex"
+            justifyContent="center">
+            <Typography component="h1" variant="h7">
+              {user.username}
             </Typography>
-            <img className={classes.introduction} className={classes.carImage} src="https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/models_gw/hero-banner/2022/04_12/gate_models_og_01.jpg" alt="car" />
-          </Grid>
+          </Box>
+          <Box display="flex"
+            justifyContent="center">
+            <Typography component="h1" variant="h6">
+              driving experience : {user.driving_experience}y
+            </Typography>
+          </Box>
+          <Box display="flex"
+            justifyContent="center">
+            <Typography component="h1" variant="h6">
+              {user.introduction}
+            </Typography>
+          </Box>
+          {/* <Box display="flex"
+            justifyContent="center">
+            <FormDialog />
+          </Box> */}
+          <Box display="flex"
+            justifyContent="center">
+              <FormDialog />
+              <AddPic />
+          </Box>
         </Grid>
-        <Grid item xs={5} alignItems="end" className="userHistory">
-            <UserHistory />
+        <Grid item xs={12} md={6}>
+          <UserHistory />
         </Grid>
       </Grid>
     </div>

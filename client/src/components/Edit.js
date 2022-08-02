@@ -11,6 +11,8 @@ export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = useState('')
   const [introduction, setIntroduction] = useState('')
+  const [avatarAddress, setAvatarAddress] = useState('')
+  const [drivingEx, setdrivingEx] = useState('')
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -27,11 +29,16 @@ export default function FormDialog() {
         setName(e.target.value);
     } else if (e.target.id == "intro") {
         setIntroduction(e.target.value);
-    } 
+    } else if (e.target.id == "avatar") {
+      setAvatarAddress(e.target.value);
+    } else if (e.target.id == "de") {
+      setdrivingEx(e.target.value);
+    }
 }
 
   const handleSubmit = () => {
-    var form = {id: user._id, username: name, introduction: introduction}
+    var form = {id: user._id, username: name, introduction: introduction, avatar: avatarAddress, drivingEx: drivingEx}
+    console.log(form)
     dispatch(
       editProfileAsync(form)
     )
@@ -63,6 +70,26 @@ export default function FormDialog() {
             label="User Introduction"
             type="string"
             value={introduction}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="avatar"
+            label="Avatar Address"
+            type="string"
+            value={avatarAddress}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="de"
+            label="Driving Experience"
+            type="string"
+            value={drivingEx}
             onChange={handleChange}
             fullWidth
           />

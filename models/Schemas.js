@@ -24,7 +24,10 @@ const userSchema = new Schema({
     rating: {type: mongoose.Decimal128},
     password: {type: String},
     email: {type: String},
-    join_date: {type: Date}
+    join_date: {type: Date},
+    avatar_address: {type: String, default: ""},
+    driving_experience: {type: String, default: "0"},
+    images: { type : Array , "default" : [] }
 }, { collection: 'users', versionKey: false});
 
 const historySchema = new Schema({

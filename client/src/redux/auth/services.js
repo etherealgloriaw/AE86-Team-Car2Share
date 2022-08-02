@@ -1,4 +1,4 @@
-const url = 'Login';
+const url = 'http://localhost:3001/Login';
 
 const loginIn = async(form) => {
     console.log(form)
@@ -35,8 +35,8 @@ const signUp = async(form) => {
 }
 
 const editProfile = async(edited) =>{
-    // const id = edited._id;
-    const response = await fetch("/Login/Edit", {
+    const id = edited._id;
+    const response = await fetch(url + "/Edit", {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json",
@@ -53,7 +53,25 @@ const editProfile = async(edited) =>{
 }
 
 const rateUser = async(user) =>{
-    const response = await fetch("/Login/rate", {
+    const response = await fetch(url + "/rate", {
+        method: 'PATCH',
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify(user)
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
+
+}
+
+const uploadPhoto = async(user) =>{
+    console.log(user)
+    const response = await fetch(url + "/upload", {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json",
@@ -73,7 +91,8 @@ const AuthService = {
     loginIn,
     signUp,
     editProfile,
-    rateUser
+    rateUser,
+    uploadPhoto
 };
 
 export default AuthService;
