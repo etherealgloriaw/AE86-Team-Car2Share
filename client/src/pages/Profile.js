@@ -66,8 +66,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem('profile'));
-  var imageList = user.images;
-  console.log(imageList);
   const navigate = useNavigate();
   var avatarAdd = "https://icons-for-free.com/download-icon-avatar-1320568024619304547_512.png"
   if (user != null) return (
@@ -78,7 +76,7 @@ export default function Profile() {
         <Grid item xs={12} md={6} className={classes.userProfile}>
           <Box display="flex"
             justifyContent="center">
-            <Avatar className={classes.avatar} src={avatarAdd} />
+            <Avatar className={classes.avatar} src={user.avatar_address} />
           </Box>
           <Box display="flex"
             justifyContent="center">
@@ -106,7 +104,7 @@ export default function Profile() {
           <Box display="flex"
             justifyContent="center">
             <ImageList rowHeight={160} className={classes.imageList} cols={3}>
-            {imageList ? (imageList.map((item) => {
+            {user.images ? (user.images.map((item) => {
               return (
                 <ImageListItem key={item.img} cols={item.cols || 1}>
                 <img src={item} alt="car" />

@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import {useLoadScript} from "@react-google-maps/api";
 import Popup from "../components/Popup"
+import UserIntro from "../components/UserIntro"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,6 +31,8 @@ function Home() {
     const [selected, setSelected] = useState(null)
     const [popup, setPopup] = useState(null)
     const [popupData, setPopupData] = useState(null);
+    const [intro, setIntro] = useState(null)
+    const [introData, setIntroData] = useState(null);
     useEffect(() => {
         if (popup !== null) {
             setPopupData(postList.find(post => {
@@ -38,7 +41,14 @@ function Home() {
         } else {
             setPopupData(null)
         }
-    }, [popup, postList, popupData])
+        if (intro !== null) {
+            setIntroData(postList.find(post => {
+            return post._id == intro
+        }))
+        } else {
+            setIntroData(null)
+        }
+    }, [popup, postList, popupData, intro, introData])
     // localStorage.clear();
     useLoadScript({
         googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',
@@ -51,7 +61,7 @@ function Home() {
             <div className={classes.root}>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
-                        <Posts selected={selected} setSelected={setSelected} posts={postList} setPopup={setPopup}/>
+                        <Posts selected={selected} setSelected={setSelected} posts={postList} setPopup={setPopup} setIntro = {setIntro}/>
                     </Grid>
                     <Grid item xs={7}>
                        <Map markerList={postList.map((post) => {
@@ -62,6 +72,7 @@ function Home() {
                 </Grid>
             </div>
             {popupData ? (<Popup togglePopup={setPopup} data={popupData}/>) : null}
+            {introData ? (<UserIntro togglePopup={setIntro} data={introData}/>) : null}
         </div>
 
     )

@@ -13,7 +13,6 @@ export const Posts = (props) => {
         dispatch(getPostAsync());
     }, [dispatch]);
 
-    console.log(posts);
     const renderedPosts = posts.map((slice) => {
         const date = new Date(slice.startingTime)
         const dateString = date.toDateString() + " " +date.getHours()+ ":"
@@ -26,7 +25,7 @@ export const Posts = (props) => {
             to = {slice.to} contactInfo={slice.contactInfo} key={Math.random()} id={slice._id}
                   active={slice.active} rating={slice.rating} price={slice.price}
                   availableSeats={slice.availableSeats} selected={props.selected} setSelected={props.setSelected}
-                  setPopup={props.setPopup}/>
+                  setPopup={props.setPopup} setIntro = {props.setIntro}/>
           }
         </Grid>
 

@@ -21,7 +21,6 @@ import TrackChangesTwoToneIcon from "@material-ui/icons/TrackChangesTwoTone";
 import AccessAlarmTwoToneIcon from "@material-ui/icons/AccessAlarmTwoTone";
 import Button from '@material-ui/core/Button';
 
-
 const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
@@ -139,7 +138,7 @@ export const Post = (slice) => {
     }
 
     const handleUserClick = () => {
-      slice.setPopup(slice.id)
+      slice.setIntro(slice.id)
     }
 
     const handleHover = () => {

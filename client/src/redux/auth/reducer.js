@@ -38,8 +38,9 @@ const INITIAL_STATE = {
         })
         .addCase(editProfileAsync.fulfilled, (state, action) => {
           state.editUser = REQUEST_STATE.FULFILLED;
-          var result = {_id: action.payload._id, username: action.payload.username, introduction: action.payload.introduction}
-          localStorage.setItem('profile', JSON.stringify(result));
+          // var result = {_id: action.payload._id, username: action.payload.username, introduction: action.payload.introduction}
+          console.log(action.payload);
+          localStorage.setItem('profile', JSON.stringify(action.payload));
         })
         .addCase(editProfileAsync.rejected, (state, action) => {
           state.editUser= REQUEST_STATE.REJECTED;
@@ -63,7 +64,7 @@ const INITIAL_STATE = {
         })
         .addCase(uploadPhotoAsync.fulfilled, (state, action) => {
           state.uploadPhoto = REQUEST_STATE.FULFILLED;
-          state.images = action.payload;
+          localStorage.setItem('profile', JSON.stringify(action.payload[0]));
         })
         .addCase(uploadPhotoAsync.rejected, (state, action) => {
           state.uploadPhoto  = REQUEST_STATE.REJECTED;
