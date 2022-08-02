@@ -33,6 +33,6 @@ export const rateUserAsync = createAsyncThunk(
 export const uploadPhotoAsync = createAsyncThunk(
     actionTypes.UPLOAD_PHOTO,
     async (user) =>{
-        return await AuthService.uploadPhotoAsync(user);
+        return await AuthService.uploadPhoto(user);
     }
 )

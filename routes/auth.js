@@ -101,18 +101,14 @@ router.patch('/rate', async (req, res, next) => {
 // upload new photos
 router.patch('/upload', async (req, res, next) => {
 	const id = mongoose.Types.ObjectId(req.body.id);
-	const photos = req.body.photos;
-	console.log(photos);
-	await mySchemas.userItem.findOneAndUpdate(
-		{ _id: id }, 
-		{ $addToSet: { images: photos } },
-	   function (error, success) {
-			 if (error) {
-				 console.log(error);
-			 } else {
-				 console.log(success);
-			 }
-		 });
+	const photos = req.body.images;
+	photos.map(async (photo) => {
+		await mySchemas.userItem.findOneAndUpdate(
+			{ _id: id }, 
+			{ $addToSet: { images: photo.value } }).catch(err => console.error(err))
+	})
+	await mySchemas.userItem.find({_id: {$eq: id}}).then(card => res.send(card))
+			.catch(err => console.error(err));
 });
 
 module.exports = router;

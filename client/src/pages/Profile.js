@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import FormDialog from "../components/Edit";
 import Button from '@material-ui/core/Button';
-import { Grid, Box, Card } from "@material-ui/core";
+import { Grid, Box, Card, ImageList, ImageListItem } from "@material-ui/core";
 import AddPic from "../components/AddPic";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
     borderBottomRightRadius: 6,
     borderTopRightRadius: 6,
     // marginRight: 100,
-    // marginTop: "2%",
-    // marginLeft: "2%"
+    marginTop: "2%",
+    // marginLeft: "5%"
   },
   introduction: {
     textAlign: "center",
@@ -66,14 +66,16 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem('profile'));
+  var imageList = user.images;
+  console.log(imageList);
   const navigate = useNavigate();
   var avatarAdd = "https://icons-for-free.com/download-icon-avatar-1320568024619304547_512.png"
   if (user != null) return (
     // <Container component="main" maxWidth="xs">
     <div className={classes.root}>
       <CssBaseline />
-      <Grid container direction="row" spacing={3} alignItems="center" justify="flex-end">
-        <Grid item xs={12} md={6}>
+      <Grid container direction="row" spacing={3}>
+        <Grid item xs={12} md={6} className={classes.userProfile}>
           <Box display="flex"
             justifyContent="center">
             <Avatar className={classes.avatar} src={avatarAdd} />
@@ -96,17 +98,25 @@ export default function Profile() {
               {user.introduction}
             </Typography>
           </Box>
-          {/* <Box display="flex"
-            justifyContent="center">
-            <FormDialog />
-          </Box> */}
           <Box display="flex"
             justifyContent="center">
-              <FormDialog />
-              <AddPic />
+            <FormDialog />
+            <AddPic />
+          </Box>
+          <Box display="flex"
+            justifyContent="center">
+            <ImageList rowHeight={160} className={classes.imageList} cols={3}>
+            {imageList ? (imageList.map((item) => {
+              return (
+                <ImageListItem key={item.img} cols={item.cols || 1}>
+                <img src={item} alt="car" />
+                </ImageListItem>
+              );
+            })) : ""}
+            </ImageList>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} >
           <UserHistory />
         </Grid>
       </Grid>

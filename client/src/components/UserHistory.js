@@ -188,11 +188,6 @@ export const UserHistory = () => {
               {slice.active ? 'Active' : 'Inactive'}
             </Avatar>
           }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
           title={statusStr}
         />
         <CardContent>
@@ -253,7 +248,7 @@ export const UserHistory = () => {
 
 
   return (
-    <section className="postsInProfilePage">
+    <div className="postsInProfilePage">
       <FormGroup>
         <FormControlLabel
           control={<Switch checked={status} onChange={handleChange} aria-label="login switch" />}
@@ -270,13 +265,13 @@ export const UserHistory = () => {
               <Button color="inherit" onClick = {handleUpcomingPost}>Upcoming</Button>
               <Button color="inherit" onClick = {handleHistoryPost}>History</Button>
               </Toolbar>
-              </AppBar>
+        </AppBar>
       <List style={{ maxHeight: '250%', overflow: 'auto' }}>
         {/* <Grid sx={{ overflowY: "scroll", maxHeight: "250px" }}, container spacing={2}> */}
         {status ? renderedPosts : renderedDriverPosts}
         {/* </Grid> */}
       </List>
-    </section>
+    </div>
   )
 }
 

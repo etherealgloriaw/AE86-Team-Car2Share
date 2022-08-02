@@ -7,13 +7,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux'
-import { editProfileAsync } from "../redux/auth/thunks";
+
 export default function AddPic() {
     const [open, setOpen] = React.useState(false);
-    const [name, setName] = useState('')
-    const [introduction, setIntroduction] = useState('')
-    const [avatarAddress, setAvatarAddress] = useState('')
-    const [drivingEx, setdrivingEx] = useState('')
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -56,7 +52,7 @@ export default function AddPic() {
     }
 
     const handleSubmit = () => {
-        var form = { id: user._id, username: name, introduction: introduction, avatar: avatarAddress, drivingEx: drivingEx }
+        var form = {id: user._id, images: arr}
         console.log(form)
         dispatch(
             uploadPhotoAsync(form)
@@ -72,33 +68,24 @@ export default function AddPic() {
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add new images to profile</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="User Name"
-                        type="string"
-                        value={name}
-                        onChange={handleChange}
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={addInput}>Add Another</Button >
                     {arr.map((item, i) => {
                         return (
                             <div>
                                 <TextField
+                                label="Photo Address"
                                 onChange={handleChange}
                                 value={item.value}
                                 id={i}
                                 type={item.type}
-                                size="40"
+                                fullWidth
                             />
                             </div>
                             
                         );
                     })}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={addInput}>Add Another</Button >
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>

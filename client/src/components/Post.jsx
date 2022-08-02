@@ -138,6 +138,10 @@ export const Post = (slice) => {
       slice.setPopup(slice.id)
     }
 
+    const handleUserClick = () => {
+      slice.setPopup(slice.id)
+    }
+
     const handleHover = () => {
         setRaised(true)
         slice.setSelected(slice.id)
@@ -160,9 +164,9 @@ export const Post = (slice) => {
 
   return (
     <Card className={classes.root} key={Math.random()} raised={raised} onMouseOver={handleHover} onMouseOut={handleOut}>
-      <CardHeader className={classes.cardHeader}
+      <CardHeader className={classes.cardHeader} 
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar} >
+          <Avatar aria-label="recipe" className={classes.avatar} onClick={handleUserClick}>
             {slice.name.username}
           </Avatar>
         }
