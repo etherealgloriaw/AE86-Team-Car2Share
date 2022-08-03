@@ -1,14 +1,14 @@
-const url = 'Profile';
+const url = 'http://localhost:3001/Profile';
 
 const getHistory = async(name) => {
-    const response = await fetch (`/${url}/${name}`,{
+    const response = await fetch (`${url}/${name}`,{
         method: 'GET'
     });
     return response.json();
 };
 
 const getDriverHistory = async(name) => {
-    const response = await fetch (`/${url}/driver/${name}`,{
+    const response = await fetch (`${url}/driver/${name}`,{
         method: 'GET'
     });
     return response.json();
@@ -16,7 +16,7 @@ const getDriverHistory = async(name) => {
 
 const joinHistory = async(post) =>{
     console.log(post)
-    const response = await fetch("/Profile/join", {
+    const response = await fetch(url + "/Profile/join", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
