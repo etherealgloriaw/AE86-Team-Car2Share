@@ -170,7 +170,7 @@ export const UserHistory = () => {
     }
 
     const handleEdit = () => {
-      navigate(`/Edit/${slice._id}`, { replace: false })
+      navigate(`/Edit/${slice._id}`, {state: posts}, { replace: false })
     }
 
     const handleFinish = () => {

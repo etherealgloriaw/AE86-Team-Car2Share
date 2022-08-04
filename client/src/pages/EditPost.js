@@ -13,12 +13,9 @@ import ModifyPost from "../components/ModifyPost";
 function EditPost({ match }) {
     const dispatch = useDispatch();
     const { postID } = useParams()
-    // const post = useSelector(state => state.posts.list.find(p => p._id == postID))
-const post = null
-    const posts = useSelector(state => state.posts.list)
-    console.log("id" + postID)
-    console.log(posts)
-    console.log("find " + posts.find(p => p._id == postID))
+    const post = useSelector(state => state.users.list.find(p => p._id == postID))
+
+    // console.log("find " + posts.find(p => p._id == postID))
     // const handleChange = e => {
     // if (e.target.name == 'availableSeats') {
     //         setAvailableSeats(e.target.value);
