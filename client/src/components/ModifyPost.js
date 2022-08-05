@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Map from "../components/Map";
 import { Navigate } from "react-router-dom";
-import { addPostAsync } from "../redux/posts/thunks";
+import {addPostAsync, editPostAsync} from "../redux/posts/thunks";
 import { useGeolocated } from "react-geolocated";
 import { FormControl, FormHelperText, IconButton, Input, InputLabel } from "@material-ui/core";
 import MyLocationIcon from '@material-ui/icons/MyLocation';
@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import NumberFormat from "react-number-format";
 import { useNavigate } from "react-router-dom";
 import { Grid } from '@material-ui/core';
+import {getGeocode, getLatLng} from "use-places-autocomplete";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
 //Reference: https://cloud.google.com/blog/products/maps-platform/how-calculate-distances-map-maps-javascript-api
 export function calcDistance(coordsA, coordsB) {
-    console.log("coords", coordsA.lat)
     const R = 3958.8; // Radius of the Earth in miles
     const rlat1 = coordsA.lat * (Math.PI / 180); // Convert degrees to radians
     const rlat2 = coordsB.lat * (Math.PI / 180); // Convert degrees to radians
@@ -102,29 +102,27 @@ NumberFormatCustom.propTypes = {
 
 
 export default function ModifyPost(prop) {
-    console.log(prop)
     const target = prop.post
     const dispatch = useDispatch();
     const classes = useStyles();
-    const [dept, setDept] = useState(null);
-    const [dest, setDest] = useState(null)
+    const [dept, setDept] = useState(prop.forEdit? prop.dept: null)
+    const [dest, setDest] = useState(prop.forEdit? prop.dest: null)
     const [deptString, setDeptString] = useState(target? target.from: null);
     const [destString, setDestString] = useState(target? target.to: null)
     const [availableSeats, setAvailableSeats] = useState(target? target.availableSeats: null)
     let dateStr
     let dateFormat
     if (target) {
-        console.log(target)
         dateStr = target.startingTime.toString()
         dateFormat = dateStr.substring(0,dateStr.length-2)
     }
     const [departureTime, setDepartureTime] = useState(target? dateFormat: null)
     const [contactInfo, setContactInfo] = useState(target? target.contactInfo: null)
-    const [directionResponse, setDirectionResponse] = useState(null)
-    const [distances, setDistances] = useState(null)
-    const [duration, setDuration] = useState(null)
+    const [directionResponse, setDirectionResponse] = useState(prop.forEdit? prop.direction: null)
+    const [distances, setDistances] = useState(prop.forEdit? prop.distance: null)
+    const [duration, setDuration] = useState(prop.forEdit? prop.duration: null)
     const user = JSON.parse(localStorage.getItem('profile'));
-    const [forEdit, setForEdit] = useState(false)
+    const [forEdit, setForEdit] = useState(prop.forEdit)
     const [posError, setPosError] = useState(0)
     const [seatsError, setSeatsError] = useState(false)
     const [contactInfoError, setContactInfoError] = useState(false)
@@ -132,6 +130,8 @@ export default function ModifyPost(prop) {
     const [priceError, setPriceError] = useState(false)
     const [price, setPrice] = useState(target? target.price:"0")
     const [posErrorMsg, setPosErrorMsg] = useState("Please choose address from list")
+    const [displayErrMsg,setDisplayErrMsg] = useState(false)
+    const [isInit, setIsInit] = useState(true)
     let posErrorVar = 0
     let seatsErrorVar = false
     let contactInfoErrorVar = false
@@ -147,6 +147,17 @@ export default function ModifyPost(prop) {
             userDecisionTimeout: 5000,
         });
 
+    useEffect(() => {
+        if (dept && dest) {
+            setIsInit(false)
+        }
+        if (!isInit) {
+            calculateRoute()
+        }
+    }, [dept, dest, isInit])
+
+
+
     const handleLocation = () => {
         if (isGeolocationAvailable && isGeolocationEnabled) {
             // eslint-disable-next-line no-undef
@@ -160,7 +171,7 @@ export default function ModifyPost(prop) {
                         response.results.every((result) => {
                             if (result.address_components[0].types[0] == 'street_number') {
                                 setDeptString(result.formatted_address)
-                                setForEdit(true)
+                                setDisplayErrMsg(true)
                                 return false
                             }
                             return true
@@ -195,25 +206,26 @@ export default function ModifyPost(prop) {
     }
 
     const calculateRoute = async () => {
-        if (dept == null || dest == null) {
-            if (dept == null && dest == null) {
-                setPosError(3)
-                setPosErrorMsg("Please choose address from list")
-                posErrorVar = 3
+            if (dept == null || dest == null) {
+                if (dept == null && dest == null) {
+                    setPosError(3)
+                    setPosErrorMsg("Please choose address from list")
+                    posErrorVar = 3
 
-            } else if (dept == null) {
-                setPosError(1)
-                posErrorVar = 1
-                setPosErrorMsg("Please choose address from list")
-            } else {
-                setPosError(2)
-                posErrorVar = 2
+                } else if (dept == null) {
+                    setPosError(1)
+                    posErrorVar = 1
+                    setPosErrorMsg("Please choose address from list")
+                } else {
+                    setPosError(2)
+                    posErrorVar = 2
+                }
+                return
             }
-            return
-        }
-        if (!checkInUBC()) {
-            return
-        }
+            if (!checkInUBC()) {
+                return
+            }
+
         setPosError(0)
         posErrorVar = 0
         // eslint-disable-next-line no-undef
@@ -249,10 +261,8 @@ export default function ModifyPost(prop) {
         } else if (e.target.name == "departureTime") {
             setDepartureTime(e.target.value);
         } else if (e.target.name == "contactInfo") {
-            console.log(e.target.value)
             setContactInfo(e.target.value);
         } else if (e.target.name == "price") {
-            console.log(e.target.value)
             setPrice(e.target.value)
         }
     }
@@ -277,8 +287,14 @@ export default function ModifyPost(prop) {
         const addPost = () => {
             if ((posErrorVar == 0) && (!seatsErrorVar) && (!contactInfoErrorVar) && (!dateErrorVar) &&
                 (!priceErrorVar)) {
-                dispatch(addPostAsync(newPost))
-                alert("Added")
+                if (forEdit) {
+                    alert("Edited!")
+                    dispatch (editPostAsync(newPost))
+                } else {
+                    alert("Added")
+                    dispatch(addPostAsync(newPost))
+                }
+
                 setDeptString("")
                 setDestString("")
                 setAvailableSeats('');
@@ -305,7 +321,7 @@ export default function ModifyPost(prop) {
                 setSeatsError(false)
                 seatsErrorVar = false
             }
-            if (!(price > 0 && price < 1000)) {
+            if (!(price >= 0 && price < 99999)) {
                 setPriceError(true)
                 priceErrorVar = true
             } else {
@@ -344,13 +360,14 @@ export default function ModifyPost(prop) {
                         <Grid item>
                             <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString}
                                                 title="Departure From" forEdit={forEdit} string={deptString} label={1}
-                                                error={posError} boundary={deptBounds} posErrorMsg={posErrorMsg} />
+                                                error={posError} boundary={deptBounds} posErrorMsg={posErrorMsg}
+                                                displayErrMsg={displayErrMsg} />
                             <IconButton aria-label="Use current location" onClick={handleLocation}>
                                 <MyLocationIcon />
                             </IconButton>
                             <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString}
                                                 title="Arrive At"
-                                                forEdit={false} label={2} error={posError} boundary={destBounds} />
+                                                forEdit={forEdit} string={destString} label={2} error={posError} boundary={destBounds} />
                             <Button variant="contained" color="primary" onClick={calculateRoute}>
                                 Calculate Route
                             </Button>
@@ -377,7 +394,7 @@ export default function ModifyPost(prop) {
                         <Grid item >
                             <TextField
                                 label="Price"
-                                value={price.numberformat}
+                                value={price}
                                 onChange={handleChange}
                                 name="price"
                                 id="formatted-numberformat-input"

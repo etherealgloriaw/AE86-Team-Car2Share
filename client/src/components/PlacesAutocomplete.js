@@ -30,7 +30,6 @@ export default function PlacesAutocomplete(props) {
         const results = await getGeocode({address});
         console.log(results)
         const coordinates = await getLatLng(results[0]);
-        console.log(coordinates.lat)
         props.setString(address)
         props.setSelected(coordinates);
     };
@@ -56,7 +55,7 @@ export default function PlacesAutocomplete(props) {
 
         <Autocomplete
             id="autocomplete"
-            value={props.forEdit? props.string:value}
+            value={(props.forEdit || props.displayErrMsg)? props.string:value}
             freeSolo
             clearOnEscape={true}
             disabled={!ready}
