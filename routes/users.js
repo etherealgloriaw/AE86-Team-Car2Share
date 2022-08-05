@@ -22,7 +22,6 @@ router.get('/:userid', async (req, res, next) => {
 router.get('/driver/:userid', async (req, res, next) => {
   const id = mongoose.Types.ObjectId(req.params.userid)
   const userID = await mySchemas.userItem.findById(id)
-  console.log(userID)
   const result = await mySchemas.postItem.find({driver: {$eq: userID._id}}).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {

@@ -225,7 +225,7 @@ export const UserHistory = () => {
               </ListItemIcon>
               <ListItemText
                   primary= "Departure Time: "
-                  secondary={slice.startingTime}
+                  secondary={dateString}
               />
             </ListItem>
           </List>

@@ -16,7 +16,7 @@ const getDriverHistory = async(name) => {
 
 const joinHistory = async(post) =>{
     console.log(post)
-    const response = await fetch(url + "/Profile/join", {
+    const response = await fetch(url + "/join", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
