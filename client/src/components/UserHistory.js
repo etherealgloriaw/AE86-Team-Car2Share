@@ -87,9 +87,10 @@ export const UserHistory = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
 
   const [status, setStatus] = React.useState(true);
-  var time = 'History'
+  const [time, setTime] = React.useState('')
 
   const handleChange = (event) => {
+    setTime('')
     setStatus(!status);
     if (status)
       dispatch(getDriverHistoryAsync(user._id));
@@ -97,40 +98,26 @@ export const UserHistory = () => {
       dispatch(getHistoryAsync(user._id));
   };
 
-  const handleHistoryPost = () =>{
-    time = 'History';
-    // posts.filter(function(slice){
-    //   return slice.active== "0";
-    // })
+  const handleTimeChange = (e) =>{
+    setTime(e.currentTarget.value)    
   }
 
-  const handleOngoingPost = () =>{
-    time = 'Ongoing';
-    // console.log("post: " + posts)
-    // posts.filter(function(slice){
-    //   console.log("active: " + JSON.stringify(slice))
-    //   return slice.active === "1";
-    // })
-    // console.log("post: " + posts)
-  }
 
-  const handleUpcomingPost = () =>{
-    time = 'Upcoming';
-    // console.log("Time: " + time)
-    // posts.filter(function(slice){
-    //   return slice.active== "2";
-    // })
-  }
 
 
   var renderedPosts = posts.map((slice) => {
-    if(time == "Histroy"){
-      console.log("History")
-      if(slice.active != "0") return
-    }else if(time == "Upcoming"){
-      if(slice.active != "2") return
-    }else{
-      if(slice.active != "1") return
+    if(time === "history"){
+      // console.log("history")
+      if(slice.active !== 2) return
+    }else if(time === 'ongoing'){
+      // console.log("ongoing")
+      // console.log("active status: " + slice.active)
+      console.log(slice.active !== 1)
+      if(slice.active !== 1) return
+      
+    }else if(time === 'upcoming'){
+      // console.log("upcoming")
+      if(slice.active !== 0) return
     }
     const date = new Date(slice.startingTime)
     const dateString = date.toDateString() + " " + date.getHours() + ":"
@@ -149,6 +136,20 @@ export const UserHistory = () => {
   })
 
   var renderedDriverPosts = posts.map((slice) => {
+    if(time === "history"){
+      console.log("history")
+      console.log(slice.active !== 2)
+      if(slice.active !== 2) return
+    }else if(time === 'ongoing'){
+      // console.log("ongoing")
+      // console.log("active status: " + slice.active)
+      console.log(slice.active !== 1)
+      if(slice.active !== "1") return
+      
+    }else if(time === 'upcoming'){
+      // console.log("upcoming")
+      if(slice.active !== 0) return
+    }
     const date = new Date(slice.startingTime)
     const dateString = date.toDateString() + " " + date.getHours() + ":"
       + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
@@ -261,9 +262,9 @@ export const UserHistory = () => {
             </IconButton>
             <Typography variant="h6" className={classes.title}>
               </Typography>
-              <Button color="inherit" onClick = {handleOngoingPost}>Ongoing</Button>
-              <Button color="inherit" onClick = {handleUpcomingPost}>Upcoming</Button>
-              <Button color="inherit" onClick = {handleHistoryPost}>History</Button>
+              <Button color="inherit" value = {'ongoing'} onClick = {handleTimeChange}>Ongoing</Button>
+              <Button color="inherit" value = {'upcoming'} onClick = {handleTimeChange}>Upcoming</Button>
+              <Button color="inherit" value = {'history'} onClick = {handleTimeChange}>History</Button>
               </Toolbar>
         </AppBar>
       <List style={{ maxHeight: '250%', overflow: 'auto' }}>
