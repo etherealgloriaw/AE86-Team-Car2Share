@@ -139,6 +139,12 @@ export const UserHistory = () => {
   const [time, setTime] = React.useState('')
 
   const handleChange = () => {
+    document.getElementById("ongoing").classList.remove(classes.activeButton)
+    document.getElementById("ongoing").classList.add(classes.basicButton)
+    document.getElementById("upcoming").classList.remove(classes.activeButton)
+    document.getElementById("upcoming").classList.add(classes.basicButton)
+    document.getElementById("history").classList.remove(classes.activeButton)
+    document.getElementById("history").classList.add(classes.basicButton)
 
     setTime('')
     setStatus(!status);
@@ -357,10 +363,10 @@ export const UserHistory = () => {
 
 
   return (
-    <div className="postsInProfilePage"  checked={status} onLoad={handleChange}>
+    <div className="postsInProfilePage">
       <FormGroup>
         <FormControlLabel
-          control={<Switch onChange={handleChange} aria-label="login switch" />}
+          control={<Switch checked={status} defaultChecked = {true} onChange={handleChange} aria-label="login switch" />}
           label={status ? 'Passenger' : 'Driver'}
         />
       </FormGroup>
