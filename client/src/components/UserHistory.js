@@ -29,7 +29,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import TrackChangesTwoToneIcon from "@material-ui/icons/TrackChangesTwoTone";
 import AccessAlarmTwoToneIcon from "@material-ui/icons/AccessAlarmTwoTone";
 import {Card} from "@material-ui/core";
-
+import { FormLabel } from '@material-ui/core';
+import { InputLabel } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -78,6 +79,54 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '3%',
     backgroundColor: "#ECECEC",
   },
+  activeButton: {
+    backgroundColor: '#fff',
+    color: '#3c52b2',
+    border: "3px solid #fff",
+    fontWeight: 540,
+    fontSize: 16,
+    '&:hover': {
+      backgroundColor: '#fff',
+      color: '#3c52b2',
+    }
+  },
+  basicButton: {
+    fontWeight: 540,
+    fontSize: 16,
+    color: 'white',
+    fontStyle: 'bold',
+    border: "3px solid #658940",
+    maxWidth: '100%',
+    backgroundColor: '#839b67',
+    // backgroundColor: '#658940',
+    '&:hover': {
+      backgroundColor: '#fff',
+      color: '#3c52b2',
+    },
+  },
+  finishedLabel: {
+    borderRadius: 5,
+    width: '100%',
+    textAlign: "center",
+    backgroundColor: '#839b67',
+    color: 'white'
+  },
+  upcomingLabel: {
+    borderRadius: 5,
+    width: '100%',
+    textAlign: "center",
+    backgroundColor: 'yellow'
+  },
+  ongoingLabel: {
+    borderRadius: 5,
+    width: '100%',
+    textAlign: "center",
+    backgroundColor: '#3c52b2',
+    color: 'white'
+  },
+  iconText: {
+    fontSize: 16
+  }
 }));
 
 export const UserHistory = () => {
@@ -86,12 +135,11 @@ export const UserHistory = () => {
   let navigate = useNavigate();
   const posts = useSelector(state => state.users.list)
   const user = JSON.parse(localStorage.getItem('profile'));
-
   const [status, setStatus] = React.useState('driver');
   const [time, setTime] = React.useState(true)
 
   const handleChange = () => {
-   
+
     setTime('')
     setStatus(!status);
     if (status)
@@ -101,12 +149,73 @@ export const UserHistory = () => {
   };
 
   const handleTimeChange = (e) =>{
-    document.getElementById("ongoing").style.color = "#ECECEC";
-    document.getElementById("upcoming").style.color = "#ECECEC";
-    document.getElementById("history").style.color = "#ECECEC";
+    // document.getElementById("ongoing").style.color = "#ECECEC";
+    // document.getElementById("upcoming").style.color = "#ECECEC";
+    // document.getElementById("history").style.color = "#ECECEC";
+
+    if (e.currentTarget.name == 'ongoing') {
+      e.currentTarget.classList.add(
+          classes.activeButton
+      );
+      e.currentTarget.classList.remove(
+          classes.basicButton
+      )
+      document.getElementById("upcoming").classList.remove(
+          classes.activeButton
+      )
+      document.getElementById("history").classList.remove(
+          classes.activeButton
+      )
+      document.getElementById("upcoming").classList.add(
+          classes.basicButton
+      )
+      document.getElementById("history").classList.add(
+          classes.basicButton
+      )
+    } else if (e.currentTarget.name == 'upcoming') {
+      e.currentTarget.classList.add(
+          classes.activeButton
+      );
+      e.currentTarget.classList.remove(
+          classes.basicButton
+      )
+      document.getElementById("ongoing").classList.remove(
+          classes.activeButton
+      )
+      document.getElementById("history").classList.remove(
+          classes.activeButton
+      )
+      document.getElementById("ongoing").classList.add(
+          classes.basicButton
+      )
+      document.getElementById("history").classList.add(
+          classes.basicButton
+      )
+    } else if (e.currentTarget.name == 'history') {
+      e.currentTarget.classList.add(
+          classes.activeButton
+      );
+      e.currentTarget.classList.remove(
+          classes.basicButton
+      )
+      document.getElementById("ongoing").classList.remove(
+          classes.activeButton
+      )
+      document.getElementById("upcoming").classList.remove(
+          classes.activeButton
+      )
+      document.getElementById("ongoing").classList.add(
+          classes.basicButton
+      )
+      document.getElementById("upcoming").classList.add(
+          classes.basicButton
+      )
+    }
+    // document.getElementById("history").classList.remove('')
+
     setTime(e.currentTarget.value)
     // console.log( document.getElementById(e.currentTarget.value).textContent)
-    document.getElementById(e.currentTarget.value).style.color = "#000000";
+    // document.getElementById(e.currentTarget.value).style.color = "#000000";
     // document.getElementById(e.currentTarget.value).textContent.style.color = "#336600";
   }
 
@@ -140,14 +249,14 @@ export const UserHistory = () => {
   var renderedDriverPosts = posts.map((slice) => {
     if (slice._id == null) return
     if(time === "history"){
-      
+
       if(slice.active !== 2) return
     }else if(time === 'ongoing'){
-     
+
       if(slice.active !== "1") return
 
     }else if(time === 'upcoming'){
-   
+
       if(slice.active !== 0) return
     }
     const date = new Date(slice.startingTime)
@@ -156,13 +265,18 @@ export const UserHistory = () => {
       ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
     const status = slice.active;
     let statusStr = "";
+    let statusLabel = ''
     if (status == "0") {
-      statusStr = "In the future"
+      statusStr = "In the future";
+      statusLabel = <InputLabel id="statusLabel" className={classes.upcomingLabel}>{statusStr}</InputLabel>
     } else if(status == "1") {
       statusStr = "Ongoing"
+      statusLabel = <InputLabel id="statusLabel" className={classes.ongoingLabel}>{statusStr}</InputLabel>
     } else if(status == 2) {
       statusStr = "Finished"
+      statusLabel = <InputLabel id="statusLabel" className={classes.finishedLabel}>{statusStr}</InputLabel>
     }
+
 
     const handleDelete = () => {
       dispatch(
@@ -181,27 +295,25 @@ export const UserHistory = () => {
       )
     }
 
+    const handleEditHover = () => {
+      alert('edut')
+    }
+
 
     return (
         <Card className={classes.root} key={Math.random()}>
+          {statusLabel}
         <CardHeader className={classes.cardHeader}
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
-              {slice.active ? 'Active' : 'Inactive'}
+              {/*{slice.active ? 'Active' : 'Inactive'}*/}
+              {slice.driver.username}
             </Avatar>
           }
-          title={statusStr}
+          title={slice.driver.username}
         />
-        <CardContent>
-          {/*<Typography variant="body2" color="textSecondary" component="p">*/}
-          {/*  From: {slice.from}*/}
-          {/*  <div></div>*/}
-          {/*  To: {slice.to}*/}
-          {/*</Typography>*/}
 
-          {/*<Typography variant="body2" color="textSecondary" component="p">*/}
-          {/*  <span style={{fontWeight: 'bold'}}>Departure time: </span>{dateString}*/}
-          {/*</Typography>*/}
+        <CardContent>
           <List className={classes.itemList}>
             <ListItem className={classes.item}>
               <ListItemIcon>
@@ -231,14 +343,17 @@ export const UserHistory = () => {
               />
             </ListItem>
           </List>
-          <IconButton aria-label="share" onClick={handleDelete}>
+          <IconButton aria-label="share" onClick={handleDelete} className={classes.iconText}>
             <DeleteIcon />
+            Delete
           </IconButton>
-          <IconButton aria-label="share" onClick={handleEdit} >
+          <IconButton aria-label="share" onClick={handleEdit} className={classes.iconText}>
             <EditIcon />
+            Edit
           </IconButton>
-          <IconButton aria-label="share" onClick={handleFinish} >
+          <IconButton aria-label="share" onClick={handleFinish} className={classes.iconText}>
             <CheckBoxIcon />
+            Finish
           </IconButton>
 
         </CardContent>
@@ -262,11 +377,24 @@ export const UserHistory = () => {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             </IconButton>
             <Typography variant="h6" className={classes.title}></Typography>
-            <div id = "buttons">
-            <Button id="ongoing" color="inherit" value = {'ongoing'} onClick = {handleTimeChange}>Ongoing</Button>
-              <Button id="upcoming" color="inherit" value = {'upcoming'} onClick = {handleTimeChange}>Upcoming</Button>
-              <Button id="history" color="inherit" value = {'history'} onClick = {handleTimeChange}>History</Button>
-            </div>
+            <Grid id = "buttons" container
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center">
+              <Grid >
+                <Button id="ongoing" color="inherit" value = {'ongoing'} onClick = {handleTimeChange} name={'ongoing'} className={classes.basicButton}>Ongoing</Button>
+              </Grid>
+
+              <Grid>
+                <Button id="upcoming" color="inherit" value = {'upcoming'} onClick = {handleTimeChange} name={'upcoming'} className={classes.basicButton}>Upcoming</Button>
+              </Grid>
+              <Grid>
+                <Button id="history" color="inherit" value = {'history'} onClick = {handleTimeChange} name={'history'} className={classes.basicButton}>History</Button>
+              </Grid>
+              {/*<Button id="ongoing" color="inherit" value = {'ongoing'} onClick = {handleTimeChange} name={'ongoing'} className={classes.basicButton}>Ongoing</Button>*/}
+              {/*<Button id="upcoming" color="inherit" value = {'upcoming'} onClick = {handleTimeChange} name={'upcoming'} className={classes.basicButton}>Upcoming</Button>*/}
+              {/*<Button id="history" color="inherit" value = {'history'} onClick = {handleTimeChange} name={'history'} className={classes.basicButton}>History</Button>*/}
+            </Grid>
               </Toolbar>
         </AppBar>
       <List style={{ maxHeight: '250%', overflow: 'auto' }}>

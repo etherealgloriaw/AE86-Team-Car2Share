@@ -5,8 +5,10 @@ import clsx from 'clsx';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Rating from '@material-ui/lab/Rating';
-import {Card, CardHeader, CardContent,CardActions, Collapse, Avatar, Box, IconButton, Typography,
-    Dialog, DialogContent, DialogTitle} from "@material-ui/core";
+import {
+    Card, CardHeader, CardContent, CardActions, Collapse, Avatar, Box, IconButton, Typography,
+    Dialog, DialogContent, DialogTitle, InputLabel
+} from "@material-ui/core";
 import { rateUserAsync } from "../redux/auth/thunks";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -71,6 +73,29 @@ const useStyles = makeStyles((theme) => ({
             maxHeight: 1,
             paddingLeft: "3.5%"
         },
+        finishedLabel: {
+            borderRadius: 5,
+            width: '100%',
+            textAlign: "center",
+            backgroundColor: '#839b67',
+            color: 'white'
+        },
+        upcomingLabel: {
+            borderRadius: 5,
+            width: '100%',
+            textAlign: "center",
+            backgroundColor: 'yellow',
+        },
+        ongoingLabel: {
+            borderRadius: 5,
+            width: '100%',
+            textAlign: "center",
+            backgroundColor: '#3c52b2',
+            color: 'white'
+        },
+        iconText: {
+            fontSize: 16
+        }
 }
 ));
 
@@ -115,8 +140,23 @@ export const PostHistory = (slice) => {
         setOpen(false);
     };
 
+    const status = slice.active;
+    let statusStr = "";
+    let statusLabel = ''
+    if (status == "0") {
+        statusStr = "In the future";
+        statusLabel = <InputLabel id="statusLabel" className={classes.upcomingLabel}>{statusStr}</InputLabel>
+    } else if(status == "1") {
+        statusStr = "Ongoing"
+        statusLabel = <InputLabel id="statusLabel" className={classes.ongoingLabel}>{statusStr}</InputLabel>
+    } else if(status == 2) {
+        statusStr = "Finished"
+        statusLabel = <InputLabel id="statusLabel" className={classes.finishedLabel}>{statusStr}</InputLabel>
+    }
+
     return (
         <Card className={classes.root} key={Math.random()}>
+            {statusLabel}
             <CardHeader className="cardHeader"
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar} >
@@ -159,11 +199,13 @@ export const PostHistory = (slice) => {
                 </List>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="share" onClick={handleRate} >
+                <IconButton aria-label="share" onClick={handleRate} className={classes.iconText}>
                     <RateReviewIcon />
+                    Rate
                 </IconButton>
-                <IconButton aria-label="share" onClick={handleCancel}>
+                <IconButton aria-label="share" onClick={handleCancel} className={classes.iconText}>
                     <CancelIcon />
+                    Cancel
                 </IconButton>
                 <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Rate</DialogTitle>
