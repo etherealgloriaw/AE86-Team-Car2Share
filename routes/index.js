@@ -137,12 +137,16 @@ router.patch('/finish/:id', async (req, res, next) => {
   try {
     const id = mongoose.Types.ObjectId(req.params.id);
     const post = await mySchemas.postItem.findById(id);
+    const historyPost = await mySchemas.historyItem.find({original_id: {$eq: id}})
+    const historyID = historyPost[0]._id
+
+
     await mySchemas.historyItem.find({ original_id: { $eq: id } }).populate("user").then(
         card => {
           if (post.active == 1) {
               if (card) {
                 user = card[0].user;
-                console.log(user)
+
                 nodeoutlook.sendEmail({
                   auth: {
                     user: "car2share@outlook.com",
@@ -151,7 +155,7 @@ router.patch('/finish/:id', async (req, res, next) => {
                   from: 'car2share@outlook.com',
                   to: user.email,
                   subject: 'Your ride has been finished by driver!',
-                  text: 
+                  text:
                   `     Hello ${user.username}, your ride from ${post.from} to ${post.to} start at ${post.startingTime} has been finished by driver, please check the status in Car2Share(https://ae86-car.herokuapp.com)!
 Car2Share Official`,
                   replyTo: 'car2share@outlook.com',
@@ -164,6 +168,7 @@ Car2Share Official`,
         }
     )
     await mySchemas.postItem.findByIdAndUpdate(id, { active: 2 }).populate("driver");
+    await mySchemas.historyItem.findByIdAndUpdate(historyID, { active: 2 }).populate("driver");
     const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
     res.send(allPosts)
   } catch (e) {
