@@ -134,6 +134,7 @@ export const ResponsiveSearchBar = () => {
                         value={selection}
                         onChange={selectionMade}
                         >
+                        <MenuItem value={"distance"}>Distance</MenuItem>
                         <MenuItem value={"rating"}>Ratings</MenuItem>
                         <MenuItem value={"totalTime"}>Total Time</MenuItem>
                         <MenuItem value={"availableSeats"}>Available Seats</MenuItem>

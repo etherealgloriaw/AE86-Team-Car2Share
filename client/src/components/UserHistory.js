@@ -106,6 +106,7 @@ export const UserHistory = () => {
 
 
   var renderedPosts = posts.map((slice) => {
+    if (slice._id == null) return
     if(time === "history"){
       // console.log("history")
       if(slice.active !== 2) return
@@ -136,6 +137,7 @@ export const UserHistory = () => {
   })
 
   var renderedDriverPosts = posts.map((slice) => {
+    if (slice._id == null) return
     if(time === "history"){
       console.log("history")
       console.log(slice.active !== 2)
@@ -253,7 +255,7 @@ export const UserHistory = () => {
     <div className="postsInProfilePage">
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked={status} defaultChecked = {true} onChange={handleChange} aria-label="login switch" />}
+          control={<Switch checked = {status} defaultchecked = {status} onChange={handleChange} aria-label="login switch" />}
           label={status ? 'Passenger' : 'Driver'}
         />
       </FormGroup>

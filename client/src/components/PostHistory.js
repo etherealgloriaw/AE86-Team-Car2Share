@@ -124,6 +124,7 @@ export const PostHistory = (slice) => {
                         {slice.name.username}
                     </Avatar>
                 }
+
                 title={slice.name.username}
                 starting_time={slice.startingTime}
             />
