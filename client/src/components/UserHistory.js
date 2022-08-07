@@ -135,8 +135,8 @@ export const UserHistory = () => {
   let navigate = useNavigate();
   const posts = useSelector(state => state.users.list)
   const user = JSON.parse(localStorage.getItem('profile'));
-  const [status, setStatus] = React.useState('driver');
-  const [time, setTime] = React.useState(true)
+  const [status, setStatus] = React.useState(true);
+  const [time, setTime] = React.useState('')
 
   const handleChange = () => {
 
@@ -225,6 +225,7 @@ export const UserHistory = () => {
   var renderedPosts = posts.map((slice) => {
     if (slice._id == null) return
     if(time === "history"){
+      if(slice.active !== 2) return
     }else if(time === 'ongoing'){
       if(slice.active !== 1) return
     }else if(time === 'upcoming'){
@@ -249,14 +250,10 @@ export const UserHistory = () => {
   var renderedDriverPosts = posts.map((slice) => {
     if (slice._id == null) return
     if(time === "history"){
-
       if(slice.active !== 2) return
     }else if(time === 'ongoing'){
-
-      if(slice.active !== "1") return
-
+      if(slice.active !== 1) return
     }else if(time === 'upcoming'){
-
       if(slice.active !== 0) return
     }
     const date = new Date(slice.startingTime)
