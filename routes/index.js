@@ -9,7 +9,7 @@ const posts = mySchemas.postItem
 /// get main page active posts
 router.get("/home", async (req, res, next) => {
   var dt = dateTime.create();
-  await posts.find({ $and: [{ active: 0, startingTime: { $gt: dt._now } }] }).populate("driver").exec((err, postData) => {
+  await posts.find({ $and: [{ active: { $lt: 2 }, startingTime: { $gt: dt._now }, availableSeats: { $gt: 0 } }] }).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
       console.log(postData);
@@ -126,6 +126,25 @@ router.put('/Edit/:id', async (req, res, next) => {
     from: req.body.from,
     driver: req.body.driver,
   }
+  const historyPost = await mySchemas.historyItem.find({ original_id: { $eq: id } })
+  console.log(historyPost);
+  for (var p of historyPost) {
+    const historyID = p._id;
+    await mySchemas.historyItem.findByIdAndUpdate(historyID, {
+      availableSeats: req.body.availableSeats,
+      rating: req.body.rating,
+      startingTime: req.body.startingTime,
+      totalTime: req.body.totalTime,
+      lat: req.body.lat,
+      lng: req.body.lng,
+      contactInfo: req.body.contactInfo,
+      active: req.body.active,
+      price: req.body.price,
+      to: req.body.to,
+      from: req.body.from,
+      driver: req.body.driver,
+    });
+  }
   await mySchemas.postItem.findByIdAndUpdate(id, post).populate("driver").then(
     card => res.send(card)
   )
@@ -137,38 +156,40 @@ router.patch('/finish/:id', async (req, res, next) => {
   try {
     const id = mongoose.Types.ObjectId(req.params.id);
     const post = await mySchemas.postItem.findById(id);
-    const historyPost = await mySchemas.historyItem.find({original_id: {$eq: id}})
-    const historyID = historyPost[0]._id
-
-
     await mySchemas.historyItem.find({ original_id: { $eq: id } }).populate("user").then(
-        card => {
-          if (post.active == 1) {
-              if (card) {
-                user = card[0].user;
-
-                nodeoutlook.sendEmail({
-                  auth: {
-                    user: "car2share@outlook.com",
-                    pass: "Notification"
-                  },
-                  from: 'car2share@outlook.com',
-                  to: user.email,
-                  subject: 'Your ride has been finished by driver!',
-                  text:
+      card => {
+        if (post.active == 1) {
+          if (card) {
+            for (var curr of card) {
+              user = curr.user;
+              nodeoutlook.sendEmail({
+                auth: {
+                  user: "car2share@outlook.com",
+                  pass: "Notification"
+                },
+                from: 'car2share@outlook.com',
+                to: user.email,
+                subject: 'Your ride has been finished by driver!',
+                text:
                   `     Hello ${user.username}, your ride from ${post.from} to ${post.to} start at ${post.startingTime} has been finished by driver, please check the status in Car2Share(https://ae86-car.herokuapp.com)!
-Car2Share Official`,
-                  replyTo: 'car2share@outlook.com',
-                  attachments: [],
-                  onError: (e) => console.log(e),
-                  onSuccess: (i) => console.log(i)
-                });
-              }
+  Car2Share Official`,
+                replyTo: 'car2share@outlook.com',
+                attachments: [],
+                onError: (e) => console.log(e),
+                onSuccess: (i) => console.log(i)
+              });
+            }
           }
         }
+      }
     )
-    await mySchemas.postItem.findByIdAndUpdate(id, { active: 2 }).populate("driver");
-    await mySchemas.historyItem.findByIdAndUpdate(historyID, { active: 2 }).populate("driver");
+    await mySchemas.postItem.findByIdAndUpdate(id, { active: 2 });
+    const historyPost = await mySchemas.historyItem.find({ original_id: { $eq: id } })
+    console.log(historyPost);
+    for (var p of historyPost) {
+      const historyID = p._id;
+      await mySchemas.historyItem.findByIdAndUpdate(historyID, { active: 2 });
+    }
     const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
     res.send(allPosts)
   } catch (e) {

@@ -15,6 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { loginSuccessAsync } from "../redux/auth/thunks";
+import { Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +60,16 @@ export default function Login() {
   const [inputPassword, setInputPassword] = useState('');
   let navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [openalert, setalertOpen] = React.useState(false);
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+
+  const handleAlertClose = () => {
+    setalertOpen(false);
+  };
   
   
   const emailChangeHandler = (e) => {
@@ -71,7 +83,7 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault(); // to prevent the website reloading
     if (!isValidEmail(inputEmail)) {
-      alert('Email is invalid')
+      setalertOpen(true);
     } else {
       let form = {email: inputEmail, password: inputPassword};
       setInputEmail('');
@@ -148,6 +160,11 @@ export default function Login() {
           </form>
         </div>
       </Grid>
+      <Snackbar open={openalert} autoHideDuration={6000} onClose={handleAlertClose}>
+          <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }}>
+             Your Login credential is invalid!
+          </Alert>
+        </Snackbar>
     </Grid>
   );
 }
