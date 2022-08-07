@@ -63,7 +63,7 @@ export default function AddPic() {
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Upload Images
+                Upload Memories
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add new images to profile</DialogTitle>
