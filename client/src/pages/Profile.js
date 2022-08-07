@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import FormDialog from "../components/Edit";
 import Button from '@material-ui/core/Button';
+import Rating from "@material-ui/lab/Rating";
 import { Grid, Box, Card, ImageList, ImageListItem } from "@material-ui/core";
 import AddPic from "../components/AddPic";
 
@@ -87,8 +88,22 @@ export default function Profile() {
           <Box display="flex"
             justifyContent="center">
             <Typography component="h1" variant="h6">
-              driving experience : {user.driving_experience}y
+              Rate : <Rating name="half-rating" value={user.rating.$numberDecimal} precision={0.1} readOnly />
             </Typography>
+          </Box>
+          <Box display="flex"
+            justifyContent="center">
+            <Grid item xs={6} md={4}>
+              <FormDialog />
+            </Grid>
+            <Grid item xs={6} md={4}>
+            <Typography component="h1" variant="h6">
+              Driving experience : {user.driving_experience}y
+            </Typography>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <AddPic />
+            </Grid>
           </Box>
           <Box display="flex"
             justifyContent="center">
@@ -96,21 +111,17 @@ export default function Profile() {
               {user.introduction}
             </Typography>
           </Box>
-          <Box display="flex"
-            justifyContent="center">
-            <FormDialog />
-            <AddPic />
-          </Box>
+
           <Box display="flex"
             justifyContent="center">
             <ImageList rowHeight={160} className={classes.imageList} cols={3}>
-            {user.images ? (user.images.map((item) => {
-              return (
-                <ImageListItem key={item.img} cols={item.cols || 1}>
-                <img src={item} alt="car" />
-                </ImageListItem>
-              );
-            })) : ""}
+              {user.images ? (user.images.map((item) => {
+                return (
+                  <ImageListItem key={item.img} cols={item.cols || 1}>
+                    <img src={item} alt="car" />
+                  </ImageListItem>
+                );
+              })) : ""}
             </ImageList>
           </Box>
         </Grid>

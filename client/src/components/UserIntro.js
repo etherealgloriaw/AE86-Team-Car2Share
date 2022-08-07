@@ -31,21 +31,21 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
+    containerStyle: {
+      position: 'relative',
+      width: "30vw",
+      height: "57vh",
+      marginTop: 10,
+      borderBottomLeftRadius: 6,
+      borderBottomRightRadius: 6,
+      borderTopLeftRadius: 6,
+      borderTopRightRadius: 6,
+  }
 
 }));
 
 export default function UserIntro(props) {
     const classes = useStyles();
-    const containerStyle = {
-        position: 'relative',
-        width: "39vw",
-        height: "57vh",
-        marginTop: 10,
-        borderBottomLeftRadius: 6,
-        borderBottomRightRadius: 6,
-        borderTopLeftRadius: 6,
-        borderTopRightRadius: 6,
-    };
     useMemo(() => {
         if (props.data){
             console.log(props.data)
@@ -65,7 +65,7 @@ export default function UserIntro(props) {
                         }
                     }/>
                 </div>
-        <Grid item xs={12} md={6} className={classes.userProfile}>
+        <Grid item xs={12} md={6} className={classes.containerStyle}>
           <Box display="flex"
             justifyContent="center">
             <Avatar className={classes.avatar} src={driver.avatar_address} />

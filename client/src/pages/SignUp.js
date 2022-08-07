@@ -55,13 +55,21 @@ export default function SignUp() {
 
   const handleSignUp = (e) => {
     e.preventDefault(); // to prevent the website reloading
-    let form = {email: inputEmail, password: inputPassword, username: inputUsername};
-    setInputUsername('');
-    setInputEmail('');
-    setInputPassword('');
-    dispatch(signUpAsync(form)).then((user) => {navigate('/Profile/' + user._id, { replace: false });});
+    if (!isValidEmail(inputEmail) || inputUsername.length > 25 || inputPassword.length < 8) {
+      alert('Input is invalid, please ensure the email is valid, username is below 25 characters and password length > 8')
+    } else {
+      let form = {email: inputEmail, password: inputPassword, username: inputUsername};
+      setInputUsername('');
+      setInputEmail('');
+      setInputPassword('');
+      dispatch(signUpAsync(form)).then((user) => {navigate('/Profile/' + user._id, { replace: false });});
+    }
     // navigate("/Profile", { replace: false });
   };
+
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
 
   return (
     <Container component="main" maxWidth="xs">

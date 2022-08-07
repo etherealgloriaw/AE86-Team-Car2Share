@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actionTypes } from './actionTypes';
 import UserService from './services';
+import PostService from "../posts/services";
 
 export const getHistoryAsync = createAsyncThunk(
   actionTypes.GET_HISTORY,
@@ -23,6 +24,13 @@ export const joinPostAsync = createAsyncThunk(
     }
   )
 
+export const cancelPostAsync = createAsyncThunk(
+    actionTypes.CANCEL_POST,
+    async (id) => {
+        console.log(id)
+        return await UserService.cancelPost(id);
+    }
+)
 
 
 
@@ -34,4 +42,3 @@ export const joinPostAsync = createAsyncThunk(
 
 
 
-  

@@ -15,8 +15,7 @@ const getDriverHistory = async(name) => {
 };
 
 const joinHistory = async(post) =>{
-    console.log(post)
-    const response = await fetch(url + "/Profile/join", {
+    const response = await fetch(url + "/join", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -24,6 +23,7 @@ const joinHistory = async(post) =>{
         body: JSON.stringify(post)
     });
     const data = await response.json();
+    console.log(data)
     if (!response.ok) {
         const errorMsg = data?.message;
         throw new Error(errorMsg)
@@ -32,11 +32,29 @@ const joinHistory = async(post) =>{
 }
 
 
+const cancelPost = async(id) =>{
+    const response = await fetch(`${url}/cancel/${id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-type": "application/json"
+        }
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
+};
+
+
 
 const UserService = {
     getHistory,
     joinHistory,
-    getDriverHistory
+    getDriverHistory,
+    cancelPost
 };
 
 export default UserService;
