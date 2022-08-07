@@ -31,6 +31,7 @@ import AccessAlarmTwoToneIcon from "@material-ui/icons/AccessAlarmTwoTone";
 import {Card} from "@material-ui/core";
 
 
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -86,10 +87,11 @@ export const UserHistory = () => {
   const posts = useSelector(state => state.users.list)
   const user = JSON.parse(localStorage.getItem('profile'));
 
-  const [status, setStatus] = React.useState(true);
-  const [time, setTime] = React.useState('')
+  const [status, setStatus] = React.useState('driver');
+  const [time, setTime] = React.useState(true)
 
-  const handleChange = (event) => {
+  const handleChange = () => {
+   
     setTime('')
     setStatus(!status);
     if (status)
@@ -99,7 +101,13 @@ export const UserHistory = () => {
   };
 
   const handleTimeChange = (e) =>{
+    document.getElementById("ongoing").style.color = "#ECECEC";
+    document.getElementById("upcoming").style.color = "#ECECEC";
+    document.getElementById("history").style.color = "#ECECEC";
     setTime(e.currentTarget.value)
+    // console.log( document.getElementById(e.currentTarget.value).textContent)
+    document.getElementById(e.currentTarget.value).style.color = "#000000";
+    // document.getElementById(e.currentTarget.value).textContent.style.color = "#336600";
   }
 
 
@@ -108,16 +116,9 @@ export const UserHistory = () => {
   var renderedPosts = posts.map((slice) => {
     if (slice._id == null) return
     if(time === "history"){
-      // console.log("history")
-      if(slice.active !== 2) return
     }else if(time === 'ongoing'){
-      // console.log("ongoing")
-      // console.log("active status: " + slice.active)
-      console.log(slice.active !== 1)
       if(slice.active !== 1) return
-
     }else if(time === 'upcoming'){
-      // console.log("upcoming")
       if(slice.active !== 0) return
     }
     const date = new Date(slice.startingTime)
@@ -139,17 +140,14 @@ export const UserHistory = () => {
   var renderedDriverPosts = posts.map((slice) => {
     if (slice._id == null) return
     if(time === "history"){
-      console.log("history")
-      console.log(slice.active !== 2)
+      
       if(slice.active !== 2) return
     }else if(time === 'ongoing'){
-      // console.log("ongoing")
-      // console.log("active status: " + slice.active)
-      console.log(slice.active !== 1)
+     
       if(slice.active !== "1") return
 
     }else if(time === 'upcoming'){
-      // console.log("upcoming")
+   
       if(slice.active !== 0) return
     }
     const date = new Date(slice.startingTime)
@@ -252,10 +250,10 @@ export const UserHistory = () => {
 
 
   return (
-    <div className="postsInProfilePage">
+    <div className="postsInProfilePage"  checked={status} onLoad={handleChange}>
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked = {status} defaultchecked = {status} onChange={handleChange} aria-label="login switch" />}
+          control={<Switch onChange={handleChange} aria-label="login switch" />}
           label={status ? 'Passenger' : 'Driver'}
         />
       </FormGroup>
@@ -263,11 +261,12 @@ export const UserHistory = () => {
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              </Typography>
-              <Button color="inherit" value = {'ongoing'} onClick = {handleTimeChange}>Ongoing</Button>
-              <Button color="inherit" value = {'upcoming'} onClick = {handleTimeChange}>Upcoming</Button>
-              <Button color="inherit" value = {'history'} onClick = {handleTimeChange}>History</Button>
+            <Typography variant="h6" className={classes.title}></Typography>
+            <div id = "buttons">
+            <Button id="ongoing" color="inherit" value = {'ongoing'} onClick = {handleTimeChange}>Ongoing</Button>
+              <Button id="upcoming" color="inherit" value = {'upcoming'} onClick = {handleTimeChange}>Upcoming</Button>
+              <Button id="history" color="inherit" value = {'history'} onClick = {handleTimeChange}>History</Button>
+            </div>
               </Toolbar>
         </AppBar>
       <List style={{ maxHeight: '250%', overflow: 'auto' }}>
