@@ -15,6 +15,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import TrackChangesTwoToneIcon from "@material-ui/icons/TrackChangesTwoTone";
 import AccessAlarmTwoToneIcon from "@material-ui/icons/AccessAlarmTwoTone";
 import List from "@material-ui/core/List";
+import CancelIcon from '@material-ui/icons/Cancel';
+import {cancelPostAsync} from "../redux/users/thunks";
+
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -88,6 +91,17 @@ export const PostHistory = (slice) => {
         else alert('You have rated this drive!');
     };
 
+    const handleCancel = () => {
+        console.log(slice)
+        if (slice.active == 1) {
+            dispatch(
+                cancelPostAsync(slice._id)
+            )
+        } else {
+            alert('You cannot cancel this trip!');
+        }
+    };
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -153,6 +167,9 @@ export const PostHistory = (slice) => {
             <CardActions disableSpacing>
                 <IconButton aria-label="share" onClick={handleRate} >
                     <RateReviewIcon />
+                </IconButton>
+                <IconButton aria-label="share" onClick={handleCancel}>
+                    <CancelIcon />
                 </IconButton>
                 <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Rate</DialogTitle>

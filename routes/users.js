@@ -76,5 +76,45 @@ router.post('/join', async (req, res, next) => {
 });
 
 
+router.patch('/cancel/:id', async (req, res, next) => {
+  try {
+    const id = mongoose.Types.ObjectId(req.params.id);
+    const post = await mySchemas.postItem.findById(id);
+    await mySchemas.historyItem.find({ original_id: { $eq: id } }).populate("user").then(
+        card => {
+          if (post.active == 1) {
+            if (card) {
+              user = card[0].user;
+              console.log(user)
+              nodeoutlook.sendEmail({
+                auth: {
+                  user: "car2share@outlook.com",
+                  pass: "Notification"
+                },
+                from: 'car2share@outlook.com',
+                to: user.email,
+                subject: 'Your ride has been finished by driver!',
+                text:
+                    `     Hello ${user.username}, your ride from ${post.from} to ${post.to} start at ${post.startingTime} has been finished by driver, please check the status in Car2Share(https://ae86-car.herokuapp.com)!
+Car2Share Official`,
+                replyTo: 'car2share@outlook.com',
+                attachments: [],
+                onError: (e) => console.log(e),
+                onSuccess: (i) => console.log(i)
+              });
+            }
+          }
+        }
+    )
+    await mySchemas.postItem.findByIdAndUpdate(id, { active: 0 }).populate("driver");
+    const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
+    res.send(allPosts)
+  } catch (e) {
+    console.error(e)
+  }
+
+})
+
+
 
 module.exports = router;

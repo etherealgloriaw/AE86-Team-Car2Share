@@ -32,11 +32,29 @@ const joinHistory = async(post) =>{
 }
 
 
+const cancelPost = async(id) =>{
+    const response = await fetch(`${url}/cancel/${id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-type": "application/json"
+        }
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        const errorMsg = data?.message;
+        throw new Error(errorMsg)
+    }
+    return data;
+};
+
+
 
 const UserService = {
     getHistory,
     joinHistory,
-    getDriverHistory
+    getDriverHistory,
+    cancelPost
 };
 
 export default UserService;

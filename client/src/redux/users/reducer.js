@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
-import { getHistoryAsync, joinPostAsync, getDriverHistoryAsync} from './thunks';
+import { getHistoryAsync, joinPostAsync, getDriverHistoryAsync, cancelPostAsync} from './thunks';
 
 
 const INITIAL_STATE = {
@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     getUsers: REQUEST_STATE.IDLE,
     addUser: REQUEST_STATE.IDLE,
     getDrivers: REQUEST_STATE.IDLE,
+    cancelPost: REQUEST_STATE.IDLE,
     error: null
   };
 
@@ -53,10 +54,21 @@ const INITIAL_STATE = {
           state.getDrivers = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
-        
-       
+          .addCase(cancelPostAsync.pending, (state) => {
+            state.getDrivers = REQUEST_STATE.PENDING;
+            state.error = null;
+          })
+          .addCase(cancelPostAsync.fulfilled, (state, action) => {
+            state.getDrivers = REQUEST_STATE.FULFILLED;
+            state.list = action.payload;
+          })
+          .addCase(cancelPostAsync.rejected, (state, action) => {
+            state.getDrivers = REQUEST_STATE.REJECTED;
+            state.error = action.error;
+          })
+
+
     }
   });
-  
+
   export default usersSlice.reducer;
-  
