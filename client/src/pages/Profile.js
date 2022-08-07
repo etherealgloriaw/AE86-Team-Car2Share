@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   userProfile: {
     textAlign: "center",
-    backgroundColor: "#ECECEC",
+    backgroundColor: "#ffffff",
     // alignItems: "center",
     borderBottomLeftRadius: 6,
     borderTopLeftRadius: 6,

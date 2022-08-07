@@ -5,6 +5,9 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 
 import TextField from "@material-ui/core/TextField" ;
+import {IconButton, InputAdornment} from "@material-ui/core";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
+import React from "react";
 
 
 export default function PlacesAutocomplete(props) {
@@ -30,7 +33,6 @@ export default function PlacesAutocomplete(props) {
         const results = await getGeocode({address});
         console.log(results)
         const coordinates = await getLatLng(results[0]);
-        console.log(coordinates.lat)
         props.setString(address)
         props.setSelected(coordinates);
     };
@@ -53,10 +55,10 @@ export default function PlacesAutocomplete(props) {
 
     }
     return (
-
+//(props.forEdit || props.displayErrMsg)
         <Autocomplete
             id="autocomplete"
-            value={props.forEdit? props.string:value}
+            value={props.string? props.string:value}
             freeSolo
             clearOnEscape={true}
             disabled={!ready}
@@ -71,14 +73,38 @@ export default function PlacesAutocomplete(props) {
             options={data.map(({ description}) => description)}
             renderInput={(params) => {
                 if (props.label == props.error || props.error == 3){
-                    return <TextField error helperText={props.posErrorMsg? props.posErrorMsg:
+                    if (props.label == 1) {
+                        return <TextField error helperText={props.posErrorMsg? props.posErrorMsg:
+                            "Please choose address from list"}
+                                          {...params} label={props.title} margin="normal"
+                                          InputProps={{...params.InputProps,
+                                              endAdornment: (
+                                                  <InputAdornment position="end">
+                                                      <IconButton aria-label="Use current location" onClick={props.handleLocation}>
+                                                          <MyLocationIcon />
+                                                      </IconButton>
+                                                  </InputAdornment>
+                                              ),
+                                          }}/>
+                    } else return <TextField error helperText={props.posErrorMsg? props.posErrorMsg:
                         "Please choose address from list"}
                                       {...params} label={props.title} margin="normal"/>
+                } else if (props.label == 1){
+                    return (
+                        <TextField required {...params} label={props.title} margin="normal"
+                                   InputProps={{...params.InputProps,
+                                       endAdornment: (
+                                           <InputAdornment position="end">
+                                               <IconButton aria-label="Use current location" onClick={props.handleLocation}>
+                                                   <MyLocationIcon />
+                                               </IconButton>
+                                           </InputAdornment>
+                                       ),
+                                   }}/>
+                    )
                 } else return (
                 <TextField required {...params} label={props.title} margin="normal"/>
             )}
-        }
-        />
-        )
+        }/>)
 }
 
