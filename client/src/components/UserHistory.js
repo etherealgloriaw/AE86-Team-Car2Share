@@ -295,11 +295,6 @@ export const UserHistory = () => {
       )
     }
 
-    const handleEditHover = () => {
-      alert('edut')
-    }
-
-
     return (
         <Card className={classes.root} key={Math.random()}>
           {statusLabel}
