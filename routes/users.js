@@ -50,12 +50,12 @@ router.post('/join', async (req, res, next) => {
   await mySchemas.postItem.findByIdAndUpdate(postId, joinPost);
   await mySchemas.historyItem(joinPost).save();
   await mySchemas.historyItem.find({user: {$eq: userId}}).populate("driver").exec((err, postData) => {
-      if (err) throw err;
-      if (postData) {
+    if (err) throw err;
+    if (postData) {
       nodeoutlook.sendEmail({
         auth: {
-            user: "car2share@outlook.com",
-            pass: "Notification"
+          user: "car2share@outlook.com",
+          pass: "Notification"
         },
         from: 'car2share@outlook.com',
         to: driver.email,
@@ -67,47 +67,51 @@ router.post('/join', async (req, res, next) => {
         attachments: [],
         onError: (e) => console.log(e),
         onSuccess: (i) => console.log(i)
-    });
-        res.send(JSON.stringify(postData));
-      } else {
-        res.end();
-      }
-    });
+      });
+      res.send(JSON.stringify(postData));
+    } else {
+      res.end();
+    }
+  });
 });
 
 
 router.patch('/cancel/:id', async (req, res, next) => {
   try {
     const id = mongoose.Types.ObjectId(req.params.id);
-    const post = await mySchemas.postItem.findById(id);
-    await mySchemas.historyItem.find({ original_id: { $eq: id } }).populate("user").then(
-        card => {
-          if (post.active == 1) {
-            if (card) {
-              user = card[0].user;
-              console.log(user)
-              nodeoutlook.sendEmail({
-                auth: {
-                  user: "car2share@outlook.com",
-                  pass: "Notification"
-                },
-                from: 'car2share@outlook.com',
-                to: user.email,
-                subject: 'Your ride has been finished by driver!',
-                text:
-                    `     Hello ${user.username}, your ride from ${post.from} to ${post.to} start at ${post.startingTime} has been finished by driver, please check the status in Car2Share(https://ae86-car.herokuapp.com)!
-Car2Share Official`,
-                replyTo: 'car2share@outlook.com',
-                attachments: [],
-                onError: (e) => console.log(e),
-                onSuccess: (i) => console.log(i)
-              });
-            }
-          }
-        }
-    )
-    await mySchemas.postItem.findByIdAndUpdate(id, { active: 0 }).populate("driver");
-    const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
+
+    const post = await mySchemas.historyItem.findById(id).populate("driver");
+
+    // console.log(post)
+
+    const original_id = post.original_id;
+    const driverID = post.driver;
+    const driver = await mySchemas.userItem.findById(driverID)
+    await mySchemas.postItem.findByIdAndUpdate(original_id, { active: 0 }).populate("driver");
+    await mySchemas.historyItem.deleteOne({ _id: id }).exec();
+
+    const allPosts = await mySchemas.historyItem.find({}).populate("driver").exec((err, posts) => {
+      if (err) throw err;
+      if (posts) {
+        nodeoutlook.sendEmail({
+          auth: {
+            user: "car2share@outlook.com",
+            pass: "Notification"
+          },
+          from: 'car2share@outlook.com',
+          to: driver.email,
+          subject: 'Someone has canceled your post!',
+          text: ` Hello ${driver.username}, your post from ${post.from} to ${post.to} start at ${post.startingTime} has been canceled, please check the status in Car2Share!
+        
+        Car2Share Official`,
+          replyTo: 'car2share@outlook.com',
+          attachments: [],
+          onError: (e) => console.log(e),
+          onSuccess: (i) => console.log(i)
+        });
+      }
+
+    });
     res.send(allPosts)
   } catch (e) {
     console.error(e)

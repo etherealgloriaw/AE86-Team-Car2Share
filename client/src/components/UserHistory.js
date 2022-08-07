@@ -99,7 +99,7 @@ export const UserHistory = () => {
   };
 
   const handleTimeChange = (e) =>{
-    setTime(e.currentTarget.value)    
+    setTime(e.currentTarget.value)
   }
 
 
@@ -115,7 +115,7 @@ export const UserHistory = () => {
       // console.log("active status: " + slice.active)
       console.log(slice.active !== 1)
       if(slice.active !== 1) return
-      
+
     }else if(time === 'upcoming'){
       // console.log("upcoming")
       if(slice.active !== 0) return
@@ -147,7 +147,7 @@ export const UserHistory = () => {
       // console.log("active status: " + slice.active)
       console.log(slice.active !== 1)
       if(slice.active !== "1") return
-      
+
     }else if(time === 'upcoming'){
       // console.log("upcoming")
       if(slice.active !== 0) return

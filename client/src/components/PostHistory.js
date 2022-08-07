@@ -90,15 +90,14 @@ export const PostHistory = (slice) => {
         if (rate == null || rate._id != slice.name._id) {
             if (slice.active == 2) setOpen(true);
             else alert('This drive has not ended!');
-        } 
+        }
         else alert('You have rated this drive!');
     };
 
     const handleCancel = () => {
-        console.log(slice)
         if (slice.active == 1) {
             dispatch(
-                cancelPostAsync(slice._id)
+                cancelPostAsync(slice.id)
             )
         } else {
             alert('You cannot cancel this trip!');
@@ -129,15 +128,6 @@ export const PostHistory = (slice) => {
                 starting_time={slice.startingTime}
             />
             <CardContent>
-                {/*<Typography paragraph color="textSecondary" component="p">*/}
-                {/*    <span style={{ fontWeight: 'bold' }}>From: </span>{slice.from}*/}
-                {/*</Typography>*/}
-                {/*<Typography paragraph color="textSecondary" component="p">*/}
-                {/*    <span style={{ fontWeight: 'bold' }}>To: </span>{slice.to}*/}
-                {/*</Typography>*/}
-                {/*<Typography paragraph color="textSecondary" component="p">*/}
-                {/*    <span style={{ fontWeight: 'bold' }}>Departure time: </span>{slice.startingTime}*/}
-                {/*</Typography>*/}
                 <List className={classes.itemList}>
                     <ListItem className={classes.item}>
                         <ListItemIcon>
