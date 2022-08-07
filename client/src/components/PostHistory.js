@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: 5,
             width: '100%',
             textAlign: "center",
-            backgroundColor: 'yellow',
+            backgroundColor: 'orange',
         },
         ongoingLabel: {
             borderRadius: 5,
