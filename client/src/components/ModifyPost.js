@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux'
-import PlacesAutocomplete from "../components/PlacesAutocomplete";
-import Map from "../components/Map";
 import { Navigate } from "react-router-dom";
 import {addPostAsync, editPostAsync} from "../redux/posts/thunks";
 import { useGeolocated } from "react-geolocated";
-import { FormControl, FormHelperText, IconButton, Input, InputLabel } from "@material-ui/core";
-import MyLocationIcon from '@material-ui/icons/MyLocation';
-import MaskedInput from "react-text-mask/dist/reactTextMask";
-import PropTypes from "prop-types";
-import NumberFormat from "react-number-format";
+import {
+     Step,
+    StepLabel,
+    Stepper,
+    Typography
+} from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { Grid } from '@material-ui/core';
-import {getGeocode, getLatLng} from "use-places-autocomplete";
+import Paper from "@material-ui/core/Paper";
+import AddressForm from "./ModifyPostForms/AddressForm";
+import DetailForm from "./ModifyPostForms/DetailForm";
+import Review from "./ModifyPostForms/Review";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,7 +37,44 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         width: 200,
     },
+    appBar: {
+        position: 'relative',
+    },
+    layout: {
+        width: 'auto',
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up(800 + theme.spacing(2) * 2)]: {
+            width: 800,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+    paper: {
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(3),
+        padding: theme.spacing(2),
+        [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+            marginTop: theme.spacing(6),
+            marginBottom: theme.spacing(6),
+            padding: theme.spacing(3),
+        },
+    },
+    stepper: {
+        padding: theme.spacing(3, 0, 5),
+    },
+    buttons: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    button: {
+        marginTop: theme.spacing(3),
+        marginLeft: theme.spacing(1),
+    }
 }));
+
+const steps = ['Address', 'Detail', 'Review'];
+
 
 //Reference: https://cloud.google.com/blog/products/maps-platform/how-calculate-distances-map-maps-javascript-api
 export function calcDistance(coordsA, coordsB) {
@@ -53,52 +90,6 @@ export function calcDistance(coordsA, coordsB) {
 }
 
 
-function TextMaskCustom(props) {
-    const { inputRef, ...other } = props;
-
-    return (
-        <MaskedInput
-            {...other}
-            ref={(ref) => {
-                inputRef(ref ? ref.inputElement : null);
-            }}
-            mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-            placeholderChar={'\u2000'}
-        />
-    );
-}
-
-TextMaskCustom.propTypes = {
-    inputRef: PropTypes.func.isRequired,
-};
-
-function NumberFormatCustom(props) {
-    const { inputRef, onChange, ...other } = props;
-
-    return (
-        <NumberFormat
-            {...other}
-            getInputRef={inputRef}
-            onValueChange={(values) => {
-                onChange({
-                    target: {
-                        name: props.name,
-                        value: values.value,
-                    },
-                });
-            }}
-            thousandSeparator
-            isNumericString
-            prefix="$"
-        />
-    );
-}
-
-NumberFormatCustom.propTypes = {
-    inputRef: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-};
 
 
 export default function ModifyPost(prop) {
@@ -116,6 +107,7 @@ export default function ModifyPost(prop) {
         dateStr = target.startingTime.toString()
         dateFormat = dateStr.substring(0,dateStr.length-2)
     }
+    const [activeStep, setActiveStep] = React.useState(0);
     const [departureTime, setDepartureTime] = useState(target? dateFormat: null)
     const [contactInfo, setContactInfo] = useState(target? target.contactInfo: null)
     const [directionResponse, setDirectionResponse] = useState(prop.forEdit? prop.direction: null)
@@ -138,6 +130,100 @@ export default function ModifyPost(prop) {
     let dateErrorVar = false
     let priceErrorVar = false
     const navigate = useNavigate();
+    const markerList = [dept, dest]
+    // eslint-disable-next-line no-undef
+    const deptBounds = new google.maps.LatLngBounds({ lat: 49.010569, lng: -123.466741 },
+        { lat: 50.555913, lng: -119.017361 })
+    // eslint-disable-next-line no-undef
+    const destBounds = new google.maps.LatLngBounds({ lat: 49.241624, lng: -123.273167 },
+        { lat: 49.241624, lng: -123.273167 })
+
+    function getStepContent(step) {
+        switch (step) {
+            case 0:
+                return <AddressForm setDept={setDept} dept={dept} setDeptString={setDeptString}
+                                    forEdit={forEdit} deptString={deptString}
+                                    posError={posError} deptBounds={deptBounds} posErrorMsg={posErrorMsg}
+                                    displayErrMsg={displayErrMsg} handleLocation={handleLocation}
+                                    setDest={setDest} dest={dest} setDestString={setDestString}
+                                    destString={destString} label={2} destBounds={destBounds}
+                                    markerList={markerList} directionResponse={directionResponse}
+                                    distances={distances} duration={duration}/>;
+            case 1:
+                return <DetailForm seatsError={seatsError} handleChange={handleChange} availableSeats={availableSeats
+                } price={price} priceError={priceError} dateError={dateError} departureTime={departureTime}
+                                   contactInfo={contactInfo} contactInfoError={contactInfoError}/>;
+            case 2:
+                return <Review deptString={deptString} destString={destString} distances={distances} duration={duration}
+                               availableSeats={availableSeats} price={price}  departureTime={departureTime}
+                               contactInfo={contactInfo} markerList={markerList} directionResponse={directionResponse}/>;
+            default:
+                throw new Error('Unknown step');
+        }
+    }
+
+
+    const handleNext = () => {
+        switch (activeStep) {
+            case 0:
+                calculateRoute().then(() => {
+                    if (checkInUBC()) {
+                        if (posErrorVar === 0){
+                            setActiveStep(activeStep + 1);
+                        }
+                    }
+                })
+                break
+            case 1:
+                if (!/^\(\d{3}\)\s\d{3}-\d{4}/.test(contactInfo)) {
+                    setContactInfoError(true)
+                    contactInfoErrorVar = true
+                } else {
+                    setContactInfoError(false)
+                    contactInfoErrorVar = false
+                }
+                if (!(availableSeats > 0 && availableSeats < 20)) {
+                    setSeatsError(true)
+                    seatsErrorVar = true
+                } else {
+                    setSeatsError(false)
+                    seatsErrorVar = false
+                }
+                if (!(price >= 0 && price < 99999)) {
+                    setPriceError(true)
+                    priceErrorVar = true
+                } else {
+                    setPriceError(false)
+                    priceErrorVar = false
+                }
+                const inputTime = new Date(departureTime)
+                const now = new Date()
+                const limit = new Date('2050-01-01T00:00')
+                if (!(inputTime > now && inputTime < limit)) {
+                    setDateError(true)
+                    dateErrorVar = true
+                } else {
+                    setDateError(false)
+                    dateErrorVar = false
+                }
+                if ((!seatsErrorVar) && (!contactInfoErrorVar) && (!dateErrorVar) && (!priceErrorVar)) {
+                    setActiveStep(activeStep + 1)
+                }
+                break
+            case 2:
+                addPost()
+                setActiveStep(activeStep + 1)
+                break
+
+            default:
+                setActiveStep(activeStep + 1)
+
+        }
+    };
+
+    const handleBack = () => {
+        setActiveStep(activeStep - 1);
+    };
 
     const { coords, isGeolocationAvailable, isGeolocationEnabled } =
         useGeolocated({
@@ -267,181 +353,104 @@ export default function ModifyPost(prop) {
         }
     }
 
-    const markerList = [dept, dest]
+
+    const newPost = {
+        availableSeats: availableSeats,
+        rating: 0,
+        startingTime: departureTime,
+        totalTime: duration,
+        lat: destLat,
+        lng: destLng,
+        contactInfo: contactInfo,
+        active: 0,
+        price: price,
+        to: destString,
+        from: deptString,
+        driver: user._id
+    }
+
+    const handleReturn = () => {
+        navigate("/");
+    }
+
+    const addPost = () => {
+        if ((posErrorVar == 0) && (!seatsErrorVar) && (!contactInfoErrorVar) && (!dateErrorVar) &&
+            (!priceErrorVar)) {
+            if (forEdit) {
+                dispatch (editPostAsync(newPost))
+            } else {
+                dispatch(addPostAsync(newPost))
+            }
+            setDeptString("")
+            setDestString("")
+            setAvailableSeats('');
+            setDepartureTime('');
+            setContactInfo('');
+            setPrice(0)
+        }
+    }
 
     if (user != null) {
-        const newPost = {
-            availableSeats: availableSeats,
-            rating: 0,
-            startingTime: departureTime,
-            totalTime: duration,
-            lat: destLat,
-            lng: destLng,
-            contactInfo: contactInfo,
-            active: 0,
-            price: price,
-            to: destString,
-            from: deptString,
-            driver: user._id
-        }
-        const addPost = () => {
-            if ((posErrorVar == 0) && (!seatsErrorVar) && (!contactInfoErrorVar) && (!dateErrorVar) &&
-                (!priceErrorVar)) {
-                if (forEdit) {
-                    alert("Edited!")
-                    dispatch (editPostAsync(newPost))
-                } else {
-                    alert("Added")
-                    dispatch(addPostAsync(newPost))
-                }
-
-                setDeptString("")
-                setDestString("")
-                setAvailableSeats('');
-                setDepartureTime('');
-                setContactInfo('');
-                setPrice(0)
-                navigate("/");
-            }
-        }
-
-
-        const submit = () => {
-            if (!/^\(\d{3}\)\s\d{3}-\d{4}/.test(contactInfo)) {
-                setContactInfoError(true)
-                contactInfoErrorVar = true
-            } else {
-                setContactInfoError(false)
-                contactInfoErrorVar = false
-            }
-            if (!(availableSeats > 0 && availableSeats < 20)) {
-                setSeatsError(true)
-                seatsErrorVar = true
-            } else {
-                setSeatsError(false)
-                seatsErrorVar = false
-            }
-            if (!(price >= 0 && price < 99999)) {
-                setPriceError(true)
-                priceErrorVar = true
-            } else {
-                setPriceError(false)
-                priceErrorVar = false
-            }
-            const inputTime = new Date(departureTime)
-            const now = new Date()
-            const limit = new Date('2050-01-01T00:00')
-            if (!(inputTime > now && inputTime < limit)) {
-                setDateError(true)
-                dateErrorVar = true
-            } else {
-                setDateError(false)
-                dateErrorVar = false
-            }
-            calculateRoute().then(() => {
-                if (checkInUBC()) {
-                    addPost()
-                }
-            })
-        }
-
-
-        // eslint-disable-next-line no-undef
-        const deptBounds = new google.maps.LatLngBounds({ lat: 49.010569, lng: -123.466741 },
-            { lat: 50.555913, lng: -119.017361 })
-        // eslint-disable-next-line no-undef
-        const destBounds = new google.maps.LatLngBounds({ lat: 49.241624, lng: -123.273167 },
-            { lat: 49.241624, lng: -123.273167 })
-
         return (
-            <div>
-                <form className={classes.root} noValidate autoComplete="off">
-                    <Grid container spacing={2}>
-                        <Grid item>
-                            <PlacesAutocomplete setSelected={setDept} selected={dept} setString={setDeptString}
-                                                title="Departure From" forEdit={forEdit} string={deptString} label={1}
-                                                error={posError} boundary={deptBounds} posErrorMsg={posErrorMsg}
-                                                displayErrMsg={displayErrMsg} />
-                            <IconButton aria-label="Use current location" onClick={handleLocation}>
-                                <MyLocationIcon />
-                            </IconButton>
-                            <PlacesAutocomplete setSelected={setDest} selected={dest} setString={setDestString}
-                                                title="Arrive At"
-                                                forEdit={forEdit} string={destString} label={2} error={posError} boundary={destBounds} />
-                            <Button variant="contained" color="primary" onClick={calculateRoute}>
-                                Calculate Route
-                            </Button>
-                            <h3>Estimated Travel Time: {duration}</h3>
-                            <h3>Distance: {distances}</h3>
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                required
-                                id="standard-number"
-                                label="Available seats"
-                                type="number"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                error={seatsError}
-                                name="availableSeats"
-                                onChange={handleChange}
-                                value={availableSeats}
-                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                helperText={seatsError ? "Invalid input" : null}
-                            />
-                        </Grid>
-                        <Grid item >
-                            <TextField
-                                label="Price"
-                                value={price}
-                                onChange={handleChange}
-                                name="price"
-                                id="formatted-numberformat-input"
-                                InputProps={{
-                                    inputComponent: NumberFormatCustom,
-                                }}
-                                error={priceError}
-                                helperText={priceError ? "Invalid price" : null}
-                            />
-                            <TextField
-                                id="datetime-local standard-required"
-                                required
-                                error={dateError}
-                                label="Departure time"
-                                type="datetime-local"
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                name="departureTime"
-                                value={departureTime}
-                                onChange={handleChange}
-                                helperText={dateError ? "Invalid departure time" : null}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <FormControl error={contactInfoError}>
-                                <InputLabel htmlFor="formatted-text-mask-input">Contact information</InputLabel>
-                                <Input
-                                    value={contactInfo}
-                                    onChange={handleChange}
-                                    name="contactInfo"
-                                    id="formatted-text-mask-input"
-                                    inputComponent={TextMaskCustom}
-                                />
-                                {contactInfoError ? <FormHelperText id="component-error-text">Invalid phone number
-                                </FormHelperText> : null}
-                            </FormControl>
-                        </Grid>
+            <React.Fragment>
 
-                    </Grid>
-                    <Button variant="contained" color="primary" onClick={submit}>
-                        Submit
-                    </Button>
-                </form>
-                <Map markerList={markerList} directions={directionResponse} forHome={false} />
-            </div>
-        )
+                <main className={classes.layout}>
+                    <Paper className={classes.paper}>
+                        <Typography component="h1" variant="h4" align="center">
+                            {prop.forEdit? "Edit Your Post": "Add a New Post"}
+                        </Typography>
+                        <Stepper activeStep={activeStep} className={classes.stepper}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        <React.Fragment>
+                            {activeStep === steps.length ? (
+                                <React.Fragment>
+                                    <Typography variant="h5" gutterBottom>
+                                        Your post has been {forEdit? "edited": "added"}!
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        You will receive an E-mail notification when a user join your trip.
+                                        Thank you for using Car2Share.
+                                    </Typography>
+                                    <div className={classes.buttons}>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={handleReturn}
+                                            className={classes.button}
+                                        >
+                                          Return to Home
+                                        </Button>
+                                    </div>
+                                </React.Fragment>
+                            ) : (
+                                <React.Fragment>
+                                    {getStepContent(activeStep)}
+                                    <div className={classes.buttons}>
+                                        {activeStep !== 0 && (
+                                            <Button onClick={handleBack} className={classes.button}>
+                                                Back
+                                            </Button>
+                                        )}
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={handleNext}
+                                            className={classes.button}
+                                        >
+                                            {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                                        </Button>
+                                    </div>
+                                </React.Fragment>
+                            )}
+                        </React.Fragment>
+                    </Paper>
+                </main>
+            </React.Fragment>
+        );
     } else return < Navigate to='/Login' />
 }
