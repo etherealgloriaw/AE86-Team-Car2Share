@@ -106,6 +106,7 @@ export const UserHistory = () => {
 
 
   var renderedPosts = posts.map((slice) => {
+    console.log(slice.active)
     if(time === "history"){
       // console.log("history")
       if(slice.active !== 2) return
@@ -250,10 +251,10 @@ export const UserHistory = () => {
 
 
   return (
-    <div className="postsInProfilePage">
+    <div className="postsInProfilePage" checked={status} onLoad={handleChange}>
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked={status} defaultChecked = {true} onChange={handleChange} aria-label="login switch" />}
+          control={<Switch  onChange={handleChange} aria-label="login switch" />}
           label={status ? 'Passenger' : 'Driver'}
         />
       </FormGroup>
