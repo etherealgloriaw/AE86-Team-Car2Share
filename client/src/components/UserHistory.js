@@ -171,7 +171,8 @@ export const UserHistory = () => {
     }
 
     const handleEdit = () => {
-      navigate(`/Edit/${slice._id}`, { replace: false })
+      if (slice.active == 2) alert("The past post cannot be edited!")
+      else navigate(`/Edit/${slice._id}`, { replace: false })
     }
 
     const handleFinish = () => {
@@ -252,7 +253,7 @@ export const UserHistory = () => {
     <div className="postsInProfilePage">
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked={status} onChange={handleChange} aria-label="login switch" />}
+          control={<Switch checked={status} defaultChecked = {true} onChange={handleChange} aria-label="login switch" />}
           label={status ? 'Passenger' : 'Driver'}
         />
       </FormGroup>

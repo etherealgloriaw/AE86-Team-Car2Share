@@ -8,13 +8,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {useDispatch} from 'react-redux'
 import {editProfileAsync} from "../redux/auth/thunks";
 export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
-  const [name, setName] = useState('')
-  const [introduction, setIntroduction] = useState('')
-  const [avatarAddress, setAvatarAddress] = useState('')
-  const [drivingEx, setdrivingEx] = useState('')
-  const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile'));
+  const [open, setOpen] = React.useState(false);
+  const [name, setName] = useState(user.username)
+  const [introduction, setIntroduction] = useState(user.introduction)
+  const [avatarAddress, setAvatarAddress] = useState(user.avatar_address)
+  const [drivingEx, setdrivingEx] = useState(user.driving_experience)
+  const dispatch = useDispatch();
+  
+  console.log(user)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,12 +39,16 @@ export default function FormDialog() {
 }
 
   const handleSubmit = () => {
-    var form = {id: user._id, username: name, introduction: introduction, avatar: avatarAddress, drivingEx: drivingEx}
-    console.log(form)
-    dispatch(
-      editProfileAsync(form)
-    )
-    setOpen(false);
+    if (name > 25 || isNaN(drivingEx)) {
+        alert('Input is invalid, please make sure username is below 25 characters and driving experience is a number')
+    } else {
+      var form = {id: user._id, username: name, introduction: introduction, avatar: avatarAddress, drivingEx: drivingEx}
+      console.log(form)
+      dispatch(
+        editProfileAsync(form)
+      )
+      setOpen(false);
+    }
   };
 
   return (

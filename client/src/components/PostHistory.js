@@ -87,7 +87,10 @@ export const PostHistory = (slice) => {
     };
 
     const handleRate = () => {
-        if (rate == null || rate._id != slice.name._id) setOpen(true);
+        if (rate == null || rate._id != slice.name._id) {
+            if (slice.active == 2) setOpen(true);
+            else alert('This drive has not ended!');
+        } 
         else alert('You have rated this drive!');
     };
 
