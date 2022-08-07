@@ -88,7 +88,7 @@ router.patch('/rate', async (req, res, next) => {
 	const result = await mySchemas.historyItem.find({
 		$and: [
 			{ user: { $eq: id } },
-			{ rate: { $ne: 0 } },
+			{ rating: { $ne: 0 } },
 		]
 	}).populate("driver");
 	postNum = result.length;

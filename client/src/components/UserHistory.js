@@ -282,7 +282,8 @@ export const UserHistory = () => {
 
 
     const handleDelete = () => {
-      dispatch(
+      if (slice.active != 0) alert("You can only delete the upcoming post!")
+      else dispatch(
           deletePostAsync(slice._id)
       )
     }

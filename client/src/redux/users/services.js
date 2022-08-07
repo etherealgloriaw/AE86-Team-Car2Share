@@ -15,7 +15,6 @@ const getDriverHistory = async(name) => {
 };
 
 const joinHistory = async(post) =>{
-    console.log(post)
     const response = await fetch(url + "/join", {
         method: 'POST',
         headers: {
@@ -24,6 +23,7 @@ const joinHistory = async(post) =>{
         body: JSON.stringify(post)
     });
     const data = await response.json();
+    console.log(data)
     if (!response.ok) {
         const errorMsg = data?.message;
         throw new Error(errorMsg)

@@ -18,8 +18,9 @@ import TrackChangesTwoToneIcon from "@material-ui/icons/TrackChangesTwoTone";
 import AccessAlarmTwoToneIcon from "@material-ui/icons/AccessAlarmTwoTone";
 import List from "@material-ui/core/List";
 import CancelIcon from '@material-ui/icons/Cancel';
-import {cancelPostAsync} from "../redux/users/thunks";
-
+import { cancelPostAsync } from "../redux/users/thunks";
+import { Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -60,42 +61,42 @@ const useStyles = makeStyles((theme) => ({
             color: 'red',
         }
     },
-        itemList: {
-            paddingLeft: "4%",
-            maxHeight: "20%",
-        },
-        item: {
-            maxHeight: 55,
-            marginBottom: 10,
-        },
-        cardHeader: {
-            marginTop: "5%",
-            maxHeight: 1,
-            paddingLeft: "3.5%"
-        },
-        finishedLabel: {
-            borderRadius: 5,
-            width: '100%',
-            textAlign: "center",
-            backgroundColor: '#839b67',
-            color: 'white'
-        },
-        upcomingLabel: {
-            borderRadius: 5,
-            width: '100%',
-            textAlign: "center",
-            backgroundColor: 'orange',
-        },
-        ongoingLabel: {
-            borderRadius: 5,
-            width: '100%',
-            textAlign: "center",
-            backgroundColor: '#3c52b2',
-            color: 'white'
-        },
-        iconText: {
-            fontSize: 16
-        }
+    itemList: {
+        paddingLeft: "4%",
+        maxHeight: "20%",
+    },
+    item: {
+        maxHeight: 55,
+        marginBottom: 10,
+    },
+    cardHeader: {
+        marginTop: "5%",
+        maxHeight: 1,
+        paddingLeft: "3.5%"
+    },
+    finishedLabel: {
+        borderRadius: 5,
+        width: '100%',
+        textAlign: "center",
+        backgroundColor: '#839b67',
+        color: 'white'
+    },
+    upcomingLabel: {
+        borderRadius: 5,
+        width: '100%',
+        textAlign: "center",
+        backgroundColor: 'orange',
+    },
+    ongoingLabel: {
+        borderRadius: 5,
+        width: '100%',
+        textAlign: "center",
+        backgroundColor: '#3c52b2',
+        color: 'white'
+    },
+    iconText: {
+        fontSize: 16
+    }
 }
 ));
 
@@ -107,6 +108,12 @@ export const PostHistory = (slice) => {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(0);
     const rate = useSelector(state => state.auth.rate);
+    const [openalert, setalertOpen] = React.useState(false);
+    var message = "error"
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+      }
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -114,9 +121,19 @@ export const PostHistory = (slice) => {
     const handleRate = () => {
         if (rate == null || rate._id != slice.name._id) {
             if (slice.active == 2) setOpen(true);
-            else alert('This drive has not ended!');
+            else {
+                message = 'This drive has not ended!';
+                setalertOpen(true);
+            }
         }
-        else alert('You have rated this drive!');
+        else {
+            message = 'You have rated this drive!';
+            setalertOpen(true);
+        }
+    };
+
+    const handleAlertClose = () => {
+        setalertOpen(false);
     };
 
     const handleCancel = () => {
@@ -125,7 +142,8 @@ export const PostHistory = (slice) => {
                 cancelPostAsync(slice.id)
             )
         } else {
-            alert('You cannot cancel this trip!');
+            message = 'You cannot cancel the finished trip!';
+            setalertOpen(true);
         }
     };
 
@@ -146,10 +164,10 @@ export const PostHistory = (slice) => {
     if (status == "0") {
         statusStr = "In the future";
         statusLabel = <InputLabel id="statusLabel" className={classes.upcomingLabel}>{statusStr}</InputLabel>
-    } else if(status == "1") {
+    } else if (status == "1") {
         statusStr = "Ongoing"
         statusLabel = <InputLabel id="statusLabel" className={classes.ongoingLabel}>{statusStr}</InputLabel>
-    } else if(status == 2) {
+    } else if (status == 2) {
         statusStr = "Finished"
         statusLabel = <InputLabel id="statusLabel" className={classes.finishedLabel}>{statusStr}</InputLabel>
     }
@@ -163,7 +181,6 @@ export const PostHistory = (slice) => {
                         {slice.name.username}
                     </Avatar>
                 }
-
                 title={slice.name.username}
                 starting_time={slice.startingTime}
             />
@@ -174,7 +191,7 @@ export const PostHistory = (slice) => {
                             <DriveEtaTwoToneIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary= "From: "
+                            primary="From: "
                             secondary={slice.from}
                         />
                     </ListItem>
@@ -183,7 +200,7 @@ export const PostHistory = (slice) => {
                             <TrackChangesTwoToneIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary= "To: "
+                            primary="To: "
                             secondary={slice.to}
                         />
                     </ListItem>
@@ -192,7 +209,7 @@ export const PostHistory = (slice) => {
                             <AccessAlarmTwoToneIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary= "Departure Time: "
+                            primary="Departure Time: "
                             secondary={slice.startingTime}
                         />
                     </ListItem>
@@ -216,7 +233,7 @@ export const PostHistory = (slice) => {
                                 value={value}
                                 onChange={(event, newValue) => {
                                     setValue(newValue);
-                                    dispatch(rateUserAsync({id: slice.name._id, rate: newValue}));
+                                    dispatch(rateUserAsync({ id: slice.name._id, rate: newValue }));
                                     setOpen(false);
                                 }}
                             />
@@ -241,6 +258,11 @@ export const PostHistory = (slice) => {
                     <Typography paragraph>Available seats: {slice.availableSeats}</Typography>
                 </CardContent>
             </Collapse>
+            <Snackbar open={openalert} autoHideDuration={6000} onClose={handleAlertClose}>
+                <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }}>
+                    error
+                </Alert>
+            </Snackbar>
         </Card>
     )
 

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -20,6 +20,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import TrackChangesTwoToneIcon from "@material-ui/icons/TrackChangesTwoTone";
 import AccessAlarmTwoToneIcon from "@material-ui/icons/AccessAlarmTwoTone";
 import Button from '@material-ui/core/Button';
+import { Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -102,24 +104,21 @@ export const Post = (slice) => {
   const classes = useStyles();
   let navigate = useNavigate();
   const [raised, setRaised] = React.useState(false)
-
+  const joinSuccess = useSelector(state => state.users.joinSuccess)
   const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem('profile'));
+  const [openalert, setalertOpen] = React.useState(false);
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
 
   const handleJoin = () => {
-    // dispatch(
-    //   joinPostAsync({
-    //     id: slice.id,
-    //     user: user._id
-    //   })
-    // )
-      console.log(user._id)
       if (user == null || user.length == 0) {
-          alert("Please login")
           navigate("/Login")
       } else if (user._id == slice.name._id) {
+          setalertOpen(true);
           console.log(user._id)
-          alert("Can't join your own post")
       } else {
           console.log(user._id)
           dispatch(
@@ -128,9 +127,15 @@ export const Post = (slice) => {
                   user: user._id
               })
           )
-          navigate("/Profile/" + user._id, { replace: false });
+          console.log(joinSuccess)
+          if (joinSuccess) navigate("/Profile/" + user._id, { replace: false });
+          else alert('You have joined this post before!')
       }
   }
+
+  const handleAlertClose = () => {
+    setalertOpen(false);
+  };
 
 
     const handleClick = () => {
@@ -210,13 +215,11 @@ export const Post = (slice) => {
                   </div>
           </Tooltip>
       </CardContent>
-      {/*<CardActions disableSpacing>*/}
-      {/*  <Tooltip title="Join the post">*/}
-      {/*    <IconButton aria-label="add to favorites" onClick={handleJoin}>*/}
-      {/*      <FavoriteIcon className={classes.fav} />*/}
-      {/*    </IconButton>*/}
-      {/*  </Tooltip>*/}
-      {/*</CardActions>*/}
+      <Snackbar open={openalert} autoHideDuration={6000} onClose={handleAlertClose}>
+          <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }}>
+            Can't join your own post
+          </Alert>
+        </Snackbar>
     </Card>
   )
 
