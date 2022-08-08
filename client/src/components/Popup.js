@@ -206,7 +206,7 @@ export default function Popup(props) {
                                 </ListItemIcon>
                                 <ListItemText
                                     primary= "Rating: "
-                                    secondary= {props.data.rating}
+                                    secondary= {props.data.driver.rating.$numberDecimal}
                                 />
                             </ListItem>
                             <ListItem>

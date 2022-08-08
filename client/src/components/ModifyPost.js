@@ -137,7 +137,7 @@ export default function ModifyPost(prop) {
     // eslint-disable-next-line no-undef
     const destBounds = new google.maps.LatLngBounds({ lat: 49.241624, lng: -123.273167 },
         { lat: 49.241624, lng: -123.273167 })
-
+    
     function getStepContent(step) {
         switch (step) {
             case 0:
