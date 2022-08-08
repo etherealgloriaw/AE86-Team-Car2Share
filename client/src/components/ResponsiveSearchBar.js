@@ -13,6 +13,7 @@ import './style/Filter.css'
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
+import SearchAutocomplete from "./SearchAutocomplete";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,7 +72,7 @@ export const ResponsiveSearchBar = () => {
     var[destination, setDestination] = useState('')
     const[selection, setSelection] = useState('rating')
     const[sorting, setSorting] = useState('ascending')
-
+    const[coordinate, setCoordinate] = useState(null)
     const handleChange = e =>{
         if(e.target.name == 'destination'){
             setDestination(e.target.value);
@@ -81,21 +82,24 @@ export const ResponsiveSearchBar = () => {
     const dispatch = useDispatch()
 
     const handleSearch = () => {
-        if(destination == ""){
-            destination = "NULL"
-        }
+        // if(destination == ""){
+        //     destination = "NULL"
+        // }
+        //
+        // const searchReq = {
+        //     selection,
+        //     sorting,
+        //     destination
+        // }
+        //
+        //
+        // console.log(searchReq);
+        // setDestination('');
+        // dispatch(searchPostAsync(searchReq));
 
-        const searchReq = {
-            selection,
-            sorting,
-            destination
-        }
-            
+        //TODO: remember to check if the coordinates exists!
+        alert(coordinate.lat + " " + coordinate.lng)
 
-        console.log(searchReq);
-        setDestination('');
-        dispatch(searchPostAsync(searchReq));
-        
       };
 
     const selectionMade = (e) =>{
@@ -105,26 +109,26 @@ export const ResponsiveSearchBar = () => {
 
     const sortingMade = (e) =>{
         setSorting(e.target.value);
-    } 
+    }
 
     return (
         <div>
         <div className={classes.search} >
-            <InputBase onChange={handleChange}
-            value = {destination}
-                id = "destination"
-                name = "destination"
-                placeholder="To…"
-                classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                }}
-            />
-            <IconButton aria-label="search" onClick = {handleSearch}>
-                <SearchIcon />
-            </IconButton>
+            <SearchAutocomplete setSelected={setCoordinate} handleSearch={handleSearch}/>
+            {/*<InputBase onChange={handleChange}*/}
+            {/*           value = {destination}*/}
+            {/*           id = "destination"*/}
+            {/*           name = "destination"*/}
+            {/*           placeholder="To…"*/}
+            {/*           classes={{*/}
+            {/*               root: classes.inputRoot,*/}
+            {/*               input: classes.inputInput,*/}
+            {/*           }}*/}
+            {/*/>*/}
+            {/*<IconButton aria-label="search" onClick = {handleSearch}>*/}
+            {/*    <SearchIcon />*/}
+            {/*</IconButton>*/}
         </div>
-        
         <div className="filter" >
         <FormControl className={classes.formControl}>
                     <InputLabel id="demo-controlled-select-label"></InputLabel>
@@ -138,7 +142,7 @@ export const ResponsiveSearchBar = () => {
                         <MenuItem value={"rating"}>Ratings</MenuItem>
                         <MenuItem value={"totalTime"}>Total Time</MenuItem>
                         <MenuItem value={"availableSeats"}>Available Seats</MenuItem>
-                    </Select> 
+                    </Select>
                     </FormControl></div>
             <div className="sorting" >
             <FormControl component="fieldset">

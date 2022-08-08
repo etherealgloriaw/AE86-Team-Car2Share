@@ -26,13 +26,12 @@ export default function PlacesAutocomplete(props) {
 
 
     const handleSelect = async (address) => {
-
         setValue(address, false);
         clearSuggestions();
-
         const results = await getGeocode({address});
         console.log(results)
         const coordinates = await getLatLng(results[0]);
+        console.log(coordinates)
         props.setString(address)
         props.setSelected(coordinates);
     };
