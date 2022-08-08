@@ -85,9 +85,9 @@ router.post('/add', async (req, res, next) => {
     from: req.body.from,
     driver: mongoose.Types.ObjectId(req.body.driver)
   };
-
+  await mySchemas.postItem(post).save();
   try {
-    await mySchemas.postItem(post).save().populate("driver").then(card => res.send(card))
+    await mySchemas.postItem.findbyID({}).populate("driver").then(card => res.send(card))
       .catch(err => console.error(err));
   } catch (error) {
     console.log(error);
@@ -111,7 +111,8 @@ router.delete('/delete/:id', async (req, res, next) => {
 
 /* Edit a post. */
 router.put('/Edit/:id', async (req, res, next) => {
-  const id = req.params.id;
+  const id = mongoose.Types.ObjectId(req.body._id);
+  console.log(id)
   const post = {
     availableSeats: req.body.availableSeats,
     rating: req.body.rating,
@@ -146,7 +147,10 @@ router.put('/Edit/:id', async (req, res, next) => {
     });
   }
   await mySchemas.postItem.findByIdAndUpdate(id, post).populate("driver").then(
-    card => res.send(card)
+    card => {
+      console.log(card)
+      res.send(card)
+    }
   )
     .catch(err => console.error(err))
 })

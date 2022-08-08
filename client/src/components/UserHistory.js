@@ -289,6 +289,7 @@ export const UserHistory = () => {
     }
 
     const handleEdit = () => {
+      console.log(slice._id);
       if (slice.active == 2) alert("The past post cannot be edited!")
       else navigate(`/Edit/${slice._id}`, { replace: false })
     }

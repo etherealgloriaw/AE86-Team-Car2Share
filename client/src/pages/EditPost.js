@@ -13,7 +13,7 @@ function EditPost() {
     const [directionResponse, setDirectionResponse] = useState(null)
     const [distances, setDistances] = useState(null)
     const [duration, setDuration] = useState(null)
-
+    console.log(post)
     useEffect(() => {
         async function initLocation() {
             const results = await getGeocode({address: post.from});
@@ -44,7 +44,7 @@ function EditPost() {
     return (
         <div>
             {(initDept && directionResponse)? (<ModifyPost post={post} forEdit={true} dept={initDept} dest={initDest}
-                                  direction={directionResponse} distance={distances} duration={duration} />) : null}
+                                  direction={directionResponse} distance={distances} duration={duration} id = {post._id} />) : null}
         </div>
     )
 }

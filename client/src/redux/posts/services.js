@@ -78,7 +78,8 @@ const addPost = async(newPost)=>{
 };
 
 const editPost = async(edited) =>{
-    const id = edited._id;
+    const id = edited.driver;
+    console.log(id)
     const response = await fetch(`${url}/Edit/${id}`, {
         method: 'PUT',
         headers: {

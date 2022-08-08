@@ -36,7 +36,6 @@ const postsSlice = createSlice({
         .addCase(getPostAsync.fulfilled, (state, action) => {
           state.getPosts = REQUEST_STATE.FULFILLED;
           state.list = action.payload;
-
         })
         .addCase(getPostAsync.rejected, (state, action) => {
           state.getPosts = REQUEST_STATE.REJECTED;
@@ -48,7 +47,7 @@ const postsSlice = createSlice({
         })
         .addCase(addPostAsync.fulfilled, (state, action) => {
           state.addPost = REQUEST_STATE.FULFILLED;
-          state.list.push(action.payload);
+          state.list = action.payload;
         })
         .addCase(addPostAsync.rejected, (state, action) => {
           state.addPost = REQUEST_STATE.REJECTED;
@@ -72,7 +71,7 @@ const postsSlice = createSlice({
         })
         .addCase(searchPostAsync.fulfilled, (state, action) => {
           state.findPost = REQUEST_STATE.FULFILLED;
-          state.list= action.payload;
+          state.list = action.payload;
         })
         .addCase(searchPostAsync.rejected, (state, action) => {
           state.findPost = REQUEST_STATE.REJECTED;
@@ -83,8 +82,7 @@ const postsSlice = createSlice({
           state.error = null;
         })
         .addCase(editPostAsync.fulfilled, (state, action) => {
-          state.editPost = REQUEST_STATE.FULFILLED;
-            state.list.push(action.payload);
+            state.editPost = REQUEST_STATE.FULFILLED;
         })
         .addCase(editPostAsync.rejected, (state, action) => {
           state.editPost = REQUEST_STATE.REJECTED;
@@ -96,7 +94,6 @@ const postsSlice = createSlice({
           })
           .addCase(joinPostAsync.fulfilled, (state, action) => {
             state.joinPost = REQUEST_STATE.FULFILLED;
-            state.list= action.payload;
           })
           .addCase(joinPostAsync.rejected, (state, action) => {
             state.joinPost = REQUEST_STATE.REJECTED;
@@ -108,7 +105,6 @@ const postsSlice = createSlice({
           })
           .addCase(finishPostAsync.fulfilled, (state, action) => {
               state.finishPost = REQUEST_STATE.FULFILLED;
-              state.list= action.payload;
           })
           .addCase(finishPostAsync.rejected, (state, action) => {
               state.finishPost = REQUEST_STATE.REJECTED;

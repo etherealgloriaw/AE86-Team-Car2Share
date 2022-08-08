@@ -19,7 +19,6 @@ router.get("/:email", async (req, res, next) => {
 // edit profile
 router.patch('/Edit', async (req, res, next) => {
 	const id = mongoose.Types.ObjectId(req.body.id);
-	console.log(req.body)
 	const post = { username: req.body.username, introduction: req.body.introduction, avatar_address: req.body.avatar,
 		driving_experience: req.body.drivingEx};
 	await mySchemas.userItem.findByIdAndUpdate(id, post, { new: true }).then(card => res.send(card))

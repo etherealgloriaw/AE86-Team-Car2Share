@@ -377,9 +377,11 @@ export default function ModifyPost(prop) {
         if ((posErrorVar == 0) && (!seatsErrorVar) && (!contactInfoErrorVar) && (!dateErrorVar) &&
             (!priceErrorVar)) {
             if (forEdit) {
-                dispatch (editPostAsync(newPost))
+                newPost._id = prop.id;
+                console.log(newPost)
+                dispatch(editPostAsync(newPost)).then((user) => {navigate('/Profile/' + user._id, { replace: false });});
             } else {
-                dispatch(addPostAsync(newPost))
+                dispatch(addPostAsync(newPost)); //.then((user) => {navigate('/', { replace: false });});
             }
             setDeptString("")
             setDestString("")
@@ -393,7 +395,6 @@ export default function ModifyPost(prop) {
     if (user != null) {
         return (
             <React.Fragment>
-
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
                         <Typography component="h1" variant="h4" align="center">
