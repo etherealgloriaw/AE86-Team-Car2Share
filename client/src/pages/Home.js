@@ -56,7 +56,6 @@ function Home() {
     return (
         <div className="Home">
             <ResponsiveSearchBar />
-            <Filter />
             <div className={classes.root}>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
