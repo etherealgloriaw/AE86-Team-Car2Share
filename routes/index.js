@@ -79,9 +79,6 @@ router.get('/search/:selection/:sorting/:lat/:lng', async (req, res, next) => {
 
 /* delete a post. */
 router.delete('/delete/:id', async (req, res, next) => {
-  const id = req.params.id;
-  // mySchemas.postItem.findByIdAndDelete(id).then(card => res.send(id))
-  //     .catch(err => console.error(err))
   try {
     await mySchemas.postItem.deleteOne({ _id: req.params.id }).exec();
     const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
