@@ -139,7 +139,6 @@ export const ResponsiveSearchBar = () => {
                 <SearchAutocomplete setSelected={setCoordinate} handleSearch={handleSearch}/>
             </Grid>
 
-            <Grid item xs={1}></Grid>
             <Grid item xs={2} className={classes.filter} >
                 <FormControl className={classes.formControl}>
                     <InputLabel id="demo-controlled-select-label" ></InputLabel>
@@ -156,7 +155,7 @@ export const ResponsiveSearchBar = () => {
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={2} className={classes.sort}>
+            <Grid item xs={3} className={classes.sort}>
                 <FormControl component="fieldset">
                     <RadioGroup row aria-label="sorting" name="sorting"  onChange={sortingMade}>
                         <FormControlLabel value="ascending" control={<Radio />} label="ascending" />
