@@ -54,8 +54,8 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const user = JSON.parse(localStorage.getItem('profile'));
-  var profileURL = '/Profile/';
-  if (user != null) profileURL = '/Profile/' + user._id;
+  var profileURL = '/';
+  if (user != null) profileURL = '/Profile';
   else profileURL = '/Login'
   
   const isMenuOpen = Boolean(anchorEl);

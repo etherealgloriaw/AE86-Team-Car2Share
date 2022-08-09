@@ -23,23 +23,23 @@ router.get("/home", async (req, res, next) => {
 // get a single post (search)
 router.get('/search/:selection/:sorting/:lat/:lng', async (req, res, next) => {
 
-  function calcDist(i){
+  function calcDist(i) {
     const R = 3958.8; // Radius of the Earth in miles
     const rlat1 = i.lat * (Math.PI / 180); // Convert degrees to radians
     const rlat2 = lat * (Math.PI / 180); // Convert degrees to radians
     const difflat = rlat2 - rlat1; // Radian difference (latitudes)
     const difflon = (lng - i.lng) * (Math.PI / 180); // Radian difference (longitudes)
     const d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(rlat1) *
-    Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
+      Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
     return d;
   }
   var sorting = req.params.sorting;
   var selection = req.params.selection;
   var lat = req.params.lat;
   var lng = req.params.lng;
-  if(selection == 'distance'){
+  if (selection == 'distance') {
     var dt = dateTime.create();
-    await posts.find({ $and: [{active: { $lt: 2 }, startingTime: { $gt: dt._now }, availableSeats: { $gt: 0 }}]}).populate("driver").exec((err, results) => {
+    await posts.find({ $and: [{ active: { $lt: 2 }, startingTime: { $gt: dt._now }, availableSeats: { $gt: 0 } }] }).populate("driver").exec((err, results) => {
       if (err) throw err;
       if (results) {
         if (sorting == "ascending") {
@@ -53,28 +53,27 @@ router.get('/search/:selection/:sorting/:lat/:lng', async (req, res, next) => {
       }
     });
   } else {
-  var dt = dateTime.create();
-  await posts.find({ $and: [{lat: lat, lng: lng, active: { $lt: 2 }, startingTime: { $gt: dt._now }, availableSeats: { $gt: 0 }}]}).populate("driver").exec((err, results) => {
-    if (err) throw err;
-    if (results) {
-      if (sorting == "ascending") {
-        if (selection == "availableSeats") results.sort((a, b) => parseFloat(a.availableSeats) - (b.availableSeats));
-        if (selection == "rating") results.sort((a, b) => parseFloat(a.driver.rating) - (b.driver.rating));
-        if (selection == "totalTime") results.sort((a, b) => parseFloat(a.totalTime) - (b.totalTime));
-        if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(a)) - calcDist(b));
-      } else if (sorting == "descending") {
-        if (selection == "availableSeats") results.sort((a, b) => parseFloat(b.availableSeats) - (a.availableSeats));
-        if (selection == "rating") results.sort((a, b) => {console.log(b.driver.rating); console.log(a.driver);
-          parseFloat((b.driver.rating) - (a.driver.rating))});
-        if (selection == "totalTime") results.sort((a, b) => parseFloat(b.totalTime) - (a.totalTime));
-        if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(b)) - calcDist(a));
+    var dt = dateTime.create();
+    await posts.find({ $and: [{ lat: lat, lng: lng, active: { $lt: 2 }, startingTime: { $gt: dt._now }, availableSeats: { $gt: 0 } }] }).populate("driver").exec((err, results) => {
+      if (err) throw err;
+      if (results) {
+        if (sorting == "ascending") {
+          if (selection == "availableSeats") results.sort((a, b) => parseFloat(a.availableSeats) - (b.availableSeats));
+          if (selection == "rating") results.sort((a, b) => (a.driver.rating) - (b.driver.rating));
+          if (selection == "totalTime") results.sort((a, b) => parseFloat(a.totalTime) - (b.totalTime));
+          if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(a)) - calcDist(b));
+        } else if (sorting == "descending") {
+          if (selection == "availableSeats") results.sort((a, b) => parseFloat(b.availableSeats) - (a.availableSeats));
+          if (selection == "rating") results.sort((a, b) => (b.driver.rating) - (a.driver.rating));
+          if (selection == "totalTime") results.sort((a, b) => parseFloat(b.totalTime) - (a.totalTime));
+          if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(b)) - calcDist(a));
+        }
+        res.send(JSON.stringify(results));
+      } else {
+        res.end();
       }
-      res.send(JSON.stringify(results));
-    } else {
-      res.end();
-    }
-  });
-}
+    });
+  }
 });
 
 
@@ -110,9 +109,26 @@ router.put('/Edit/:id', async (req, res, next) => {
     from: req.body.from,
     driver: req.body.driver,
   }
-  const historyPost = await mySchemas.historyItem.find({ original_id: { $eq: id } })
+  const historyPost = await mySchemas.historyItem.find({ original_id: { $eq: id } }).populate("user");
   for (var p of historyPost) {
     const historyID = p._id;
+    user = p.user;
+    nodeoutlook.sendEmail({
+      auth: {
+        user: "car2share@outlook.com",
+        pass: "Notification"
+      },
+      from: 'car2share@outlook.com',
+      to: user.email,
+      subject: 'Your ride has been edited by driver!',
+      text:
+        `     Hello ${user.username}, your ride from ${p.from} to ${p.to} start at ${p.startingTime} has been edited by driver, please check the new post in Car2Share(https://ae86-car.herokuapp.com)!
+  Car2Share Official`,
+      replyTo: 'car2share@outlook.com',
+      attachments: [],
+      onError: (e) => console.log(e),
+      onSuccess: (i) => console.log(i)
+    });
     await mySchemas.historyItem.findByIdAndUpdate(historyID, {
       availableSeats: req.body.availableSeats,
       rating: req.body.rating,
@@ -156,7 +172,7 @@ router.post('/add', async (req, res, next) => {
   await mySchemas.postItem(post).save();
   try {
     await mySchemas.postItem.findbyID({}).populate("driver").then(card => res.send(card))
-        .catch(err => console.error(err));
+      .catch(err => console.error(err));
   } catch (error) {
     console.log(error);
   }

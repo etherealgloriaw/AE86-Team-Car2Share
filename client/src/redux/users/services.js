@@ -1,4 +1,4 @@
-const url = 'http://localhost:3001/Profile';
+const url = '/Profile';
 
 const getHistory = async(name) => {
     const response = await fetch (`${url}/${name}`,{

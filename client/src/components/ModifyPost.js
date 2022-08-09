@@ -379,7 +379,7 @@ export default function ModifyPost(prop) {
             if (forEdit) {
                 newPost._id = prop.id;
                 console.log(newPost)
-                dispatch(editPostAsync(newPost)).then((user) => {navigate('/Profile/' + user._id, { replace: false });});
+                dispatch(editPostAsync(newPost)).then((user) => {navigate('/Profile', { replace: false });});
             } else {
                 dispatch(addPostAsync(newPost)); //.then((user) => {navigate('/', { replace: false });});
             }

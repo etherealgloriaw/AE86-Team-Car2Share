@@ -1,6 +1,5 @@
 import Posts from "../components/Posts";
 import { ResponsiveSearchBar } from "../components/ResponsiveSearchBar";
-import { Filter } from "../components/Filter";
 import React, {useEffect, useState} from 'react';
 import Map from '../components/Map'
 import './Home.css'
@@ -57,7 +56,6 @@ function Home() {
     return (
         <div className="Home">
             <ResponsiveSearchBar />
-            <Filter />
             <div className={classes.root}>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
