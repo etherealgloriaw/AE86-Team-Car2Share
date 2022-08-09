@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
         },
         marginLeft: 0,
         width: '50%',
-        maxWidth: "38%",
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(1),
             width: 'auto',
@@ -77,10 +76,6 @@ export const ResponsiveSearchBar = () => {
     const dispatch = useDispatch()
 
     const handleSearch = (e) => {
-
-        //TODO: remember to check if the coordinates exists!
-
-        // alert(coordinate.lat + " " + coordinate.lng);
         const lat = coordinate.lat;
         const lng = coordinate.lng;
         console.log(lat)
@@ -91,7 +86,7 @@ export const ResponsiveSearchBar = () => {
             lat,
             lng
         }
-
+            
 
         // console.log(searchReq);
         dispatch(searchPostAsync(searchReq));
@@ -111,19 +106,6 @@ export const ResponsiveSearchBar = () => {
         <div>
         <div className={classes.search} >
             <SearchAutocomplete setSelected={setCoordinate} handleSearch={handleSearch}/>
-            {/*<InputBase */}
-            {/*           */}
-            {/*           id = "destination"*/}
-            {/*           name = "destination"*/}
-            {/*           */}
-            {/*           classes={{*/}
-            {/*               root: classes.inputRoot,*/}
-            {/*               input: classes.inputInput,*/}
-            {/*           }}*/}
-            {/*/>*/}
-            {/*<IconButton aria-label="search" onClick = {handleSearch}>*/}
-            {/*    <SearchIcon />*/}
-            {/*</IconButton>*/}
         </div>
         <div className="filter" >
         <FormControl className={classes.formControl}>
@@ -136,6 +118,7 @@ export const ResponsiveSearchBar = () => {
                         >
                         <MenuItem value={"distance"}>Distance</MenuItem>
                         <MenuItem value={"rating"}>Ratings</MenuItem>
+                        <MenuItem value={"totalTime"}>Total Time</MenuItem>
                         <MenuItem value={"availableSeats"}>Available Seats</MenuItem>
                     </Select>
                     </FormControl></div>
