@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: alpha(theme.palette.common.white, 0.25),
         },
         marginLeft: 0,
-        width: '38%',
-        maxWidth: "38%",
+        width: '42%',
+        maxWidth: "42%",
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(1),
             width: 'auto',
@@ -132,12 +132,14 @@ export const ResponsiveSearchBar = () => {
     }
 
     return (
-        <Grid container spacing={12} direction="row"
+        <Grid container spacing={13} direction="row"
               justifyContent="flex-start"
               alignItems="center">
             <Grid xs = {8} className={classes.search}>
                 <SearchAutocomplete setSelected={setCoordinate} handleSearch={handleSearch}/>
             </Grid>
+
+            <Grid item xs={1}></Grid>
             <Grid item xs={2} className={classes.filter} >
                 <FormControl className={classes.formControl}>
                     <InputLabel id="demo-controlled-select-label" ></InputLabel>
