@@ -79,6 +79,12 @@ export default function UserIntro(props) {
           <Box display="flex"
             justifyContent="center">
             <Typography component="h1" variant="h6">
+              Rate : <Rating name="half-rating" value={driver.rating.$numberDecimal} precision={0.1} readOnly />
+            </Typography>
+          </Box>
+          <Box display="flex"
+            justifyContent="center">
+            <Typography component="h1" variant="h6">
               driving experience : {driver.driving_experience ? driver.driving_experience: "0"}y
             </Typography>
           </Box>
