@@ -14,6 +14,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import SearchAutocomplete from "./SearchAutocomplete";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: alpha(theme.palette.common.white, 0.25),
         },
         marginLeft: 0,
-        width: '50%',
+        width: '38%',
+        maxWidth: "38%",
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(1),
             width: 'auto',
@@ -57,11 +59,34 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     formControl: {
-        position: 'absolute',
-        width: 150,
-        height: 220,
+        // position: 'absolute',
+        // position: 'relative',
+        // width: 150,
+        // height: 220,
+        width: "80%",
+        height: "50%",
+        borderRadius: 9,
+        marginTop: 0,
         margin: theme.spacing(1),
     },
+    sort: {
+        // position: 'relative',
+        // width: 150,
+        // height: 220,
+    },
+    filter: {
+        width: "100%",
+        height: "100%",
+        marginTop: 0,
+        borderRadius: 9,
+        fontSize: 18
+    },
+    filter2: {
+        width: "100%",
+        marginTop: 0,
+        borderRadius: 9,
+        fontSize: 16
+    }
 }));
 
 
@@ -76,6 +101,10 @@ export const ResponsiveSearchBar = () => {
     const dispatch = useDispatch()
 
     const handleSearch = (e) => {
+
+        //TODO: remember to check if the coordinates exists!
+
+        // alert(coordinate.lat + " " + coordinate.lng);
         const lat = coordinate.lat;
         const lng = coordinate.lng;
         console.log(lat)
@@ -86,12 +115,12 @@ export const ResponsiveSearchBar = () => {
             lat,
             lng
         }
-            
+
 
         // console.log(searchReq);
         dispatch(searchPostAsync(searchReq));
 
-      };
+    };
 
     const selectionMade = (e) =>{
         // console.log("selection made: " + e.target.value)
@@ -103,33 +132,36 @@ export const ResponsiveSearchBar = () => {
     }
 
     return (
-        <div>
-        <div className={classes.search} >
-            <SearchAutocomplete setSelected={setCoordinate} handleSearch={handleSearch}/>
-        </div>
-        <div className="filter" >
-        <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-controlled-select-label"></InputLabel>
+        <Grid container spacing={12} direction="row"
+              justifyContent="flex-start"
+              alignItems="center">
+            <Grid xs = {8} className={classes.search}>
+                <SearchAutocomplete setSelected={setCoordinate} handleSearch={handleSearch}/>
+            </Grid>
+            <Grid item xs={2} className={classes.filter} >
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-controlled-select-label" ></InputLabel>
                     <Select
                         labelId="demo-controlled-select-label"
                         id="demo-controlled-select"
                         value={selection}
-                        onChange={selectionMade}
-                        >
+                        onChange={selectionMade} className={classes.filter2}
+                    >
                         <MenuItem value={"distance"}>Distance</MenuItem>
                         <MenuItem value={"rating"}>Ratings</MenuItem>
                         <MenuItem value={"totalTime"}>Total Time</MenuItem>
                         <MenuItem value={"availableSeats"}>Available Seats</MenuItem>
                     </Select>
-                    </FormControl></div>
-            <div className="sorting" >
-            <FormControl component="fieldset">
-                <RadioGroup row aria-label="sorting" name="sorting"  onChange={sortingMade}>
-                    <FormControlLabel value="ascending" control={<Radio />} label="ascending" />
-                    <FormControlLabel value="descending" control={<Radio />} label="descending" />
-                </RadioGroup>
                 </FormControl>
-            </div>
-            </div>
+            </Grid>
+            <Grid item xs={2} className={classes.sort}>
+                <FormControl component="fieldset">
+                    <RadioGroup row aria-label="sorting" name="sorting"  onChange={sortingMade}>
+                        <FormControlLabel value="ascending" control={<Radio />} label="ascending" />
+                        <FormControlLabel value="descending" control={<Radio />} label="descending" />
+                    </RadioGroup>
+                </FormControl>
+            </Grid>
+        </Grid>
     )
 }
