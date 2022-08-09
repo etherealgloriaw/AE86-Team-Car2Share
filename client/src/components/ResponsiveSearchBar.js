@@ -136,7 +136,6 @@ export const ResponsiveSearchBar = () => {
                         >
                         <MenuItem value={"distance"}>Distance</MenuItem>
                         <MenuItem value={"rating"}>Ratings</MenuItem>
-                        <MenuItem value={"totalTime"}>Total Time</MenuItem>
                         <MenuItem value={"availableSeats"}>Available Seats</MenuItem>
                     </Select>
                     </FormControl></div>

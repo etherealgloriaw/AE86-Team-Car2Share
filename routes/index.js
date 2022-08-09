@@ -59,13 +59,12 @@ router.get('/search/:selection/:sorting/:lat/:lng', async (req, res, next) => {
     if (results) {
       if (sorting == "ascending") {
         if (selection == "availableSeats") results.sort((a, b) => parseFloat(a.availableSeats) - (b.availableSeats));
-        if (selection == "rating") results.sort((a, b) => parseFloat(a.driver.rating) - (b.driver.rating));
+        if (selection == "rating") results.sort((a, b) => (a.driver.rating) - (b.driver.rating));
         if (selection == "totalTime") results.sort((a, b) => parseFloat(a.totalTime) - (b.totalTime));
         if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(a)) - calcDist(b));
       } else if (sorting == "descending") {
         if (selection == "availableSeats") results.sort((a, b) => parseFloat(b.availableSeats) - (a.availableSeats));
-        if (selection == "rating") results.sort((a, b) => {console.log(b.driver.rating); console.log(a.driver);
-          parseFloat((b.driver.rating) - (a.driver.rating))});
+        if (selection == "rating") results.sort((a, b) => (b.driver.rating) - (a.driver.rating));
         if (selection == "totalTime") results.sort((a, b) => parseFloat(b.totalTime) - (a.totalTime));
         if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(b)) - calcDist(a));
       }
