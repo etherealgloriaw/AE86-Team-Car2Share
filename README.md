@@ -1,19 +1,11 @@
 # Car2Share -- Carpool Application
 
-## Project Summary:
-
-Car2Share is a carpool application for people who need a car ride living in Greater Vancouver. People could publish and view the carpool posts in real-time with other users, and share their previous carpool experiences with others.
-
-The application also contains the map components for users to interact and filter the posts nearby. We hope people without car could hitchhike more and save the energy to protect the environment from now on!
-
 ## Project Description:
-We store the user information(name, password, phone number) and their trip information(destination, time, number of available seats, home address, price).
 
-Using this data, a user will be able to register and login, and create and edit trips. They could also view their own travel history and other user's real-time posts. The users could also filter the available trips by distance, trip types and number of available seats.
+Car2Share is a carpool application for UBC students, staffs and faculties. Driver can publish trip posts to find someone to share the gas fee, and passengers can join the carshare to save time and money. Drivers can modify/cancel the trip, and receive email notification if someone joins the trip. And passengers can discover potential trips or search a destination by using Google Maps interface in the Home page, and join the carshare. In addition, passengers can rate a driver and see the driver's rating before joining the trip. Users can also publish pictures of the trip in their profile page.
 
-The additional functionality could include automatic matching system according to user's preference and their travel history.
 
-## Project task requirements:
+## Statement of goals:
 ○ minimal requirements
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. The requestors and car owners could add, edit, delete, view carpool request, such as destination, home, price, date and number of available seats ✅
@@ -42,28 +34,31 @@ The additional functionality could include automatic matching system according t
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d. Users could label their trips, such as shopping and traveling
 
-## Small Tasks:
-○ Task 1: The requestors and car owners could add, edit, delete, view carpool request, such as destination, home, price, date and number of available seats
+## Technology used from Unit 1-5:
+- Unit 1 HTML, CSS, JS
+  The front-end and server of our project are both implemented using JavaScript, which is a powerful high level programing language that is easy to learn and use.  Although we did not directly use HTML in our project, we use JSX to describe the UI, which syntax is similar to HTML but are more flexible and compatible with React. And the React will eventually generate HTML for the browser to display. We only use few of CSS in our project for the basic and simple styling of component. Most of the complex styling is done by using Material UI's makeStyle function, which is more powerful and compatible with the Material UI. 
+  
+- Unit 2 React & Redux
+  The entire front-end of our project is implemented by React, which provides a lot of functionaity that makes the implementation more efficient. We used React Hooks to simplify our code (avoid create a whole class and constantly worry about lifecyle). For example, we used useState to store and pass those state variales that need to be updated and rendered between functional components, and other external hooks such as useGeolocation. We also used Redux, which provides a centralized storge, to manage the state for the whole front-end, keeping the state consistant between client and server.
+  
+- Unit 3 – Node & Express
+The backend of our project is running in the Node.js environment, which enables our Javascript to be executed without a browser. On top of that we used Express web framework for the server implementation. The Express is easy to use and helps us handle the low level operation such as IO request. It also provides extra features such as router and middlewares that we used in our project. Therefore, Express increased our efficiency and simplified the server side implementation.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Design the front-end user interface (html page, css and Javascript) to show the individual trip posting
+- Unit 4 - NoSQL and MongoDB
+We used MongoDB as our database, Mongoose for Object Document Mapping, and we host our database on the MongoDB Atlas. Because we expanded our project periodically and added many data as we progressed, the NoSQL feature of MongoDB provides us a lot of flexibility so that we can frequently adding data field to the database schema. And using the Mongoose significantly reduced our code size, makes the development more efficient. The MongooDB Atlas provides us a free cloud based platform so that we do not need to worry about the deployment of database.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Design the back-end to retrieve/modify/delete trip posts from the database
+- Unit 5 - Release Engineering
+We choose to use a mono repo for the project because our project is small sized and many people work together on different file. We used Git and Github for version control, and the most important feature it provides is that we can work on the project at the same time and avoid destroy whole project by a buggy commit. We use npm as the build tool for dependency management and compiling. And We depoly and host our project on Heroku so that we do not need to dealing with the AWS.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Create relavent database to store the details of each trip post(destination, home, price, date and number of available seats)
 
-○ Task 2: User statistics, such as the carpool history, ratings
+## Above and Beyond functionality
+- Google Maps API integration: We integrated Google Maps API into our project, which can provides place display, route information, distance information, duration and place name autocomplete. We also used location service so that users can input their current location quickly. This function goes above and beyond the requirements of this course because it requires reading a lot of API documentation, and location service is a totally new area that we have never touched on. Plus, many documents and tutorials are based on vanilla React and HTML while we are using Material UI. Therefore we have to spend a lot of time to dig into Google Maps API and Material UI to resolve the conflicts and make things work. For example, the place autocomplete cost us many time to figure out how to request, passing result, display results on Material UI and get coordinates/route information. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Design the front-end user interface (html page, css and Javascript) to display users' profile page
+## Next Steps
+- Introduce chat function and calling over internet function to make the communication between driver and client more efficiently, and better protect their privacy.
+- Introduce emergency help center so that passenger can seek help if there is an emergency happening during the trip.
+- Introduce mobile version of our App
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Design the front-end user interface (html page, css and Javascript) for users to rate other users
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Design the back-end to retrieve/modify/delete users' profile from the database
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d. Create relavent database to store the user's information such as their carpool history and ratings
-
-## Blueprints:
-Car owners can post new trip and view their past trips as well as comments by passengers.
-![Car2Share_prototypes_carowner](https://user-images.githubusercontent.com/52093783/170796118-4396c743-32b0-4f33-a149-b7b643ebfe06.jpg)
-Passengers can choose the hitchhike based on the distance, time, and total seats.
-![Car2Share_prototypes_carowner](https://user-images.githubusercontent.com/52093783/170796692-650dcbd8-1fe3-4ef5-9cd0-6ef99e7a95ae.jpg)
-
+## List of Contributions
+- Jasper Zhao (z0a3b) implemented Google Maps API (Map component, location service, place autocomplete, route information) and related UI design. Also implemented Add Post page and Edit Post page (include UI, front-end logic and validation)
+  
