@@ -27,6 +27,7 @@ export default function SearchAutocomplete(props) {
     );
 
 
+
     const handleSelect = async (address) => {
         setValue(address, false);
         clearSuggestions();

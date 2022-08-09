@@ -48,7 +48,6 @@ export default function FormDialog() {
       setalertOpen(true);
     } else {
       var form = { id: user._id, username: name, introduction: introduction, avatar: avatarAddress, drivingEx: drivingEx }
-      console.log(form)
       dispatch(
         editProfileAsync(form)
       )

@@ -9,10 +9,11 @@ const getPosts = async() => {
 };
 
 const searchPost = async(searchReq) =>{
-    const dest = searchReq.destination;
     const selection = searchReq.selection;
     const sorting = searchReq.sorting;
-    const response = await fetch(`${url}/search/${dest}/${selection}/${sorting}`, {
+    const lat = searchReq.lat;
+    const lng = searchReq.lng;
+    const response = await fetch(`${url}/search/${selection}/${sorting}/${lat}/${lng}`, {
         method: 'GET',
         headers:{
             "Content-type": "application/json"

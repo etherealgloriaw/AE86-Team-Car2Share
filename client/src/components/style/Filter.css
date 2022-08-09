@@ -1,7 +1,7 @@
 .filter {
     position: absolute;
     display: inline;
-    left: 250px;
+    left: 450px;
     top: 47px;
     border-radius: 9px;
     margin-right: 2.4rem;
@@ -13,6 +13,6 @@
     position: absolute;
     display: inline;
     top: 67px;
-    left: 450px;
+    left: 650px;
     font-size: 12px;
 }

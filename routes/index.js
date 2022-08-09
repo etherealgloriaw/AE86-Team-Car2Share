@@ -12,7 +12,6 @@ router.get("/home", async (req, res, next) => {
   await posts.find({ $and: [{ active: { $lt: 2 }, startingTime: { $gt: dt._now }, availableSeats: { $gt: 0 } }] }).populate("driver").exec((err, postData) => {
     if (err) throw err;
     if (postData) {
-      console.log(postData);
       res.send(JSON.stringify(postData));
     } else {
       res.end();
@@ -22,77 +21,61 @@ router.get("/home", async (req, res, next) => {
 
 
 // get a single post (search)
-router.get('/search/:dest/:selection/:sorting', async (req, res, next) => {
-  var dest = req.params.dest;
+router.get('/search/:selection/:sorting/:lat/:lng', async (req, res, next) => {
+
+  function calcDist(i){
+    const R = 3958.8; // Radius of the Earth in miles
+    const rlat1 = i.lat * (Math.PI / 180); // Convert degrees to radians
+    const rlat2 = lat * (Math.PI / 180); // Convert degrees to radians
+    const difflat = rlat2 - rlat1; // Radian difference (latitudes)
+    const difflon = (lng - i.lng) * (Math.PI / 180); // Radian difference (longitudes)
+    const d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(rlat1) *
+    Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
+    return d;
+  }
   var sorting = req.params.sorting;
   var selection = req.params.selection;
-  if (dest != "NULL") {
-    try {
-      await posts.find({ $and: [{ active: 0 }, { to: { $regex: dest, $options: 'i' } }] })
-        .populate("driver").then(results => {
-          if (sorting == "ascending") {
-            if (selection == "availableSeats") results.sort((a, b) => parseFloat(a.availableSeats) - (b.availableSeats));
-            if (selection == "rating") results.sort((a, b) => parseFloat(a.rating) - (b.rating));
-            if (selection == "totalTime") results.sort((a, b) => parseFloat(a.totalTime) - (b.totalTime));
-          } else if (sorting == "descending") {
-            if (selection == "availableSeats") results.sort((a, b) => parseFloat(b.availableSeats) - (a.availableSeats));
-            if (selection == "rating") results.sort((a, b) => parseFloat(b.rating) - (a.rating));
-            if (selection == "totalTime") results.sort((a, b) => parseFloat(b.totalTime) - (a.totalTime));
-          }
-          res.send(JSON.stringify(results));
-        })
-        .catch(err => console.error(err));
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    try {
-      await posts.find({ active: 0 }).populate("driver").then(results => {
+  var lat = req.params.lat;
+  var lng = req.params.lng;
+  if(selection == 'distance'){
+    var dt = dateTime.create();
+    await posts.find({ $and: [{active: { $lt: 2 }, startingTime: { $gt: dt._now }, availableSeats: { $gt: 0 }}]}).populate("driver").exec((err, results) => {
+      if (err) throw err;
+      if (results) {
         if (sorting == "ascending") {
-          if (selection == "availableSeats") results.sort((a, b) => parseFloat(a.availableSeats) - (b.availableSeats));
-          if (selection == "rating") results.sort((a, b) => parseFloat(a.rating) - (b.rating));
-          if (selection == "totalTime") results.sort((a, b) => parseFloat(a.totalTime) - (b.totalTime));
+          results.sort((a, b) => parseFloat(calcDist(a)) - calcDist(b));
         } else if (sorting == "descending") {
-          console.log("descending");
-          if (selection == "availableSeats") results.sort((a, b) => parseFloat(b.availableSeats) - (a.availableSeats));
-          if (selection == "rating") results.sort((a, b) => parseFloat(b.rating) - (a.rating));
-          if (selection == "totalTime") results.sort((a, b) => parseFloat(b.totalTime) - (a.totalTime));
+          results.sort((a, b) => parseFloat(calcDist(b)) - calcDist(a));
         }
-        // console.log("results:" + results);
         res.send(JSON.stringify(results));
-      })
-        .catch(err => console.error(err));
-    } catch (error) {
-      console.log(error);
+      } else {
+        res.end();
+      }
+    });
+  } else {
+  var dt = dateTime.create();
+  await posts.find({ $and: [{lat: lat, lng: lng, active: { $lt: 2 }, startingTime: { $gt: dt._now }, availableSeats: { $gt: 0 }}]}).populate("driver").exec((err, results) => {
+    if (err) throw err;
+    if (results) {
+      if (sorting == "ascending") {
+        if (selection == "availableSeats") results.sort((a, b) => parseFloat(a.availableSeats) - (b.availableSeats));
+        if (selection == "rating") results.sort((a, b) => parseFloat(a.rating) - (b.rating));
+        if (selection == "totalTime") results.sort((a, b) => parseFloat(a.totalTime) - (b.totalTime));
+        if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(a)) - calcDist(b));
+      } else if (sorting == "descending") {
+        if (selection == "availableSeats") results.sort((a, b) => parseFloat(b.availableSeats) - (a.availableSeats));
+        if (selection == "rating") results.sort((a, b) => parseFloat(b.rating) - (a.rating));
+        if (selection == "totalTime") results.sort((a, b) => parseFloat(b.totalTime) - (a.totalTime));
+        if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(b)) - calcDist(a));
+      }
+      res.send(JSON.stringify(results));
+    } else {
+      res.end();
     }
-  }
-
+  });  
+}
 });
 
-/* add a new post. */
-router.post('/add', async (req, res, next) => {
-  const post = {
-    availableSeats: req.body.availableSeats,
-    rating: req.body.rating,
-    startingTime: req.body.startingTime,
-    totalTime: req.body.totalTime,
-    lat: req.body.lat,
-    lng: req.body.lng,
-    contactInfo: req.body.contactInfo,
-    active: req.body.active,
-    price: req.body.price,
-    to: req.body.to,
-    from: req.body.from,
-    driver: mongoose.Types.ObjectId(req.body.driver)
-  };
-  await mySchemas.postItem(post).save();
-  try {
-    await mySchemas.postItem.findbyID({}).populate("driver").then(card => res.send(card))
-      .catch(err => console.error(err));
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 /* delete a post. */
 router.delete('/delete/:id', async (req, res, next) => {
@@ -112,7 +95,6 @@ router.delete('/delete/:id', async (req, res, next) => {
 /* Edit a post. */
 router.put('/Edit/:id', async (req, res, next) => {
   const id = mongoose.Types.ObjectId(req.body._id);
-  console.log(id)
   const post = {
     availableSeats: req.body.availableSeats,
     rating: req.body.rating,
@@ -128,7 +110,6 @@ router.put('/Edit/:id', async (req, res, next) => {
     driver: req.body.driver,
   }
   const historyPost = await mySchemas.historyItem.find({ original_id: { $eq: id } })
-  console.log(historyPost);
   for (var p of historyPost) {
     const historyID = p._id;
     await mySchemas.historyItem.findByIdAndUpdate(historyID, {
@@ -148,7 +129,6 @@ router.put('/Edit/:id', async (req, res, next) => {
   }
   await mySchemas.postItem.findByIdAndUpdate(id, post).populate("driver").then(
     card => {
-      console.log(card)
       res.send(card)
     }
   )
@@ -189,7 +169,6 @@ router.patch('/finish/:id', async (req, res, next) => {
     )
     await mySchemas.postItem.findByIdAndUpdate(id, { active: 2 });
     const historyPost = await mySchemas.historyItem.find({ original_id: { $eq: id } })
-    console.log(historyPost);
     for (var p of historyPost) {
       const historyID = p._id;
       await mySchemas.historyItem.findByIdAndUpdate(historyID, { active: 2 });

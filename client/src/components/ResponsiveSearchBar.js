@@ -69,41 +69,36 @@ const useStyles = makeStyles((theme) => ({
 export const ResponsiveSearchBar = () => {
     const classes = useStyles();
 
-    var[destination, setDestination] = useState('')
     const[selection, setSelection] = useState('rating')
     const[sorting, setSorting] = useState('ascending')
     const[coordinate, setCoordinate] = useState(null)
-    const handleChange = e =>{
-        if(e.target.name == 'destination'){
-            setDestination(e.target.value);
-        }
-    }
 
     const dispatch = useDispatch()
 
-    const handleSearch = () => {
-        // if(destination == ""){
-        //     destination = "NULL"
-        // }
-        //
-        // const searchReq = {
-        //     selection,
-        //     sorting,
-        //     destination
-        // }
-        //
-        //
-        // console.log(searchReq);
-        // setDestination('');
-        // dispatch(searchPostAsync(searchReq));
+    const handleSearch = (e) => {
 
         //TODO: remember to check if the coordinates exists!
-        alert(coordinate.lat + " " + coordinate.lng)
+        
+        // alert(coordinate.lat + " " + coordinate.lng);
+        const lat = coordinate.lat;
+        const lng = coordinate.lng;
+        console.log(lat)
+
+        const searchReq = {
+            selection,
+            sorting,
+            lat,
+            lng
+        }
+            
+
+        // console.log(searchReq);
+        dispatch(searchPostAsync(searchReq));
 
       };
 
     const selectionMade = (e) =>{
-        console.log("selection made: " + e.target.value)
+        // console.log("selection made: " + e.target.value)
         setSelection(e.target.value);
     }
 
@@ -115,11 +110,11 @@ export const ResponsiveSearchBar = () => {
         <div>
         <div className={classes.search} >
             <SearchAutocomplete setSelected={setCoordinate} handleSearch={handleSearch}/>
-            {/*<InputBase onChange={handleChange}*/}
-            {/*           value = {destination}*/}
+            {/*<InputBase */}
+            {/*           */}
             {/*           id = "destination"*/}
             {/*           name = "destination"*/}
-            {/*           placeholder="To…"*/}
+            {/*           */}
             {/*           classes={{*/}
             {/*               root: classes.inputRoot,*/}
             {/*               input: classes.inputInput,*/}
