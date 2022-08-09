@@ -59,12 +59,13 @@ router.get('/search/:selection/:sorting/:lat/:lng', async (req, res, next) => {
     if (results) {
       if (sorting == "ascending") {
         if (selection == "availableSeats") results.sort((a, b) => parseFloat(a.availableSeats) - (b.availableSeats));
-        if (selection == "rating") results.sort((a, b) => parseFloat(a.rating) - (b.rating));
+        if (selection == "rating") results.sort((a, b) => parseFloat(a.driver.rating) - (b.driver.rating));
         if (selection == "totalTime") results.sort((a, b) => parseFloat(a.totalTime) - (b.totalTime));
         if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(a)) - calcDist(b));
       } else if (sorting == "descending") {
         if (selection == "availableSeats") results.sort((a, b) => parseFloat(b.availableSeats) - (a.availableSeats));
-        if (selection == "rating") results.sort((a, b) => parseFloat(b.rating) - (a.rating));
+        if (selection == "rating") results.sort((a, b) => {console.log(b.driver.rating); console.log(a.driver);
+          parseFloat((b.driver.rating) - (a.driver.rating))});
         if (selection == "totalTime") results.sort((a, b) => parseFloat(b.totalTime) - (a.totalTime));
         if (selection == "distance") results.sort((a, b) => parseFloat(calcDist(b)) - calcDist(a));
       }
@@ -72,7 +73,7 @@ router.get('/search/:selection/:sorting/:lat/:lng', async (req, res, next) => {
     } else {
       res.end();
     }
-  });  
+  });
 }
 });
 
@@ -134,6 +135,32 @@ router.put('/Edit/:id', async (req, res, next) => {
   )
     .catch(err => console.error(err))
 })
+
+
+/* add a new post. */
+router.post('/add', async (req, res, next) => {
+  const post = {
+    availableSeats: req.body.availableSeats,
+    rating: req.body.rating,
+    startingTime: req.body.startingTime,
+    totalTime: req.body.totalTime,
+    lat: req.body.lat,
+    lng: req.body.lng,
+    contactInfo: req.body.contactInfo,
+    active: req.body.active,
+    price: req.body.price,
+    to: req.body.to,
+    from: req.body.from,
+    driver: mongoose.Types.ObjectId(req.body.driver)
+  };
+  await mySchemas.postItem(post).save();
+  try {
+    await mySchemas.postItem.findbyID({}).populate("driver").then(card => res.send(card))
+        .catch(err => console.error(err));
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 
 router.patch('/finish/:id', async (req, res, next) => {

@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         },
         marginLeft: 0,
         width: '50%',
+        maxWidth: "38%",
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(1),
             width: 'auto',
@@ -78,7 +79,7 @@ export const ResponsiveSearchBar = () => {
     const handleSearch = (e) => {
 
         //TODO: remember to check if the coordinates exists!
-        
+
         // alert(coordinate.lat + " " + coordinate.lng);
         const lat = coordinate.lat;
         const lng = coordinate.lng;
@@ -90,7 +91,7 @@ export const ResponsiveSearchBar = () => {
             lat,
             lng
         }
-            
+
 
         // console.log(searchReq);
         dispatch(searchPostAsync(searchReq));
