@@ -128,7 +128,7 @@ export const Post = (slice) => {
               })
           )
           console.log(joinSuccess)
-          if (joinSuccess) navigate("/Profile/" + user._id, { replace: false });
+          if (joinSuccess) navigate("/Profile", { replace: false });
           else alert('You have joined this post before!')
       }
   }
