@@ -53,6 +53,8 @@ We choose to use a mono repo for the project because our project is small sized 
 
 ## Above and Beyond functionality
 - Google Maps API integration: We integrated Google Maps API into our project, which can provides place display, route information, distance information, duration and place name autocomplete. We also used location service so that users can input their current location quickly. This function goes above and beyond the requirements of this course because it requires reading a lot of API documentation, and location service is a totally new area that we have never touched on. Plus, many documents and tutorials are based on vanilla React and HTML while we are using Material UI. Therefore we have to spend a lot of time to dig into Google Maps API and Material UI to resolve the conflicts and make things work. For example, the place autocomplete cost us many time to figure out how to request, passing result, display results on Material UI and get coordinates/route information. 
+- Switch between driver and passenger: we implemented two modes for users to view their posts in different roles. So we create another database collection called historyItem specifically for user's history posts. And the postitem collection for driver's posts. In this way, the interactions between passenger and driver are more independent to prevent the operational errors. We also use three active status to manage the post type and allows multiple users to join the same post.
+- Send email notification: the library nodemailer has been used for sending emails. When choosing the email server, it needs to be noted that gmail does not support the SMTP now, so we can only use outlook. Also, after sending around 30 emails, the outlook server needs a security verification to keep using it.
 
 ## Next Steps
 - Introduce chat function and calling over internet function to make the communication between driver and client more efficiently, and better protect their privacy.
@@ -61,5 +63,7 @@ We choose to use a mono repo for the project because our project is small sized 
 
 ## List of Contributions
 - Jasper Zhao (z0a3b) implemented Google Maps API (Map component, location service, place autocomplete, route information) and related UI design. Also implemented Add Post page and Edit Post page (include UI, front-end logic and validation)
-- Gloria Wang (a7z2b) designed the first-version of UI, implemented the interaction logic between passenger and driver (join the post, rate the post, edit the profile, upload the photos, switch between passenger and driver) from frontend to backend.
+- Gloria Wang (a7z2b) designed the structure of UI, implemented the interaction logic between passenger and driver (join the post, rate the post, edit the profile, upload the photos, switch between passenger and driver) from frontend to backend.
+- Meihui Li (j7b7d) implemented cancel, finish, delete functions, and login in validation. I also modified the whole program UI to make it more consistent, including home page, post format, and user history format.
+- - Yiran Liu (o1z2b) implented the search bar and sorting functionality. Also implemented some component (nav bar, UI desigen) in the profile page.
   
