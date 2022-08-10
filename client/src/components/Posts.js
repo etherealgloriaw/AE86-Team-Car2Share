@@ -14,9 +14,7 @@ export const Posts = (props) => {
     }, [dispatch]);
 
     const renderedPosts = posts.map((slice) => {
-        const dateString = new Date(slice.startingTime).toLocaleString('en-US', {
-            timeZone: 'America/Los_Angeles',
-        });
+        const dateString = new Date(slice.startingTime).toUTCString().slice(0,-3);
         return(
         <Grid item xs={12} md={12} key={Math.random()}>
           {

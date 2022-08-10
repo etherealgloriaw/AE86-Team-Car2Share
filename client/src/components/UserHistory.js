@@ -228,9 +228,7 @@ export const UserHistory = () => {
         } else if (time === 'upcoming') {
             if (slice.active !== 0) return
         }
-        const dateString = new Date(slice.startingTime).toLocaleString('en-US', {
-            timeZone: 'America/Los_Angeles',
-        });
+        const dateString = new Date(slice.startingTime).toUTCString().slice(0,-3);
 
         return (
             <Grid item xs={12} md={12} key={Math.random()}>
@@ -253,10 +251,7 @@ export const UserHistory = () => {
         } else if (time === 'upcoming') {
             if (slice.active !== 0) return
         }
-        const date = new Date(slice.startingTime)
-        const dateString = date.toDateString() + " " + date.getHours() + ":"
-            + ((date.getMinutes() > 9) ? date.getMinutes() : ("0" + date.getMinutes())) + ":" +
-            ((date.getSeconds() > 9) ? date.getSeconds() : ("0" + date.getSeconds()))
+        const dateString = new Date(slice.startingTime).toUTCString().slice(0,-3);
         const status = slice.active;
         let statusStr = "";
         let statusLabel = ''
