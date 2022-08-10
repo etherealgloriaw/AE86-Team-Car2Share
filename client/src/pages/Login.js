@@ -133,10 +133,6 @@ export default function Login() {
                             value={inputPassword}
                             onChange={passwordChangeHandler}
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary"/>}
-                            label="Remember me"
-                        />
                         <Button
                             type="submit"
                             fullWidth
@@ -149,9 +145,6 @@ export default function Login() {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
                             </Grid>
                             <Grid item>
                                 <Link component={Jump} to={"/SignUp"} variant="body2">
