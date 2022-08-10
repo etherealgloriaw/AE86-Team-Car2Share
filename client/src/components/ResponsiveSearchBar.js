@@ -55,10 +55,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     formControl: {
-        // position: 'absolute',
-        // position: 'relative',
-        // width: 150,
-        // height: 220,
         width: "80%",
         height: "50%",
         borderRadius: 9,
@@ -97,10 +93,6 @@ export const ResponsiveSearchBar = () => {
     const dispatch = useDispatch()
 
     const handleSearch = (e) => {
-
-        //TODO: remember to check if the coordinates exists!
-
-        // alert(coordinate.lat + " " + coordinate.lng);
         const lat = coordinate.lat;
         const lng = coordinate.lng;
         console.log(lat)
@@ -111,15 +103,11 @@ export const ResponsiveSearchBar = () => {
             lat,
             lng
         }
-
-
-        // console.log(searchReq);
         dispatch(searchPostAsync(searchReq));
 
     };
 
     const selectionMade = (e) =>{
-        // console.log("selection made: " + e.target.value)
         setSelection(e.target.value);
     }
 
@@ -146,7 +134,6 @@ export const ResponsiveSearchBar = () => {
                     >
                         <MenuItem value={"distance"}>Distance</MenuItem>
                         <MenuItem value={"rating"}>Ratings</MenuItem>
-                        <MenuItem value={"totalTime"}>Total Time</MenuItem>
                         <MenuItem value={"availableSeats"}>Available Seats</MenuItem>
                     </Select>
                 </FormControl>

@@ -4,7 +4,6 @@ import './Popup.css'
 import {DirectionsRenderer, GoogleMap} from "@react-google-maps/api";
 import React, {useEffect, useMemo, useState} from "react";
 import {Rating} from "@material-ui/lab";
-// import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

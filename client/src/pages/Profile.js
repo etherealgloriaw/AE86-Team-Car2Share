@@ -16,7 +16,6 @@ import AddPic from "../components/AddPic";
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
-        // margin: theme.spacing(3),
         backgroundColor: theme.palette.secondary.main,
         width: theme.spacing(20),
         height: theme.spacing(20),
@@ -39,14 +38,11 @@ const useStyles = makeStyles((theme) => ({
     userProfile: {
         textAlign: "center",
         backgroundColor: "#ffffff",
-        // alignItems: "center",
         borderBottomLeftRadius: 6,
         borderTopLeftRadius: 6,
         borderBottomRightRadius: 6,
         borderTopRightRadius: 6,
-        // marginRight: 100,
         marginTop: "2%",
-        // marginLeft: "5%"
     },
     introduction: {
         textAlign: "center",
@@ -68,7 +64,6 @@ export default function Profile() {
     const navigate = useNavigate();
     var avatarAdd = "https://icons-for-free.com/download-icon-avatar-1320568024619304547_512.png"
     if (user != null) return (
-        // <Container component="main" maxWidth="xs">
         <div className={classes.root}>
             <CssBaseline/>
             <Grid container direction="row" spacing={3}>
