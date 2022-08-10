@@ -80,17 +80,12 @@ router.get('/search/:selection/:sorting/:lat/:lng', async (req, res, next) => {
 /* delete a post. */
 router.delete('/delete/:id', async (req, res, next) => {
   try {
-    // await mySchemas.postItem.deleteOne({ _id: req.params.id }).exec();
-    // const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
-    // res.send(allPosts)
-    await mySchemas.postItem.deleteMany({});
-    await mySchemas.userItem.deleteMany({});
-    await mySchemas.historyItem.deleteMany({});
-    res.end();
+    await mySchemas.postItem.deleteOne({ _id: req.params.id }).exec();
+    const allPosts = await mySchemas.postItem.find({}).populate("driver").exec();
+    res.send(allPosts);
   } catch {
     console.log("err")
   }
-  // res.json({ message: "Post deleted successfully." });
 });
 
 /* Edit a post. */
