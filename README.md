@@ -61,4 +61,5 @@ We choose to use a mono repo for the project because our project is small sized 
 
 ## List of Contributions
 - Jasper Zhao (z0a3b) implemented Google Maps API (Map component, location service, place autocomplete, route information) and related UI design. Also implemented Add Post page and Edit Post page (include UI, front-end logic and validation)
+- Gloria Wang (a7z2b) designed the first-version of UI, implemented the interaction logic between passenger and driver (join the post, rate the post, edit the profile, upload the photos, switch between passenger and driver) from frontend to backend.
   
