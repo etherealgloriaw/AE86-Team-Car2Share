@@ -1,6 +1,6 @@
 # Car2Share -- Carpool Application
 
-## This is not the final version, please check final-project branch, thanks!
+# This is not the final version, please check final-project branch, thanks!
 
 ## Project Summary: 
 
