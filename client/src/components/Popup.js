@@ -78,40 +78,6 @@ export default function Popup(props) {
         + ((date.getMinutes() > 9)? date.getMinutes(): ("0" + date.getMinutes()))+ ":" +
         ((date.getSeconds() > 9)? date.getSeconds(): ("0" + date.getSeconds()))
     return (
-        // <div className="popup-box">
-        //     <div className="box">
-        //         <div className="details">
-        //         <h2>Trip Details:</h2>
-        //         <h3>From: {props.data.from}</h3>
-        //         <h3>To: {props.data.to}</h3>
-        //         <h3>Driver: {props.data.driver.username}</h3>
-        //         <h3>Contact information: {props.data.contactInfo} (phone), {props.data.driver.email} (E-mail) </h3>
-        //         <h3>Price: {props.data.price}</h3>
-        //         <h3>Available Seats: {props.data.availableSeats}</h3>
-        //         <div className="rating">
-        //             <h3>Driver rating:</h3>
-        //             <Rating className={"stars"} name="read-only" value={props.data.rating} readOnly />
-        //         </div>
-        //         <h3>Distance: {distances}</h3>
-        //         <h3>Estimated travel time: {duration}</h3>
-        //
-        //         <button id="button" type="button" onClick={
-        //             (e) => {
-        //                 e.preventDefault();
-        //                 props.togglePopup(0)
-        //             }
-        //         }>close
-        //         </button>
-        //         </div>
-        //         <div className="map">
-        //         <GoogleMap zoom={11} center={{lat: 49.26361670730985, lng:-123.14095958202498}}
-        //                    mapContainerStyle={containerStyle} mapContainerClassName="map-container">
-        //             {directionResponse && (<DirectionsRenderer directions={directionResponse}/>)}
-        //         </GoogleMap>
-        //         </div>
-        //     </div>
-        //
-        // </div>
         <div className="popup-box">
             <div className="box">
                 <div className="closeButton">

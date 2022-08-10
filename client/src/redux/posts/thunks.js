@@ -1,33 +1,33 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { actionTypes } from './actionTypes';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+import {actionTypes} from './actionTypes';
 import PostService from './services';
 
 export const getPostAsync = createAsyncThunk(
-  actionTypes.GET_POST,
-  async () =>{
-      return await PostService.getPosts();
-  }
+    actionTypes.GET_POST,
+    async () => {
+        return await PostService.getPosts();
+    }
 )
 
 export const addPostAsync = createAsyncThunk(
     actionTypes.ADD_POST,
     async (newPost) => {
-      return await PostService.addPost(newPost);
+        return await PostService.addPost(newPost);
     }
-  );
+);
 
 export const deletePostAsync = createAsyncThunk(
-  actionTypes.DELETE_POST,
-  async(id) => {
-    return await PostService.deletePost(id);
-  }
+    actionTypes.DELETE_POST,
+    async (id) => {
+        return await PostService.deletePost(id);
+    }
 );
 
 export const searchPostAsync = createAsyncThunk(
-  actionTypes.SEARCH_POST,
-  async (searchReq) => {
-      return await PostService.searchPost(searchReq)
-  }
+    actionTypes.SEARCH_POST,
+    async (searchReq) => {
+        return await PostService.searchPost(searchReq)
+    }
 )
 
 
@@ -40,10 +40,10 @@ export const finishPostAsync = createAsyncThunk(
 )
 
 export const editPostAsync = createAsyncThunk(
-  actionTypes.EDIT_POST,
-  async (edited) => {
-      return await PostService.editPost(edited)
-  }
+    actionTypes.EDIT_POST,
+    async (edited) => {
+        return await PostService.editPost(edited)
+    }
 )
 
 

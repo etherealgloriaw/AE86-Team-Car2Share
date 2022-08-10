@@ -81,10 +81,6 @@ export default function SearchAutocomplete(props) {
                                                    </InputAdornment>
                                                ),
                                            }}/>
-                            // <InputBase
-                            //     className={classes.input}
-                            //     {...params}
-                            // />
                         )
 
                     }}

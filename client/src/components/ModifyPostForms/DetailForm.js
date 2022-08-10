@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import NumberFormat from "react-number-format";
 
 function TextMaskCustom(props) {
-    const { inputRef, ...other } = props;
+    const {inputRef, ...other} = props;
 
     return (
         <MaskedInput
@@ -29,7 +29,7 @@ TextMaskCustom.propTypes = {
 };
 
 function NumberFormatCustom(props) {
-    const { inputRef, onChange, ...other } = props;
+    const {inputRef, onChange, ...other} = props;
 
     return (
         <NumberFormat

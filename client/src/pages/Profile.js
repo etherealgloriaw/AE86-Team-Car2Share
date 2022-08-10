@@ -1,137 +1,135 @@
 import "./styles/Login.css"
 import React from 'react';
-import { useNavigate, Navigate } from 'react-router-dom'
+import {useNavigate, Navigate} from 'react-router-dom'
 import UserHistory from "../components/UserHistory";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import FormDialog from "../components/Edit";
 import Button from '@material-ui/core/Button';
 import Rating from "@material-ui/lab/Rating";
-import { Grid, Box, Card, ImageList, ImageListItem } from "@material-ui/core";
+import {Grid, Box, Card, ImageList, ImageListItem} from "@material-ui/core";
 import AddPic from "../components/AddPic";
 
 const useStyles = makeStyles((theme) => ({
-  avatar: {
-    // margin: theme.spacing(3),
-    backgroundColor: theme.palette.secondary.main,
-    width: theme.spacing(20),
-    height: theme.spacing(20),
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  Button: {
-    // height: '50%',
-    // width: '50%',
-    margin: theme.spacing(1),
-  },
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(0),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  userProfile: {
-    textAlign: "center",
-    backgroundColor: "#ffffff",
-    // alignItems: "center",
-    borderBottomLeftRadius: 6,
-    borderTopLeftRadius: 6,
-    borderBottomRightRadius: 6,
-    borderTopRightRadius: 6,
-    // marginRight: 100,
-    marginTop: "2%",
-    // marginLeft: "5%"
-  },
-  introduction: {
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  carImage: {
-    maxWidth: "100%",
-    maxHeight: "100%"
-  },
-  userHistory: {
-    marginTop: 0
-  }
+    avatar: {
+        // margin: theme.spacing(3),
+        backgroundColor: theme.palette.secondary.main,
+        width: theme.spacing(20),
+        height: theme.spacing(20),
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    Button: {
+        margin: theme.spacing(1),
+    },
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(0),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    userProfile: {
+        textAlign: "center",
+        backgroundColor: "#ffffff",
+        // alignItems: "center",
+        borderBottomLeftRadius: 6,
+        borderTopLeftRadius: 6,
+        borderBottomRightRadius: 6,
+        borderTopRightRadius: 6,
+        // marginRight: 100,
+        marginTop: "2%",
+        // marginLeft: "5%"
+    },
+    introduction: {
+        textAlign: "center",
+        marginBottom: 10,
+    },
+    carImage: {
+        maxWidth: "100%",
+        maxHeight: "100%"
+    },
+    userHistory: {
+        marginTop: 0
+    }
 }));
 
 
 export default function Profile() {
-  const classes = useStyles();
-  const user = JSON.parse(localStorage.getItem('profile'));
-  const navigate = useNavigate();
-  var avatarAdd = "https://icons-for-free.com/download-icon-avatar-1320568024619304547_512.png"
-  if (user != null) return (
-    // <Container component="main" maxWidth="xs">
-    <div className={classes.root}>
-      <CssBaseline />
-      <Grid container direction="row" spacing={3}>
-        <Grid item xs={12} md={6} className={classes.userProfile}>
-          <Box display="flex"
-            justifyContent="center">
-            <Avatar className={classes.avatar} src={user.avatar_address} />
-          </Box>
-          <Box display="flex"
-            justifyContent="center">
-            <Typography component="h1" variant="h7">
-              {user.username}
-            </Typography>
-          </Box>
-          <Box display="flex"
-            justifyContent="center">
-            <Typography component="h1" variant="h6">
-              Rate : <Rating name="half-rating" value={user.rating.$numberDecimal} precision={0.1} readOnly />
-            </Typography>
-          </Box>
-          <Box display="flex"
-            justifyContent="center">
-            <Grid item xs={6} md={4}>
-              <FormDialog />
-            </Grid>
-            <Grid item xs={6} md={4}>
-            <Typography component="h1" variant="h6">
-              Driving experience : {user.driving_experience}y
-            </Typography>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <AddPic />
-            </Grid>
-          </Box>
-          <Box display="flex"
-            justifyContent="center">
-            <Typography component="h1" variant="h6">
-              {user.introduction}
-            </Typography>
-          </Box>
+    const classes = useStyles();
+    const user = JSON.parse(localStorage.getItem('profile'));
+    const navigate = useNavigate();
+    var avatarAdd = "https://icons-for-free.com/download-icon-avatar-1320568024619304547_512.png"
+    if (user != null) return (
+        // <Container component="main" maxWidth="xs">
+        <div className={classes.root}>
+            <CssBaseline/>
+            <Grid container direction="row" spacing={3}>
+                <Grid item xs={12} md={6} className={classes.userProfile}>
+                    <Box display="flex"
+                         justifyContent="center">
+                        <Avatar className={classes.avatar} src={user.avatar_address}/>
+                    </Box>
+                    <Box display="flex"
+                         justifyContent="center">
+                        <Typography component="h1" variant="h7">
+                            {user.username}
+                        </Typography>
+                    </Box>
+                    <Box display="flex"
+                         justifyContent="center">
+                        <Typography component="h1" variant="h6">
+                            Rate : <Rating name="half-rating" value={user.rating.$numberDecimal} precision={0.1}
+                                           readOnly/>
+                        </Typography>
+                    </Box>
+                    <Box display="flex"
+                         justifyContent="center">
+                        <Grid item xs={6} md={4}>
+                            <FormDialog/>
+                        </Grid>
+                        <Grid item xs={6} md={4}>
+                            <Typography component="h1" variant="h6">
+                                Driving experience : {user.driving_experience}y
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={6} md={4}>
+                            <AddPic/>
+                        </Grid>
+                    </Box>
+                    <Box display="flex"
+                         justifyContent="center">
+                        <Typography component="h1" variant="h6">
+                            {user.introduction}
+                        </Typography>
+                    </Box>
 
-          <Box display="flex"
-            justifyContent="center">
-            <ImageList rowHeight={160} className={classes.imageList} cols={3}>
-              {user.images ? (user.images.map((item) => {
-                return (
-                  <ImageListItem key={item.img} cols={item.cols || 1}>
-                    <img src={item} alt="car" />
-                  </ImageListItem>
-                );
-              })) : ""}
-            </ImageList>
-          </Box>
-        </Grid>
-        <Grid item xs={12} md={6} >
-          <UserHistory />
-        </Grid>
-      </Grid>
-    </div>
+                    <Box display="flex"
+                         justifyContent="center">
+                        <ImageList rowHeight={160} className={classes.imageList} cols={3}>
+                            {user.images ? (user.images.map((item) => {
+                                return (
+                                    <ImageListItem key={item.img} cols={item.cols || 1}>
+                                        <img src={item} alt="car"/>
+                                    </ImageListItem>
+                                );
+                            })) : ""}
+                        </ImageList>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <UserHistory/>
+                </Grid>
+            </Grid>
+        </div>
 
-    // </Container>
-  )
-  else return < Navigate to='/Login' />
+    )
+    else return < Navigate to='/Login'/>
 }

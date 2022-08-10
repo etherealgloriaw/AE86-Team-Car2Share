@@ -1,15 +1,11 @@
 import React,{useState} from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
 import { useDispatch } from 'react-redux';
 import { alpha, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import {searchPostAsync} from "../redux/posts/thunks";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import './style/Filter.css'
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';

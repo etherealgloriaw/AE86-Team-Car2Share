@@ -1,20 +1,20 @@
 const url = '/Profile';
 
-const getHistory = async(name) => {
-    const response = await fetch (`${url}/${name}`,{
+const getHistory = async (name) => {
+    const response = await fetch(`${url}/${name}`, {
         method: 'GET'
     });
     return response.json();
 };
 
-const getDriverHistory = async(name) => {
-    const response = await fetch (`${url}/driver/${name}`,{
+const getDriverHistory = async (name) => {
+    const response = await fetch(`${url}/driver/${name}`, {
         method: 'GET'
     });
     return response.json();
 };
 
-const joinHistory = async(post) =>{
+const joinHistory = async (post) => {
     const response = await fetch(url + "/join", {
         method: 'POST',
         headers: {
@@ -32,7 +32,7 @@ const joinHistory = async(post) =>{
 }
 
 
-const cancelPost = async(id) =>{
+const cancelPost = async (id) => {
     const response = await fetch(`${url}/cancel/${id}`, {
         method: 'PATCH',
         headers: {
@@ -47,7 +47,6 @@ const cancelPost = async(id) =>{
     }
     return data;
 };
-
 
 
 const UserService = {

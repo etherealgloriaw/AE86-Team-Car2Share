@@ -3,24 +3,24 @@ import Home from "./pages/Home"
 import Profile from "./pages/Profile"
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import PrimarySearchAppBar from './components/ResponsiveAppbar';
-import { createTheme, ThemeProvider} from '@material-ui/core/styles';
+import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 import AddNewPost from "./pages/AddNewPost";
 import EditPost from "./pages/EditPost";
 import {useLoadScript} from "@react-google-maps/api";
 
 const theme = createTheme(
-{
-  palette: {
-    primary: {
-      main: '#336600',
-    },
-    secondary: {
-      main: '#0d47a1',
-    },
-  },
-}
+    {
+        palette: {
+            primary: {
+                main: '#336600',
+            },
+            secondary: {
+                main: '#0d47a1',
+            },
+        },
+    }
 );
 
 function App() {

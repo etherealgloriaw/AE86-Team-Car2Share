@@ -14,7 +14,7 @@
 
 .post:hover {
     box-shadow: 0 16px 32px 0 rgb(211, 213, 206);
-    transform: scale3d(1.04,1.04,1.04);
+    transform: scale3d(1.04, 1.04, 1.04);
 }
 
 

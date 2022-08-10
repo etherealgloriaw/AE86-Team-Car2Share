@@ -1,6 +1,6 @@
 const url = '/Login';
 
-const loginIn = async(form) => {
+const loginIn = async (form) => {
     console.log(form)
     const response = await fetch(url + "/signIn", {
         method: 'POST',
@@ -17,7 +17,7 @@ const loginIn = async(form) => {
     return data;
 }
 
-const signUp = async(form) => {
+const signUp = async (form) => {
     console.log(form)
     const response = await fetch(url + "/signUp", {
         method: 'POST',
@@ -34,7 +34,7 @@ const signUp = async(form) => {
     return data;
 }
 
-const editProfile = async(edited) =>{
+const editProfile = async (edited) => {
     const id = edited._id;
     const response = await fetch(url + "/Edit", {
         method: 'PATCH',
@@ -52,7 +52,7 @@ const editProfile = async(edited) =>{
 
 }
 
-const rateUser = async(user) =>{
+const rateUser = async (user) => {
     const response = await fetch(url + "/rate", {
         method: 'PATCH',
         headers: {
@@ -69,7 +69,7 @@ const rateUser = async(user) =>{
 
 }
 
-const uploadPhoto = async(user) =>{
+const uploadPhoto = async (user) => {
     console.log(user)
     const response = await fetch(url + "/upload", {
         method: 'PATCH',

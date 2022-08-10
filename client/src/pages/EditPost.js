@@ -8,8 +8,8 @@ import {getGeocode, getLatLng} from "use-places-autocomplete";
 function EditPost() {
     const {postID} = useParams()
     const post = useSelector(state => state.users.list.find(p => p._id == postID))
-    const [initDept,setInitDept] = useState(null)
-    const [initDest,setInitDest] = useState(null)
+    const [initDept, setInitDept] = useState(null)
+    const [initDest, setInitDest] = useState(null)
     const [directionResponse, setDirectionResponse] = useState(null)
     const [distances, setDistances] = useState(null)
     const [duration, setDuration] = useState(null)
@@ -38,13 +38,15 @@ function EditPost() {
             setDistances(direction.routes[0].legs[0].distance.text)
             setDuration(direction.routes[0].legs[0].duration.text)
         }
+
         initLocation()
-    },[])
+    }, [])
 
     return (
         <div>
-            {(initDept && directionResponse)? (<ModifyPost post={post} forEdit={true} dept={initDept} dest={initDest}
-                                  direction={directionResponse} distance={distances} duration={duration} id = {post._id} />) : null}
+            {(initDept && directionResponse) ? (<ModifyPost post={post} forEdit={true} dept={initDept} dest={initDest}
+                                                            direction={directionResponse} distance={distances}
+                                                            duration={duration} id={post._id}/>) : null}
         </div>
     )
 }

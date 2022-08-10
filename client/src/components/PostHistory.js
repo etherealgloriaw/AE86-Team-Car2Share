@@ -102,9 +102,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const PostHistory = (slice) => {
     const classes = useStyles();
-    // let navigate = useNavigate();
     const [expanded, setExpanded] = React.useState(false);
-    const [active, setActive] = React.useState(slice.active);
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(0);
     const rate = useSelector(state => state.auth.rate);

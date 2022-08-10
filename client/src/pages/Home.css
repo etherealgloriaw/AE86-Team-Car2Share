@@ -1,9 +1,9 @@
-.bodyContainer{
+.bodyContainer {
     display: flex;
     flex-direction: row;
 }
 
-.mapComponent{
+.mapComponent {
     margin-left: -23vw;
     width: 80vw;
     height: 60vh;

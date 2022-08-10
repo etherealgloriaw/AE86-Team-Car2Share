@@ -14,7 +14,6 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from "react-router-dom";
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import HomeIcon from '@material-ui/icons/Home';
-// import Login from './GoogleLogin';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -57,7 +56,7 @@ export default function PrimarySearchAppBar() {
   var profileURL = '/';
   if (user != null) profileURL = '/Profile';
   else profileURL = '/Login'
-  
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -84,7 +83,7 @@ export default function PrimarySearchAppBar() {
 };
 
   var loginWord = user ? "Log Out" : "Login";
-  
+
 
   const menuId = 'primary-search-account-menu';
 

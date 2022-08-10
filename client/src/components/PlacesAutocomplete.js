@@ -54,7 +54,6 @@ export default function PlacesAutocomplete(props) {
 
     }
     return (
-//(props.forEdit || props.displayErrMsg)
         <Autocomplete
             id="autocomplete"
             value={props.string? props.string:value}

@@ -1,10 +1,10 @@
 import Posts from "../components/Posts";
-import { ResponsiveSearchBar } from "../components/ResponsiveSearchBar";
+import {ResponsiveSearchBar} from "../components/ResponsiveSearchBar";
 import React, {useEffect, useState} from 'react';
 import Map from '../components/Map'
 import './Home.css'
-import { useSelector } from "react-redux";
-import { makeStyles } from '@material-ui/core/styles';
+import {useSelector} from "react-redux";
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import {useLoadScript} from "@react-google-maps/api";
 import Popup from "../components/Popup"
@@ -21,11 +21,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// const libraries = ['places']
 
 function Home() {
     const classes = useStyles();
-    const [ libraries ] = useState(['places']);
+    const [libraries] = useState(['places']);
     const postList = useSelector(state => state.posts.list);
     const [selected, setSelected] = useState(null)
     const [popup, setPopup] = useState(null)
@@ -35,15 +34,15 @@ function Home() {
     useEffect(() => {
         if (popup !== null) {
             setPopupData(postList.find(post => {
-            return post._id == popup
-        }))
+                return post._id == popup
+            }))
         } else {
             setPopupData(null)
         }
         if (intro !== null) {
             setIntroData(postList.find(post => {
-            return post._id == intro
-        }))
+                return post._id == intro
+            }))
         } else {
             setIntroData(null)
         }
@@ -55,17 +54,24 @@ function Home() {
     });
     return (
         <div className="Home">
-            <ResponsiveSearchBar />
+            <ResponsiveSearchBar/>
             <div className={classes.root}>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
-                        <Posts selected={selected} setSelected={setSelected} posts={postList} setPopup={setPopup} setIntro = {setIntro}/>
+                        <Posts selected={selected} setSelected={setSelected} posts={postList} setPopup={setPopup}
+                               setIntro={setIntro}/>
                     </Grid>
                     <Grid item xs={7}>
-                       <Map markerList={postList.map((post) => {
-                           return {coordinates: {lat: Number(post.lat.$numberDecimal), lng: Number(post.lng.$numberDecimal)},
-                           id: post._id}})}
-                       selected={selected} setSelected={setSelected} setPopup={setPopup} forHome={true}/>
+                        <Map markerList={postList.map((post) => {
+                            return {
+                                coordinates: {
+                                    lat: Number(post.lat.$numberDecimal),
+                                    lng: Number(post.lng.$numberDecimal)
+                                },
+                                id: post._id
+                            }
+                        })}
+                             selected={selected} setSelected={setSelected} setPopup={setPopup} forHome={true}/>
                     </Grid>
                 </Grid>
             </div>

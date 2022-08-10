@@ -53,7 +53,6 @@ export default function AddPic() {
 
     const handleSubmit = () => {
         var form = {id: user._id, images: arr}
-        console.log(form)
         dispatch(
             uploadPhotoAsync(form)
         )
@@ -80,7 +79,7 @@ export default function AddPic() {
                                 fullWidth
                             />
                             </div>
-                            
+
                         );
                     })}
                 </DialogContent>

@@ -5,12 +5,10 @@ export default function MyMarker (props) {
     const [animation, setAnimation] = useState(false);
     const handleHover = () => {
         // eslint-disable-next-line no-undef
-        //setAnimation(google.maps.Animation.BOUNCE)
         props.setSelected(props.id);
     }
     const handleOut = () => {
         // eslint-disable-next-line no-undef
-        //setAnimation(false)
         props.setSelected(null)
     }
     const handleClick = () => {
