@@ -36,18 +36,23 @@ Car2Share is a carpool application for UBC students, staff and faculties. Driver
 
 ## Technology used from Unit 1-5:
 - Unit 1: HTML, CSS, JS
+
   The front-end and server of our project are both implemented using JavaScript, which is a powerful high-level programing language that is easy to learn and use.  Although we did not directly use HTML in our project, we use JSX to describe the UI, which syntax is similar to HTML but is more flexible and compatible with React. And React will eventually generate HTML for the browser to display. We only use few CSS in our project for the basic and simple styling of components. Most of the complex styling is done by using Material UI's makeStyle function, which is more powerful and compatible with the Material UI. 
   
 - Unit 2: React & Redux
+
   The entire front-end of our project is implemented by React, which provides a lot of functionality that makes the implementation more efficient. We used React Hooks to simplify our code (avoid creating a whole class and constantly worry about lifecycle). For example, we used useState to store and pass those state variables that need to be updated and rendered between functional components, and other external hooks such as useGeolocation. We also used Redux, which provides centralized storage, to manage the state for the whole front-end, keeping the state consistent between client and server.
   
 - Unit 3: Node & Express
+
   The backend of our project is running in the Node.js environment, which enables our Javascript to be executed without a browser. On top of that, we used the Express web framework for the server implementation. The Express is easy to use and helps us handle low-level operations such as IO requests. It also provides extra features such as router and middlewares that we used in our project. Therefore, Express increased our efficiency and simplified the server-side implementation.
 
 - Unit 4: NoSQL and MongoDB
+
   We used MongoDB as our database, Mongoose for Object Document Mapping, and we host our database on the MongoDB Atlas. Because we expanded our project periodically and added many data as we progressed, the NoSQL feature of MongoDB provides us with a lot of flexibility so that we can frequently add data fields to the database schema. And using Mongoose significantly reduced our code size, making the development more efficient. The MongoDB Atlas provides us with a free cloud-based platform so that we do not need to worry about the deployment of the database.
 
 - Unit 5: Release Engineering
+
   We choose to use a mono repo for the project because our project is small sized and many people work together on different files. We used Git and Github for version control, and the most important feature it provides is that we can work on the project at the same time and avoid destroying the whole project by a buggy commit. We use npm as the build tool for dependency management and compiling. And We deploy and host our project on Heroku so that we do not need to deal with configuring cloud services such as Amazon Web Services.
 
 
