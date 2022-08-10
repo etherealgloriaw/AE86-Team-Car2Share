@@ -9,6 +9,7 @@ import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 import AddNewPost from "./pages/AddNewPost";
 import EditPost from "./pages/EditPost";
 import {useLoadScript} from "@react-google-maps/api";
+import {useEffect} from "react";
 
 const theme = createTheme(
     {
@@ -24,6 +25,10 @@ const theme = createTheme(
 );
 
 function App() {
+    useEffect(() => {
+        document.title = 'Car2Share';
+    });
+
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: 'AIzaSyAWxWcp2Mfk3fLOtlhl-ajt-m253pDswVY',
         libraries: ["places"],
