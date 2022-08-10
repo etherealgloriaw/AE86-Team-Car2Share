@@ -73,10 +73,9 @@ export default function Popup(props) {
 
     }, [props.data])
 
-    const date = new Date(props.data.startingTime)
-    const dateString = date.toDateString() + " " +date.getHours()+ ":"
-        + ((date.getMinutes() > 9)? date.getMinutes(): ("0" + date.getMinutes()))+ ":" +
-        ((date.getSeconds() > 9)? date.getSeconds(): ("0" + date.getSeconds()))
+    const dateString = new Date(props.data.startingTime).toLocaleString('en-US', {
+        timeZone: 'America/Los_Angeles',
+    });
     return (
         <div className="popup-box">
             <div className="box">

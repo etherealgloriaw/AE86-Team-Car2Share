@@ -21,11 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Review(props) {
     const classes = useStyles();
-    const date = new Date(props.departureTime)
-    const dateString = date.toDateString() + ", " +date.getHours()+ ":"
-        + ((date.getMinutes() > 9)? date.getMinutes(): ("0" + date.getMinutes()))+ ":" +
-        ((date.getSeconds() > 9)? date.getSeconds(): ("0" + date.getSeconds()))
-
+    const dateString = new Date(props.departureTime).toLocaleString('en-US', {
+        timeZone: 'America/Los_Angeles',
+    });
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
