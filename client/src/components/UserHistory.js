@@ -298,6 +298,7 @@ export const UserHistory = () => {
       dispatch(
           finishPostAsync(slice._id)
       )
+      alert("finished this post successfully")
     }
 
     return (
