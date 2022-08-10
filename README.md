@@ -1,5 +1,7 @@
 # Car2Share -- Carpool Application
 
+## This is not the fianl version, please check final-project branch, thanks!
+
 ## Project Description:
 
 Car2Share is a carpool application for UBC students, staff and faculties. Drivers can publish trip posts to find someone to share the gas fee, and passengers can join the carshare to save time and money. Drivers can also modify/cancel the trip, and receive an email notification if someone joins the trip. And passengers can discover potential trips or search for a destination by using the Google Maps interface on the Home page and joining the carshare. In addition, passengers can rate a driver and see the driver's rating before joining the trip. Users can also publish pictures of the trip on their profile page.
