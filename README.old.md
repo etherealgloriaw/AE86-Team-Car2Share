@@ -1,5 +1,7 @@
 # Car2Share -- Carpool Application
 
+## This is not the final version, please check final-project branch, thanks!
+
 ## Project Summary: 
 
 Car2Share is a carpool application for people who need a car ride living in Greater Vancouver. People could publish and view the carpool posts in real-time with other users, and share their previous carpool experiences with others. 
